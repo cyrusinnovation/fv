@@ -13,6 +13,15 @@ class MyTableViewController < UITableViewController
   
   def viewDidLoad
     view.dataSource = self
+    navigationItem.rightBarButtonItem = UIBarButtonItem.alloc.initWithBarButtonSystemItem(UIBarButtonSystemItemAdd, target:self, action:'handlePlusClicked')
+  end
+  
+  def handlePlusClicked
+    indexPath = NSIndexPath.indexPathForRow(RegCount, inSection:0)
+    cell = tableView(view, cellForRowAtIndexPath:indexPath)
+    textField = cell.contentView.subviews[0]
+    textField.becomeFirstResponder
+    true
   end
   
   # Required method of UITableViewDataSource
