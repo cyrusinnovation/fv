@@ -1,0 +1,2 @@
+- When user enters text, make rest of table unselectable
+- When user clicks plus, deselect any selections
