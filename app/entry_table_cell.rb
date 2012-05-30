@@ -10,13 +10,20 @@ class EntryTableCell < UITableViewCell
     end
     self
   end
+
+
   
   # Defined for UITextFieldDelegate
   def textFieldShouldReturn(textField)
     textField.resignFirstResponder
-    return true
+    textField.text = nil
+    true
   end
-  
+
+  def textFieldDidEndEditing(textField)
+    NSNotificationCenter.defaultCenter.postNotificationName("textFieldDoneEditing", object:textField.text)
+    true
+  end
   
 end
 

@@ -12,8 +12,8 @@ class TaskTableCell < UITableViewCell
     self
   end
   
-  def text=text
-    @textLabel.text = text
+  def taskText=taskText
+    @textLabel.text = taskText
   end
   
 end

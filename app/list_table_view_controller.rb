@@ -1,13 +1,23 @@
 class ListTableViewController < UITableViewController
-  RegCount = 20
   
   def viewDidLoad
     view.dataSource = self
     navigationItem.rightBarButtonItem = UIBarButtonItem.alloc.initWithBarButtonSystemItem(UIBarButtonSystemItemAdd, target:self, action:'handlePlusClicked')
+    NSNotificationCenter.defaultCenter.addObserver(self, selector:'handleTaskListUpdated:', name:'textFieldDoneEditing', object:nil)
+
+  end
+  
+  def handleTaskListUpdated(notification)
+    TaskStore.shared.add_task do |task|
+      task.date_moved = NSDate.date
+      task.text = notification.object
+      task.dotted = false
+    end
+    view.reloadData
   end
   
   def handlePlusClicked
-    indexPath = NSIndexPath.indexPathForRow(RegCount, inSection:0)
+    indexPath = last_index_path
     view.scrollToRowAtIndexPath(indexPath, atScrollPosition:UITableViewScrollPositionBottom, animated:false)
     
     # This is null if above is animated
@@ -17,25 +27,39 @@ class ListTableViewController < UITableViewController
     
   # Required method of UITableViewDataSource
   def tableView(tableView, numberOfRowsInSection:section)
-    section == 0 ? RegCount + 1 : 0
+    TaskStore.shared.tasks.size + 1
+  end
+
+  def tableView(tableView, cellForRowAtIndexPath:indexPath)
+    indexPath.row < TaskStore.shared.tasks.size ? task_cell(indexPath) : input_cell(indexPath)
   end
   
-  EntryCellID = 'A'
-  TaskCellID = 'B'
-  # Required method of UITableViewDataSource
-  def tableView(tableView, cellForRowAtIndexPath:indexPath)
-    if indexPath.row < RegCount
-      cell = tableView.dequeueReusableCellWithIdentifier(TaskCellID) || begin
-        TaskTableCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier:TaskCellID)
-      end
-      cell.text = "Cell #{indexPath.row}"
-      return cell
-    else
-      cell = tableView.dequeueReusableCellWithIdentifier(EntryCellID) || begin
-        EntryTableCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier:EntryCellID)
-      end
-      return cell
+  def tableView(tableView, didSelectRowAtIndexPath:indexPath)
+    cell = tableView.cellForRowAtIndexPath(indexPath)
+  end
+
+  private
+  
+  TaskCellId = 'A'
+  def task_cell(indexPath)
+    cell = tableView.dequeueReusableCellWithIdentifier(TaskCellId) || begin
+      TaskTableCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier:TaskCellId)
     end
+    task = TaskStore.shared.tasks[indexPath.row]
+    cell.taskText = task.text
+    cell
+  end
+
+  EntryCellID = 'B'
+  def input_cell(indexPath)
+    cell = tableView.dequeueReusableCellWithIdentifier(EntryCellID) || begin
+      EntryTableCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier:EntryCellID)
+    end
+    cell
+  end
+  
+  def last_index_path
+    NSIndexPath.indexPathForRow(TaskStore.shared.tasks.size, inSection:0)
   end
   
 end
