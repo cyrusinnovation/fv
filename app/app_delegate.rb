@@ -18,9 +18,13 @@ class MyTableViewController < UITableViewController
   
   def handlePlusClicked
     indexPath = NSIndexPath.indexPathForRow(RegCount, inSection:0)
-    view.scrollToRowAtIndexPath(indexPath, atScrollPosition:UITableViewScrollPositionBottom, animated:true)
+    view.scrollToRowAtIndexPath(indexPath, atScrollPosition:UITableViewScrollPositionBottom, animated:false)
+    
+    # This is null if above is animated
+    cell = view.cellForRowAtIndexPath(indexPath)
+    cell.contentView.subviews[0].becomeFirstResponder
   end
-  
+    
   # Required method of UITableViewDataSource
   def tableView(tableView, numberOfRowsInSection:section)
     section == 0 ? RegCount + 1 : 0
