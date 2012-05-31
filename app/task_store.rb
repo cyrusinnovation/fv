@@ -28,6 +28,15 @@ class TaskStore
     save
   end
   
+  def toggle_dotted(task)
+    if task.dotted?
+      task.dotted = 0
+    else
+      task.dotted = 1
+    end
+    save
+  end
+  
   private
   
   def initialize

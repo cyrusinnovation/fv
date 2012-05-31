@@ -34,10 +34,13 @@ class ListTableViewController < UITableViewController
     indexPath.row < TaskStore.shared.tasks.size ? task_cell(indexPath) : input_cell(indexPath)
   end
   
-  def tableView(tableView, didSelectRowAtIndexPath:indexPath)
-    cell = tableView.cellForRowAtIndexPath(indexPath)
+  def tableView(tableView, willSelectRowAtIndexPath:indexPath)
+    task = TaskStore.shared.tasks[indexPath.row]
+    TaskStore.shared.toggle_dotted(task)
+    tableView.reloadData
+    nil
   end
-
+  
   private
   
   TaskCellId = 'A'
@@ -46,7 +49,7 @@ class ListTableViewController < UITableViewController
       TaskTableCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier:TaskCellId)
     end
     task = TaskStore.shared.tasks[indexPath.row]
-    cell.taskText = task.text
+    cell.task = task
     cell
   end
 

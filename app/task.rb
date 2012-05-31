@@ -16,4 +16,9 @@ class Task < NSManagedObject
       entity
     end
   end
+  
+  def dotted?
+    dotted == 1
+  end
+  
 end
