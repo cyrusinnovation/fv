@@ -3,6 +3,10 @@ class TaskStore
     @shared ||= TaskStore.new
   end
   
+  def dotted_tasks
+    @dotted_tasks ||= tasks.select {|task| task.dotted? }
+  end
+  
   def tasks
     @tasks ||= begin
       request = NSFetchRequest.alloc.init
@@ -61,5 +65,6 @@ class TaskStore
       raise "Error when saving the model: #{error_ptr[0].description}"
     end
     @tasks = nil
+    @dotted_tasks = nil
   end
 end
