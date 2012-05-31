@@ -3,8 +3,16 @@ class ListTableViewController < UITableViewController
   def viewDidLoad
     view.dataSource = self
     navigationItem.rightBarButtonItem = UIBarButtonItem.alloc.initWithBarButtonSystemItem(UIBarButtonSystemItemAdd, target:self, action:'handlePlusClicked')
-    NSNotificationCenter.defaultCenter.addObserver(self, selector:'handleTaskListUpdated:', name:'textFieldDoneEditing', object:nil)
 
+    view_toggle = UISegmentedControl.alloc.initWithItems(["All","Selected"])
+    view_toggle.selectedSegmentIndex = 0
+    navigationItem.titleView = view_toggle
+    view_toggle.addTarget(self, action:'handleViewToggleChange', forControlEvents:UIControlEventValueChanged)
+    NSNotificationCenter.defaultCenter.addObserver(self, selector:'handleTaskListUpdated:', name:'textFieldDoneEditing', object:nil)
+  end
+  
+  def handleViewToggleChange
+    puts "changed"
   end
   
   def handleTaskListUpdated(notification)
