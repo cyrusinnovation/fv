@@ -18,7 +18,7 @@ class ListTableViewController < UITableViewController
     else
       view.dataSource = SelectedStrategy.shared
     end
-    view.reloadData
+    view.dataSource.transitionView(tableView)
   end
   
   def handleTaskListUpdated(notification)
@@ -73,6 +73,10 @@ class AllStrategy
     tableView.reloadData
     nil
   end
+  
+  def transitionView(tableView)
+    tableView.reloadData
+  end
 
   private
   
@@ -117,6 +121,11 @@ class SelectedStrategy
     # Selecting does nothing in this "view"
     nil
   end
+  
+  def transitionView(tableView)
+    tableView.reloadData
+  end
+  
 
   private
   
