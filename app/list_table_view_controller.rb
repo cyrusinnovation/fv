@@ -75,7 +75,17 @@ class AllStrategy
   end
   
   def transitionView(tableView)
-    tableView.reloadData
+    # Here we need to go from "dotted" to "all"
+    # 
+    indexes_to_insert = []
+    insertion_index = 0
+    TaskStore.shared.tasks.each do |task|
+      if !(task.dotted?)
+        indexes_to_insert << NSIndexPath.indexPathForRow(insertion_index, inSection:0)
+      end
+      insertion_index += 1
+    end
+    tableView.insertRowsAtIndexPaths(indexes_to_insert, withRowAnimation:UITableViewRowAnimationFade)    
   end
 
   private
@@ -123,7 +133,17 @@ class SelectedStrategy
   end
   
   def transitionView(tableView)
-    tableView.reloadData
+    # here we are going from "all" to "dotted"
+    # so we need to remove elements from the view
+    
+    indexes_to_delete = []
+    TaskStore.shared.tasks.each_index do |task_index|
+      if !(TaskStore.shared.tasks[task_index].dotted?)
+        indexes_to_delete << NSIndexPath.indexPathForRow(task_index, inSection:0)
+      end
+    end
+    tableView.deleteRowsAtIndexPaths(indexes_to_delete, withRowAnimation:UITableViewRowAnimationFade)
+    
   end
   
 
