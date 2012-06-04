@@ -1,5 +1,5 @@
 class TestViewController < UIViewController
-  ItemHeight = 50
+  ItemHeight = 200
   
   def loadView
     self.view = UIScrollView.alloc.initWithFrame(UIScreen.mainScreen.bounds)
