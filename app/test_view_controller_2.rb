@@ -19,6 +19,12 @@ class TestViewController2 < UIViewController
     
     @grayView = scrollView.subviews[0]
     @orangeView = scrollView.subviews[3]
+    @redView = scrollView.subviews[6]
+    
+    # We would know how to 
+    scrollView.bringSubviewToFront(@grayView)
+    scrollView.bringSubviewToFront(@orangeView)
+    scrollView.bringSubviewToFront(@redView)
     
     scrollView.contentSize = CGSizeMake(view.frame.size.width, ItemHeight * colors.size);
   end
@@ -30,14 +36,27 @@ class TestViewController2 < UIViewController
     if yoffset > 0
       newFrame = CGRectMake(0,yoffset,scrollView.frame.size.width,ItemHeight)
       @grayView.frame = newFrame
-      scrollView.bringSubviewToFront(@grayView)
+    else
+      newFrame = CGRectMake(0,0,scrollView.frame.size.width,ItemHeight)
+      @grayView.frame = newFrame
     end
-        
-    if yoffset > ItemHeight * 2
+    
+    if yoffset > ItemHeight * 3
       newFrame = CGRectMake(0,yoffset,scrollView.frame.size.width,ItemHeight)
       @orangeView.frame = newFrame
-      scrollView.bringSubviewToFront(@orangeView)
+    else
+      newFrame = CGRectMake(0,ItemHeight * 3,scrollView.frame.size.width,ItemHeight)
+      @orangeView.frame = newFrame
     end
+    
+    if yoffset > ItemHeight * 6
+      newFrame = CGRectMake(0, yoffset, scrollView.frame.size.width,ItemHeight)
+      @redView.frame = newFrame
+    else
+      newFrame = CGRectMake(0, ItemHeight * 6, scrollView.frame.size.width, ItemHeight)
+      @redView.frame = newFrame
+    end
+    
   end
   
   def viewDidLoad
