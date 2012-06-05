@@ -2,8 +2,12 @@ class TaskViewController < UIViewController
   TaskHeight = 50
   
   def loadView
-    self.view = UIScrollView.alloc.initWithFrame(UIScreen.mainScreen.bounds)
-    view.contentSize = CGSizeMake(view.frame.size.width, TaskStore.shared.tasks.size * TaskHeight)
+    @scrollView = UIScrollView.alloc.initWithFrame(UIScreen.mainScreen.bounds)
+    self.view = @scrollView
+    
+    scrollPadding = @scrollView.frame.size.height - TaskHeight
+    
+    view.contentSize = CGSizeMake(view.frame.size.width, (TaskStore.shared.tasks.size * TaskHeight) + scrollPadding)
     view.delegate = self
     drawTasks
   end
