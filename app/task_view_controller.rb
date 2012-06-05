@@ -15,17 +15,12 @@ class TaskViewController < UIViewController
     yoffset = scrollView.contentOffset.y
     
     @selected_indexes.each do |index|
-      subview = @task_views[index]
-      if yoffset > TaskHeight * index
-        newFrame = CGRectMake(0,yoffset,scrollView.frame.size.width,TaskHeight)
-        subview.frame = newFrame
-      else
-        newFrame = CGRectMake(0,TaskHeight * index,scrollView.frame.size.width,TaskHeight)
-        subview.frame = newFrame
-      end
+      y = [yoffset, TaskHeight * index].max
+      @task_views[index].frame = CGRectMake(0,y,scrollView.frame.size.width,TaskHeight)
     end    
     
   end
+  
 
   def drawTasks
     @task_views = []
