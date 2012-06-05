@@ -12,12 +12,36 @@ class TaskViewController < UIViewController
   def scrollViewDidScroll(scrollView)
     # As currently designed, this is a display memory hog.
     # Here is where we would allocate or deallocate views based on the contentOffset
+    yoffset = scrollView.contentOffset.y
+    
+    @selected_indexes.each do |index|
+      subview = @task_views[index]
+      if yoffset > TaskHeight * index
+        newFrame = CGRectMake(0,yoffset,scrollView.frame.size.width,TaskHeight)
+        subview.frame = newFrame
+      else
+        newFrame = CGRectMake(0,TaskHeight * index,scrollView.frame.size.width,TaskHeight)
+        subview.frame = newFrame
+      end
+    end    
+    
   end
 
   def drawTasks
+    @task_views = []
+    @selected_indexes = []
     TaskStore.shared.tasks.each_index do |index|
       task = TaskStore.shared.tasks[index]
-      view.addSubview(task_view(index, task))
+      subview = task_view(index, task)
+      @task_views << subview
+      view.addSubview(subview)
+      if task.dotted?
+        @selected_indexes << index
+      end
+    end
+    
+    @selected_indexes.each do |index|
+      view.bringSubviewToFront(@task_views[index])
     end
   end
   
@@ -27,9 +51,11 @@ class TaskViewController < UIViewController
     task_label = UILabel.alloc.initWithFrame(CGRectMake(0,0, task_view.frame.size.width, task_view.frame.size.height))
     task_label.text = task.text
     task_view.addSubview(task_label)
+    if task.dotted?
+      task_label.backgroundColor = UIColor.grayColor
+    end
     task_view
   end
-
 
   def viewDidLoad
     @view_toggle = UISegmentedControl.alloc.initWithItems(["All","Selected"])
