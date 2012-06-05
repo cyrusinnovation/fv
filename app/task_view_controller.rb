@@ -5,7 +5,6 @@ class TaskViewController < UIViewController
     self.view = UIScrollView.alloc.initWithFrame(UIScreen.mainScreen.bounds)
     view.contentSize = CGSizeMake(view.frame.size.width, TaskStore.shared.tasks.size * TaskHeight)
     view.delegate = self
-    view.backgroundColor = UIColor.redColor
     drawTasks
   end
   
@@ -52,17 +51,6 @@ class TaskViewController < UIViewController
     task_view
   end
 
-  def viewDidLoad
-    @view_toggle = UISegmentedControl.alloc.initWithItems(["All","Selected"])
-    @view_toggle.selectedSegmentIndex = 0
-    navigationItem.titleView = @view_toggle
-    @view_toggle.addTarget(self, action:'handleViewToggleChange', forControlEvents:UIControlEventValueChanged)
-  end
-  
-  def handleViewToggleChange
-    puts "toggled!"
-  end
-  
   
   
   
