@@ -11,20 +11,18 @@ class TestViewController2 < UIViewController
     scrollView.delegate = self
     view.addSubview(scrollView)
     
+    @myviews = []
     colors.each_index do |index|
       subview = UIView.alloc.initWithFrame(CGRectMake(0, ItemHeight * index, scrollView.frame.size.width, ItemHeight))
       subview.backgroundColor = colors[index]
       scrollView.addSubview(subview)
+      @myviews << subview
     end
     
-    @grayView = scrollView.subviews[0]
-    @orangeView = scrollView.subviews[3]
-    @redView = scrollView.subviews[6]
-    
-    # We would know how to 
-    scrollView.bringSubviewToFront(@grayView)
-    scrollView.bringSubviewToFront(@orangeView)
-    scrollView.bringSubviewToFront(@redView)
+    @selected_indexes = [0,2,4,6,7,8]
+    @selected_indexes.each do |index|
+      scrollView.bringSubviewToFront(@myviews[index])
+    end
     
     scrollView.contentSize = CGSizeMake(view.frame.size.width, ItemHeight * colors.size);
   end
@@ -32,31 +30,16 @@ class TestViewController2 < UIViewController
   def scrollViewDidScroll(scrollView)
     yoffset = scrollView.contentOffset.y
     
-    # Draw the gray frame at top if scrolled away
-    if yoffset > 0
-      newFrame = CGRectMake(0,yoffset,scrollView.frame.size.width,ItemHeight)
-      @grayView.frame = newFrame
-    else
-      newFrame = CGRectMake(0,0,scrollView.frame.size.width,ItemHeight)
-      @grayView.frame = newFrame
+    @selected_indexes.each do |index|
+      subview = @myviews[index]
+      if yoffset > ItemHeight * index
+        newFrame = CGRectMake(0,yoffset,scrollView.frame.size.width,ItemHeight)
+        subview.frame = newFrame
+      else
+        newFrame = CGRectMake(0,ItemHeight * index,scrollView.frame.size.width,ItemHeight)
+        subview.frame = newFrame
+      end
     end
-    
-    if yoffset > ItemHeight * 3
-      newFrame = CGRectMake(0,yoffset,scrollView.frame.size.width,ItemHeight)
-      @orangeView.frame = newFrame
-    else
-      newFrame = CGRectMake(0,ItemHeight * 3,scrollView.frame.size.width,ItemHeight)
-      @orangeView.frame = newFrame
-    end
-    
-    if yoffset > ItemHeight * 6
-      newFrame = CGRectMake(0, yoffset, scrollView.frame.size.width,ItemHeight)
-      @redView.frame = newFrame
-    else
-      newFrame = CGRectMake(0, ItemHeight * 6, scrollView.frame.size.width, ItemHeight)
-      @redView.frame = newFrame
-    end
-    
   end
   
   def viewDidLoad
