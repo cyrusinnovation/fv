@@ -1,15 +1,22 @@
 class TaskViewController < UIViewController
   TaskHeight = 50
-  TextEntryHeight = 50
+  TextEntryHeight = 75
   
   def loadView
     self.view = UIView.alloc.initWithFrame(UIScreen.mainScreen.bounds)
+    scroll_view_frame = CGRectMake(0, 0, view.frame.size.width, view.frame.size.height - TextEntryHeight)
     @scrollView = UIScrollView.alloc.initWithFrame(UIScreen.mainScreen.bounds)
     view.addSubview(@scrollView)
     @scrollView.contentSize = CGSizeMake(@scrollView.frame.size.width, TaskStore.shared.tasks.size * TaskHeight)
     @scrollView.delegate = self
-    drawTasks
-    # drawTextBox
+    
+    text_field_frame = CGRectMake(0, view.frame.size.height - TextEntryHeight, view.frame.size.width, TextEntryHeight)
+    @text_field = UITextField.alloc.initWithFrame(text_field_frame)
+    @text_field.delegate = self
+    @text_field.backgroundColor = UIColor.redColor
+    view.addSubview(@text_field)
+    
+    addTasks
   end
   
   def scrollViewDidScroll(scrollView)
@@ -25,7 +32,7 @@ class TaskViewController < UIViewController
   end
   
 
-  def drawTasks
+  def addTasks
     @task_views = []
     @selected_indexes = []
     TaskStore.shared.tasks.each_index do |index|
@@ -45,11 +52,6 @@ class TaskViewController < UIViewController
   
   # def drawTextBox
   #   # draw text box on bottom of scrollview
-  #   text_box_frame = CGRectMake(0, @task_views.size * TaskHeight, view.frame.size.width, TaskHeight)
-  #   @text_box = UITextField.alloc.initWithFrame(text_box_frame)
-  #   @text_box.delegate = self
-  #   @text_box.backgroundColor = UIColor.redColor
-  #   view.addSubview(@text_box)
   # end
   
   def task_view(index, task)
