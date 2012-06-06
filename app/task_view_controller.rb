@@ -98,7 +98,9 @@ class TaskViewController < UIViewController
     task = TaskStore.shared.tasks.last
     
     @scrollView.contentSize = CGSizeMake(@scrollView.frame.size.width, TaskStore.shared.tasks.size * TaskHeight)
-    @scrollView.addSubview(task_view(TaskStore.shared.tasks.size - 1, task))
+    task_view = task_view(TaskStore.shared.tasks.size - 1, task)
+    @scrollView.addSubview(task_view)
+    @scrollView.scrollRectToVisible(task_view.frame, animated:true)
     true
   end
 
