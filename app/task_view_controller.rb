@@ -1,6 +1,6 @@
 class TaskViewController < UIViewController
   TaskHeight = 50
-  TextEntryHeight = 75
+  TextEntryHeight = 50
   
   def loadView
     self.view = UIView.alloc.initWithFrame(UIScreen.mainScreen.bounds)
@@ -16,7 +16,22 @@ class TaskViewController < UIViewController
     @text_field.backgroundColor = UIColor.redColor
     view.addSubview(@text_field)
     
+    # Register for keyboard notifications so that we can move the text input box.
+    NSNotificationCenter.defaultCenter.addObserver(self, selector:'keyboardDidShow:', name:UIKeyboardDidShowNotification, object:nil)
+    NSNotificationCenter.defaultCenter.addObserver(self, selector:'keyboardDidHide:', name:UIKeyboardDidHideNotification, object:nil)
+    
     addTasks
+  end
+  
+  def keyboardDidShow(notification)
+    keyboardSize = notification.userInfo.objectForKey(UIKeyboardBoundsUserInfoKey).CGRectValue.size
+    new_text_field_frame = CGRectMake(0, view.frame.size.height - (TextEntryHeight + keyboardSize.height), view.frame.size.width, TextEntryHeight)
+    @text_field.frame = new_text_field_frame
+  end
+  
+  def keyboardDidHide(notification)
+    new_text_field_frame = CGRectMake(0, view.frame.size.height - TextEntryHeight, view.frame.size.width, TextEntryHeight)
+    @text_field.frame = new_text_field_frame
   end
   
   def scrollViewDidScroll(scrollView)
