@@ -5,7 +5,7 @@ class TaskViewController < UIViewController
   def loadView
     self.view = UIView.alloc.initWithFrame(UIScreen.mainScreen.bounds)
     scroll_view_frame = CGRectMake(0, 0, view.frame.size.width, view.frame.size.height - TextEntryHeight)
-    @scrollView = UIScrollView.alloc.initWithFrame(UIScreen.mainScreen.bounds)
+    @scrollView = UIScrollView.alloc.initWithFrame(scroll_view_frame)
     view.addSubview(@scrollView)
     @scrollView.contentSize = CGSizeMake(@scrollView.frame.size.width, TaskStore.shared.tasks.size * TaskHeight)
     @scrollView.delegate = self
@@ -89,7 +89,16 @@ class TaskViewController < UIViewController
   end
   
   def textFieldDidEndEditing(textField)
-    puts textField.text
+    TaskStore.shared.add_task do |task|
+      task.date_moved = NSDate.date
+      task.text = textField.text
+      task.dotted = false
+    end
+    
+    task = TaskStore.shared.tasks.last
+    
+    @scrollView.contentSize = CGSizeMake(@scrollView.frame.size.width, TaskStore.shared.tasks.size * TaskHeight)
+    @scrollView.addSubview(task_view(TaskStore.shared.tasks.size - 1, task))
     true
   end
 
