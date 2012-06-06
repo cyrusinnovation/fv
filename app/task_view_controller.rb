@@ -3,7 +3,7 @@ class TaskViewController < UIViewController
   TextEntryHeight = 50
   
   def loadView
-    self.view = UIView.alloc.initWithFrame(UIScreen.mainScreen.bounds)
+    self.view = UIView.alloc.initWithFrame(UIScreen.mainScreen.applicationFrame)
     scroll_view_frame = CGRectMake(0, 0, view.frame.size.width, view.frame.size.height - TextEntryHeight)
     @scrollView = UIScrollView.alloc.initWithFrame(scroll_view_frame)
     view.addSubview(@scrollView)
@@ -18,20 +18,24 @@ class TaskViewController < UIViewController
     
     # Register for keyboard notifications so that we can move the text input box.
     NSNotificationCenter.defaultCenter.addObserver(self, selector:'keyboardDidShow:', name:UIKeyboardDidShowNotification, object:nil)
-    NSNotificationCenter.defaultCenter.addObserver(self, selector:'keyboardDidHide:', name:UIKeyboardDidHideNotification, object:nil)
+    NSNotificationCenter.defaultCenter.addObserver(self, selector:'keyboardWillHide:', name:UIKeyboardWillHideNotification, object:nil)
     
     addTasks
   end
   
   def keyboardDidShow(notification)
+    UIView.beginAnimations('animationID', context:nil)
     keyboardSize = notification.userInfo.objectForKey(UIKeyboardBoundsUserInfoKey).CGRectValue.size
     new_text_field_frame = CGRectMake(0, view.frame.size.height - (TextEntryHeight + keyboardSize.height), view.frame.size.width, TextEntryHeight)
     @text_field.frame = new_text_field_frame
+    UIView.commitAnimations
   end
   
-  def keyboardDidHide(notification)
+  def keyboardWillHide(notification)
+    UIView.beginAnimations('animationID2', context:nil)
     new_text_field_frame = CGRectMake(0, view.frame.size.height - TextEntryHeight, view.frame.size.width, TextEntryHeight)
     @text_field.frame = new_text_field_frame
+    UIView.commitAnimations
   end
   
   def scrollViewDidScroll(scrollView)
