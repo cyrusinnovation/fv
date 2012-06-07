@@ -16,26 +16,10 @@ class TaskViewController < UIViewController
     @text_field.backgroundColor = UIColor.redColor
     view.addSubview(@text_field)
     
-    # Register for keyboard notifications so that we can move the text input box.
-    NSNotificationCenter.defaultCenter.addObserver(self, selector:'keyboardDidShow:', name:UIKeyboardDidShowNotification, object:nil)
-    NSNotificationCenter.defaultCenter.addObserver(self, selector:'keyboardWillHide:', name:UIKeyboardWillHideNotification, object:nil)
+    # Make the helper a field so that it isn't garbage collected.
+    @textfield_visibility_helper = TextFieldVisibilityHelper.new(@text_field)
     
     addTasks
-  end
-  
-  def keyboardDidShow(notification)
-    UIView.beginAnimations('animationID', context:nil)
-    keyboardSize = notification.userInfo.objectForKey(UIKeyboardBoundsUserInfoKey).CGRectValue.size
-    new_text_field_frame = CGRectMake(0, view.frame.size.height - (TextEntryHeight + keyboardSize.height), view.frame.size.width, TextEntryHeight)
-    @text_field.frame = new_text_field_frame
-    UIView.commitAnimations
-  end
-  
-  def keyboardWillHide(notification)
-    UIView.beginAnimations('animationID2', context:nil)
-    new_text_field_frame = CGRectMake(0, view.frame.size.height - TextEntryHeight, view.frame.size.width, TextEntryHeight)
-    @text_field.frame = new_text_field_frame
-    UIView.commitAnimations
   end
   
   def scrollViewDidScroll(scrollView)
@@ -69,20 +53,9 @@ class TaskViewController < UIViewController
     end
   end
   
-  # def drawTextBox
-  #   # draw text box on bottom of scrollview
-  # end
-  
   def task_view(index, task)
     task_frame = CGRectMake(0, TaskHeight * index, @scrollView.frame.size.width, TaskHeight)
-    task_view = UIView.alloc.initWithFrame(task_frame)
-    task_label = UILabel.alloc.initWithFrame(CGRectMake(0,0, task_view.frame.size.width, task_view.frame.size.height))
-    task_label.text = task.text
-    task_view.addSubview(task_label)
-    if task.dotted?
-      task_label.backgroundColor = UIColor.grayColor
-    end
-    task_view
+    TaskView.alloc.initWithFrame(task_frame, task:task)
   end
   
   # Defined for UITextFieldDelegate
@@ -109,7 +82,4 @@ class TaskViewController < UIViewController
     true
   end
 
-  
-  
-  
 end
