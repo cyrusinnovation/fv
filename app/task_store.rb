@@ -1,10 +1,8 @@
 class TaskStore
+  include Notifications
+  
   def self.shared
     @shared ||= TaskStore.new
-  end
-  
-  def dotted_tasks
-    @dotted_tasks ||= tasks.select {|task| task.dotted? }
   end
   
   def tasks
@@ -25,20 +23,24 @@ class TaskStore
   def add_task
     yield NSEntityDescription.insertNewObjectForEntityForName('Task', inManagedObjectContext:@context)
     save
+    publish(TaskAddedNotification)
   end
   
   def remove_task(task)
     @context.deleteObject(task)
     save
+    publish(TaskRemovedNotification)
   end
   
-  def toggle_dotted(task)
+  def toggle_dotted(taskID)
+    task = @context.objectWithID(taskID)
     if task.dotted?
       task.dotted = 0
     else
       task.dotted = 1
     end
     save
+    publish(TaskChangedNotification)
   end
   
   private
@@ -65,6 +67,6 @@ class TaskStore
       raise "Error when saving the model: #{error_ptr[0].description}"
     end
     @tasks = nil
-    @dotted_tasks = nil
   end
+  
 end
