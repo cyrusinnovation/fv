@@ -7,6 +7,7 @@ class TaskView < UIView
       addSubview(@label)
       update(task)
       addGestureRecognizer(UITapGestureRecognizer.alloc.initWithTarget(self, action:"handleTap"))
+      addGestureRecognizer(UISwipeGestureRecognizer.alloc.initWithTarget(self, action:"handleSwipe"))
     end
     self
   end
@@ -23,6 +24,10 @@ class TaskView < UIView
 
   def handleTap
     TaskStore.shared.toggle_dotted(@taskID)
+  end
+  
+  def handleSwipe
+    TaskStore.shared.remove_task(@taskID)
   end
   
   def taskID

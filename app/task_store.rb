@@ -26,7 +26,8 @@ class TaskStore
     publish(TaskAddedNotification)
   end
   
-  def remove_task(task)
+  def remove_task(taskID)
+    task = @context.objectWithID(taskID)
     @context.deleteObject(task)
     save
     publish(TaskRemovedNotification)
