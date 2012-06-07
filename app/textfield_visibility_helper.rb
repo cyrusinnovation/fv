@@ -7,7 +7,6 @@ class TextFieldVisibilityHelper
   end
   
   def keyboardDidShow(notification)
-    puts notification.userInfo.keys
     @old_frame = @text_field.frame
     new_frame = CGRectOffset(@old_frame, 0, -notification.keyboard_height)
     animateTextFieldMove(new_frame)
