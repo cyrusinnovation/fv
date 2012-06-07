@@ -1,4 +1,2 @@
-- When user enters text, make rest of table unselectable
-- When user clicks plus, deselect any selections
 - If there's no text in box when returning from entry, dont add a task.
-- Remember whether last viewing all or selected when restarting app
+- Allow shake to undo
