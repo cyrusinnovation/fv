@@ -8,9 +8,9 @@ class TaskViewController < UIViewController
   def loadView
     self.view = UIView.alloc.initWithFrame(UIScreen.mainScreen.applicationFrame)
     scroll_view_frame = CGRectMake(0, 0, view.frame.size.width, view.frame.size.height - TextEntryHeight)
-    @scrollView = UIScrollView.alloc.initWithFrame(scroll_view_frame)
-    view.addSubview(@scrollView)
-    @scrollView.delegate = self
+    @scroll_view = UIScrollView.alloc.initWithFrame(scroll_view_frame)
+    view.addSubview(@scroll_view)
+    @scroll_view.delegate = self
     
     text_field_frame = CGRectMake(0, view.frame.size.height - TextEntryHeight, view.frame.size.width, TextEntryHeight)
     @text_field = UITextField.alloc.initWithFrame(text_field_frame)
@@ -31,7 +31,6 @@ class TaskViewController < UIViewController
   def handleTaskAdded(notification)
     #For now, we just redraw everything
     redraw_tasks
-    # @scrollView.scrollRectToVisible(@task_views.last.frame, animated:true)
   end
   
   def handleTaskChanged(notification)
@@ -45,7 +44,7 @@ class TaskViewController < UIViewController
   end
   
   def redraw_tasks
-    @task_views.each do |task_view|
+    @scroll_view.subviews.each do |task_view|
       task_view.removeFromSuperview
     end
     drawTasks
@@ -83,17 +82,17 @@ class TaskViewController < UIViewController
     end
     
     TaskStore.shared.tasks.each do |task|
-      task_frame = CGRectMake(0, task_y[task.objectID], @scrollView.frame.size.width, TaskHeight)
+      task_frame = CGRectMake(0, task_y[task.objectID], @scroll_view.frame.size.width, TaskHeight)
       subview = TaskView.alloc.initWithFrame(task_frame, task:task)
       @task_views << subview
-      @scrollView.addSubview(subview)
+      @scroll_view.addSubview(subview)
     end
     
     @selected_indexes.each do |index|
-      @scrollView.bringSubviewToFront(@task_views[index])
+      @scroll_view.bringSubviewToFront(@task_views[index])
     end
     
-    @scrollView.contentSize = CGSizeMake(@scrollView.frame.size.width, TaskStore.shared.tasks.size * TaskHeight)
+    @scroll_view.contentSize = CGSizeMake(@scroll_view.frame.size.width, TaskStore.shared.tasks.size * TaskHeight)
   end
   
   # Defined for UITextFieldDelegate
