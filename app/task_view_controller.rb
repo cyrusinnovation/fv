@@ -60,18 +60,12 @@ class TaskViewController < UIViewController
     yoffset = @scroll_view.contentOffset.y
     
     @selected_indexes_for_adjust.each do |index|
-      y = [yoffset, TaskHeight * index].max
+      y = y_for_view(index, @selected_indexes_for_adjust, yoffset)
       @task_views_for_adjust[index].frame = CGRectMake(0,y,@scroll_view.frame.size.width,TaskHeight)
     end    
   end
   
   def drawTasks
-
-    task_y = Hash.new
-    TaskStore.shared.tasks.each_index do |index|
-      task = TaskStore.shared.tasks[index]
-      task_y[task.objectID] = TaskHeight * index
-    end
 
     selected_indexes = []
     TaskStore.shared.tasks.each_index do |index|
@@ -81,15 +75,17 @@ class TaskViewController < UIViewController
       end
     end
 
+    yoffset = @scroll_view.contentOffset.y
+
     task_views = []
     TaskStore.shared.tasks.each_index do |index|
       task = TaskStore.shared.tasks[index]
-      task_frame = CGRectMake(0, task_y[task.objectID], @scroll_view.frame.size.width, TaskHeight)
+      y = y_for_view(index, selected_indexes, yoffset)
+      task_frame = CGRectMake(0, y, @scroll_view.frame.size.width, TaskHeight)
       subview = TaskView.alloc.initWithFrame(task_frame, task:task, position:index)
       task_views << subview
       @scroll_view.addSubview(subview)
     end
-
     
     selected_indexes.each do |index|
       @scroll_view.bringSubviewToFront(task_views[index])
@@ -97,17 +93,51 @@ class TaskViewController < UIViewController
     
     @scroll_view.contentSize = CGSizeMake(@scroll_view.frame.size.width, TaskStore.shared.tasks.size * TaskHeight)
     
-    yoffset = @scroll_view.contentOffset.y
-    
-    selected_indexes.each do |index|
-      y = [yoffset, TaskHeight * index].max
-      task_views[index].frame = CGRectMake(0,y,@scroll_view.frame.size.width,TaskHeight)
-    end    
-
     collect_adjust_data
 
   end
-  
+
+  def y_for_view(index, selected_indexes, yoffset)
+    
+    # This is the position of the indexth view would
+    # take if there wasn't any stickiness
+    normal_pos = TaskHeight * index
+    
+    # position of index within list of selected indexes
+    # nil if not present
+    selected_index = selected_indexes.index(index)
+    
+    # If the selected_indexes doesn't contain index, then 
+    # that view isn't one of a selected one.
+    return normal_pos unless selected_index
+
+    # If the normal position is far enough down then just put it in
+    # its normal spot.
+    return normal_pos if normal_pos > yoffset
+
+    # Get the index into the list of views for the next selected view
+    # if it exists
+    next_selected = selected_indexes[selected_index + 1]
+
+    if next_selected
+      next_normal_pos = next_selected * TaskHeight
+      
+      # If the next selected is bumping into this one, get out of the way
+      if next_normal_pos > yoffset && next_normal_pos < yoffset + TaskHeight
+        return next_normal_pos - TaskHeight
+      else
+        return yoffset
+      end
+    else
+      if yoffset > normal_pos 
+        return yoffset
+      else
+        return normal_pos
+      end
+    end
+  end
+
+
   def collect_adjust_data
     @task_views_for_adjust = []
     @scroll_view.subviews.each do |subview|
