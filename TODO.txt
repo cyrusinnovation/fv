@@ -1,2 +1,3 @@
 - If there's no text in box when returning from entry, dont add a task.
 - Allow shake to undo
+- Make it so that top task is always selected

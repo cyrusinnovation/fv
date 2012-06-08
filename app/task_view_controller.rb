@@ -25,12 +25,13 @@ class TaskViewController < UIViewController
     # Make the helper a field so that it isn't garbage collected.
     @textfield_visibility_helper = TextFieldVisibilityHelper.new(@text_field)
     
-    addTasks
+    drawTasks
   end
   
   def handleTaskAdded(notification)
+    #For now, we just redraw everything
     redraw_tasks
-    @scrollView.scrollRectToVisible(@task_views.last.frame, animated:true)
+    # @scrollView.scrollRectToVisible(@task_views.last.frame, animated:true)
   end
   
   def handleTaskChanged(notification)
@@ -47,7 +48,7 @@ class TaskViewController < UIViewController
     @task_views.each do |task_view|
       task_view.removeFromSuperview
     end
-    addTasks
+    drawTasks
   end
   
   def scrollViewDidScroll(scrollView)
@@ -62,17 +63,30 @@ class TaskViewController < UIViewController
     
   end
   
-  def addTasks
+  def drawTasks
+    
+    task_y = Hash.new
+    
     @task_views = []
     @selected_indexes = []
+    
     TaskStore.shared.tasks.each_index do |index|
       task = TaskStore.shared.tasks[index]
-      subview = task_view(index, task)
-      @task_views << subview
-      @scrollView.addSubview(subview)
+      task_y[task.objectID] = TaskHeight * index
+    end
+    
+    TaskStore.shared.tasks.each_index do |index|
+      task = TaskStore.shared.tasks[index]
       if task.dotted?
         @selected_indexes << index
       end
+    end
+    
+    TaskStore.shared.tasks.each do |task|
+      task_frame = CGRectMake(0, task_y[task.objectID], @scrollView.frame.size.width, TaskHeight)
+      subview = TaskView.alloc.initWithFrame(task_frame, task:task)
+      @task_views << subview
+      @scrollView.addSubview(subview)
     end
     
     @selected_indexes.each do |index|
@@ -80,11 +94,6 @@ class TaskViewController < UIViewController
     end
     
     @scrollView.contentSize = CGSizeMake(@scrollView.frame.size.width, TaskStore.shared.tasks.size * TaskHeight)
-  end
-  
-  def task_view(index, task)
-    task_frame = CGRectMake(0, TaskHeight * index, @scrollView.frame.size.width, TaskHeight)
-    TaskView.alloc.initWithFrame(task_frame, task:task)
   end
   
   # Defined for UITextFieldDelegate
