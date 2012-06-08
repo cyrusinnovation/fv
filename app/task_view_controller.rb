@@ -54,50 +54,73 @@ class TaskViewController < UIViewController
     # As currently designed, this is a display memory hog.
     # Here is where we would allocate or deallocate views based on the contentOffset
     adjust_selected
-  end
+  end 
 
   def adjust_selected
     yoffset = @scroll_view.contentOffset.y
     
-    @selected_indexes.each do |index|
+    @selected_indexes_for_adjust.each do |index|
       y = [yoffset, TaskHeight * index].max
-      @task_views[index].frame = CGRectMake(0,y,@scroll_view.frame.size.width,TaskHeight)
+      @task_views_for_adjust[index].frame = CGRectMake(0,y,@scroll_view.frame.size.width,TaskHeight)
     end    
   end
   
   def drawTasks
-    
+
     task_y = Hash.new
-    
-    @task_views = []
-    @selected_indexes = []
-    
     TaskStore.shared.tasks.each_index do |index|
       task = TaskStore.shared.tasks[index]
       task_y[task.objectID] = TaskHeight * index
     end
-    
+
+    selected_indexes = []
     TaskStore.shared.tasks.each_index do |index|
       task = TaskStore.shared.tasks[index]
       if task.dotted?
-        @selected_indexes << index
+        selected_indexes << index
       end
     end
-    
-    TaskStore.shared.tasks.each do |task|
+
+    task_views = []
+    TaskStore.shared.tasks.each_index do |index|
+      task = TaskStore.shared.tasks[index]
       task_frame = CGRectMake(0, task_y[task.objectID], @scroll_view.frame.size.width, TaskHeight)
-      subview = TaskView.alloc.initWithFrame(task_frame, task:task)
-      @task_views << subview
+      subview = TaskView.alloc.initWithFrame(task_frame, task:task, position:index)
+      task_views << subview
       @scroll_view.addSubview(subview)
     end
+
     
-    @selected_indexes.each do |index|
-      @scroll_view.bringSubviewToFront(@task_views[index])
+    selected_indexes.each do |index|
+      @scroll_view.bringSubviewToFront(task_views[index])
     end
     
     @scroll_view.contentSize = CGSizeMake(@scroll_view.frame.size.width, TaskStore.shared.tasks.size * TaskHeight)
     
-    adjust_selected
+    yoffset = @scroll_view.contentOffset.y
+    
+    selected_indexes.each do |index|
+      y = [yoffset, TaskHeight * index].max
+      task_views[index].frame = CGRectMake(0,y,@scroll_view.frame.size.width,TaskHeight)
+    end    
+
+    collect_adjust_data
+
+  end
+  
+  def collect_adjust_data
+    @task_views_for_adjust = []
+    @scroll_view.subviews.each do |subview|
+      @task_views_for_adjust[subview.position] = subview
+    end
+
+    @selected_indexes_for_adjust = []
+    TaskStore.shared.tasks.each_index do |index|
+      task = TaskStore.shared.tasks[index]
+      if task.dotted?
+        @selected_indexes_for_adjust << index
+      end
+    end
   end
   
   # Defined for UITextFieldDelegate
