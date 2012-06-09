@@ -21,6 +21,7 @@ class TaskViewController < UIViewController
     observe(TaskAddedNotification, 'handleTaskAdded')
     observe(TaskChangedNotification, 'handleTaskChanged')
     observe(TaskRemovedNotification, 'handleTaskRemoved')
+    observe(TaskPausedNotification, 'handleTaskPaused')
     
     # Make the helper a field so that it isn't garbage collected.
     @textfield_visibility_helper = TextFieldVisibilityHelper.new(@text_field)
@@ -39,6 +40,11 @@ class TaskViewController < UIViewController
   end
   
   def handleTaskRemoved(notification)
+    #For now, we just redraw everything
+    redraw_tasks
+  end
+  
+  def handleTaskPaused(notification)
     #For now, we just redraw everything
     redraw_tasks
   end

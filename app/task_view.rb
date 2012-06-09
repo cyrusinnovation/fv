@@ -8,7 +8,6 @@ class TaskView < UIView
       addSubview(@label)
       update(task, position)
       addGestureRecognizer(UITapGestureRecognizer.alloc.initWithTarget(self, action:"handleTap"))
-      addGestureRecognizer(UISwipeGestureRecognizer.alloc.initWithTarget(self, action:"handleSwipe"))
     end
     self
   end
@@ -18,6 +17,10 @@ class TaskView < UIView
     @label.text = task.text
     if task.dotted?
       @label.backgroundColor = self.backgroundColor = UIColor.grayColor
+      addGestureRecognizer(UISwipeGestureRecognizer.alloc.initWithTarget(self, action:"handleRightSwipe"))
+      leftRecognizer = UISwipeGestureRecognizer.alloc.initWithTarget(self, action:"handleLeftSwipe")
+      leftRecognizer.direction = UISwipeGestureRecognizerDirectionLeft
+      addGestureRecognizer(leftRecognizer)
     else
       @label.backgroundColor = self.backgroundColor = UIColor.whiteColor
     end
@@ -28,8 +31,12 @@ class TaskView < UIView
     TaskStore.shared.toggle_dotted(@taskID)
   end
   
-  def handleSwipe
+  def handleRightSwipe
     TaskStore.shared.remove_task(@taskID)
+  end
+  
+  def handleLeftSwipe
+    TaskStore.shared.pause_task(@taskID)
   end
   
   def taskID
