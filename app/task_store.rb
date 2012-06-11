@@ -17,6 +17,8 @@ class TaskStore
   end
   
   def add_task(text)
+    return if text == ''
+
     task = NSEntityDescription.insertNewObjectForEntityForName('Task', inManagedObjectContext:@context)
     task.date_moved = NSDate.date
     task.text = text

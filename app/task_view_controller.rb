@@ -191,8 +191,6 @@ class TaskViewController < UIViewController
   end
   
   def textFieldDidEndEditing(textField)
-    return true if (textField.text == '')
-    
     @task_store.add_task(textField.text)
     true
   end
