@@ -4,6 +4,12 @@ class TaskViewController < UIViewController
   TaskHeight = 50
   TextEntryHeight = 50
   
+  def initWithStore(task_store)
+    if init
+      @task_store = task_store
+    end
+    self
+  end
   
   def loadView
     self.view = UIView.alloc.initWithFrame(UIScreen.mainScreen.applicationFrame)
@@ -17,16 +23,34 @@ class TaskViewController < UIViewController
     @text_field.delegate = self
     @text_field.backgroundColor = UIColor.lightGrayColor
     view.addSubview(@text_field)
-    
+
+    # Observe model changes.
     observe(TaskAddedNotification, 'handleTaskAdded')
     observe(TaskChangedNotification, 'handleTaskChanged')
     observe(TaskRemovedNotification, 'handleTaskRemoved')
     observe(TaskPausedNotification, 'handleTaskPaused')
     
+    # observe events from ui elements
+    observe(TaskViewTapNotification, 'handleTaskViewTap')
+    observe(TaskViewRightSwipeNotification, 'handleTaskViewRightSwipe')
+    observe(TaskViewLeftSwipeNotification, 'handleTaskViewLeftSwipe')
+    
     # Make the helper a field so that it isn't garbage collected.
     @textfield_visibility_helper = TextFieldVisibilityHelper.new(@text_field)
     
     drawTasks
+  end
+
+  def handleTaskViewTap(notification)
+    @task_store.toggle_dotted(notification.object.taskID)
+  end
+  
+  def handleTaskViewRightSwipe(notification)
+    @task_store.remove_task(notification.object.taskID)
+  end
+  
+  def handleTaskViewLeftSwipe(notification)
+    @task_store.pause_task(notification.object.taskID)
   end
   
   def handleTaskAdded(notification)
@@ -74,8 +98,8 @@ class TaskViewController < UIViewController
   def drawTasks
 
     selected_indexes = []
-    TaskStore.shared.tasks.each_index do |index|
-      task = TaskStore.shared.tasks[index]
+    @task_store.tasks.each_index do |index|
+      task = @task_store.tasks[index]
       if task.dotted?
         selected_indexes << index
       end
@@ -84,8 +108,8 @@ class TaskViewController < UIViewController
     yoffset = @scroll_view.contentOffset.y
 
     task_views = []
-    TaskStore.shared.tasks.each_index do |index|
-      task = TaskStore.shared.tasks[index]
+    @task_store.tasks.each_index do |index|
+      task = @task_store.tasks[index]
       y = y_for_view(index, selected_indexes, yoffset)
       task_frame = CGRectMake(0, y, @scroll_view.frame.size.width, TaskHeight)
       subview = TaskView.alloc.initWithFrame(task_frame, task:task, position:index)
@@ -97,7 +121,7 @@ class TaskViewController < UIViewController
       @scroll_view.bringSubviewToFront(task_views[index])
     end
     
-    @scroll_view.contentSize = CGSizeMake(@scroll_view.frame.size.width, TaskStore.shared.tasks.size * TaskHeight)
+    @scroll_view.contentSize = CGSizeMake(@scroll_view.frame.size.width, @task_store.tasks.size * TaskHeight)
     
     collect_adjust_data
 
@@ -151,8 +175,8 @@ class TaskViewController < UIViewController
     end
 
     @selected_indexes_for_adjust = []
-    TaskStore.shared.tasks.each_index do |index|
-      task = TaskStore.shared.tasks[index]
+    @task_store.tasks.each_index do |index|
+      task = @task_store.tasks[index]
       if task.dotted?
         @selected_indexes_for_adjust << index
       end
@@ -167,7 +191,7 @@ class TaskViewController < UIViewController
   end
   
   def textFieldDidEndEditing(textField)
-    TaskStore.shared.add_task do |task|
+    @task_store.add_task do |task|
       task.date_moved = NSDate.date
       task.text = textField.text
       task.dotted = false

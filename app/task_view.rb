@@ -28,15 +28,15 @@ class TaskView < UIView
   end
 
   def handleTap
-    TaskStore.shared.toggle_dotted(@taskID)
+    publish(TaskViewTapNotification)
   end
   
   def handleRightSwipe
-    TaskStore.shared.remove_task(@taskID)
+    publish(TaskViewRightSwipeNotification)
   end
   
   def handleLeftSwipe
-    TaskStore.shared.pause_task(@taskID)
+    publish(TaskViewLeftSwipeNotification)
   end
   
   def taskID

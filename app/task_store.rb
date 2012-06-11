@@ -1,10 +1,6 @@
 class TaskStore
   include Notifications
   
-  def self.shared
-    @shared ||= TaskStore.new
-  end
-  
   def tasks
     @tasks ||= begin
       request = NSFetchRequest.alloc.init
@@ -52,8 +48,6 @@ class TaskStore
     publish(TaskChangedNotification)
   end
   
-  private
-  
   def initialize
     model = NSManagedObjectModel.alloc.init
     model.entities = [Task.entity]
@@ -69,6 +63,8 @@ class TaskStore
     context.persistentStoreCoordinator = store
     @context = context
   end
+
+  private
   
   def save
     error_ptr = Pointer.new(:object)

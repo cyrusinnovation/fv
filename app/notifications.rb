@@ -3,7 +3,11 @@ module Notifications
   TaskChangedNotification = 'TaskChanged'
   TaskRemovedNotification = 'TaskRemoved'
   TaskPausedNotification = 'TaskPaused'
-  
+
+  TaskViewTapNotification = 'TaskViewTap'
+  TaskViewRightSwipeNotification = 'TaskViewRightSwipe'
+  TaskViewLeftSwipeNotification = 'TaskViewLeftSwipe'
+
   def observe(notificationName, handler)
     NSNotificationCenter.defaultCenter.addObserver(self, selector:"#{handler}:", name:notificationName, object:nil)
   end
