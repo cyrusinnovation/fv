@@ -33,6 +33,14 @@ class TaskStore
     publish(TaskRemovedNotification)
   end
   
+  def pause_task(taskID)
+    task = @context.objectWithID(taskID)
+    task.dotted = 0
+    task.date_moved = NSDate.date
+    save
+    publish(TaskPausedNotification)
+  end
+  
   def toggle_dotted(taskID)
     task = @context.objectWithID(taskID)
     if task.dotted?
