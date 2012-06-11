@@ -1,19 +1,11 @@
 class TaskStore
   include Notifications
   
+  DB_FALSE = 0
+  DB_TRUE = 1
+  
   def tasks
-    @tasks ||= begin
-      request = NSFetchRequest.alloc.init
-      request.entity = NSEntityDescription.entityForName('Task', inManagedObjectContext:@context)
-      request.sortDescriptors = [NSSortDescriptor.alloc.initWithKey('date_moved', ascending:true)]
-
-      error_ptr = Pointer.new(:object)
-      data = @context.executeFetchRequest(request, error:error_ptr)
-      if data == nil
-        raise "Error when fetching data: #{error_ptr[0].description}"
-      end
-      data
-    end
+    @tasks ||= load_tasks
   end
   
   def add_task(text)
@@ -45,9 +37,9 @@ class TaskStore
   def toggle_dotted(taskID)
     task = @context.objectWithID(taskID)
     if task.dotted?
-      task.dotted = 0
+      task.dotted = DB_FALSE
     else
-      task.dotted = 1
+      task.dotted = DB_TRUE
     end
     save
     publish(TaskChangedNotification)
@@ -72,11 +64,36 @@ class TaskStore
   private
   
   def save
+    do_save
+    
+    @tasks = load_tasks
+
+    return if @tasks.empty? or tasks[0].dotted?
+
+    tasks[0].dotted = 1
+    
+    do_save
+    
+  end
+  
+  def do_save
     error_ptr = Pointer.new(:object)
     unless @context.save(error_ptr)
       raise "Error when saving the model: #{error_ptr[0].description}"
     end
-    @tasks = nil
+  end
+  
+  def load_tasks
+    request = NSFetchRequest.alloc.init
+    request.entity = NSEntityDescription.entityForName('Task', inManagedObjectContext:@context)
+    request.sortDescriptors = [NSSortDescriptor.alloc.initWithKey('date_moved', ascending:true)]
+
+    error_ptr = Pointer.new(:object)
+    data = @context.executeFetchRequest(request, error:error_ptr)
+    if data == nil
+      raise "Error when fetching data: #{error_ptr[0].description}"
+    end
+    data
   end
   
 end
