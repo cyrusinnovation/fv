@@ -8,7 +8,7 @@ module Notifications
   TaskViewRightSwipeNotification = 'TaskViewRightSwipe'
   TaskViewLeftSwipeNotification = 'TaskViewLeftSwipe'
 
-  def observe(notificationName, handler)
+  def observe(notificationName, action:handler)
     NSNotificationCenter.defaultCenter.addObserver(self, selector:"#{handler}:", name:notificationName, object:nil)
   end
   

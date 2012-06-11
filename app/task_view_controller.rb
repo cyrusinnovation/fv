@@ -25,15 +25,15 @@ class TaskViewController < UIViewController
     view.addSubview(@text_field)
 
     # Observe model changes.
-    observe(TaskAddedNotification, 'handleTaskAdded')
-    observe(TaskChangedNotification, 'handleTaskChanged')
-    observe(TaskRemovedNotification, 'handleTaskRemoved')
-    observe(TaskPausedNotification, 'handleTaskPaused')
+    observe(TaskAddedNotification, action:'handleTaskAdded')
+    observe(TaskChangedNotification, action:'handleTaskChanged')
+    observe(TaskRemovedNotification, action:'handleTaskRemoved')
+    observe(TaskPausedNotification, action:'handleTaskPaused')
     
     # observe events from ui elements
-    observe(TaskViewTapNotification, 'handleTaskViewTap')
-    observe(TaskViewRightSwipeNotification, 'handleTaskViewRightSwipe')
-    observe(TaskViewLeftSwipeNotification, 'handleTaskViewLeftSwipe')
+    observe(TaskViewTapNotification, action:'handleTaskViewTap')
+    observe(TaskViewRightSwipeNotification, action:'handleTaskViewRightSwipe')
+    observe(TaskViewLeftSwipeNotification, action:'handleTaskViewLeftSwipe')
     
     # Make the helper a field so that it isn't garbage collected.
     @textfield_visibility_helper = TextFieldVisibilityHelper.new(@text_field)
@@ -191,11 +191,9 @@ class TaskViewController < UIViewController
   end
   
   def textFieldDidEndEditing(textField)
-    @task_store.add_task do |task|
-      task.date_moved = NSDate.date
-      task.text = textField.text
-      task.dotted = false
-    end
+    return true if (textField.text == '')
+    
+    @task_store.add_task(textField.text)
     true
   end
 

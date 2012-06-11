@@ -16,8 +16,11 @@ class TaskStore
     end
   end
   
-  def add_task
-    yield NSEntityDescription.insertNewObjectForEntityForName('Task', inManagedObjectContext:@context)
+  def add_task(text)
+    task = NSEntityDescription.insertNewObjectForEntityForName('Task', inManagedObjectContext:@context)
+    task.date_moved = NSDate.date
+    task.text = text
+    task.dotted = false
     save
     publish(TaskAddedNotification)
   end

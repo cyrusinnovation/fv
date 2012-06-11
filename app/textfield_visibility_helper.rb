@@ -2,8 +2,8 @@ class TextFieldVisibilityHelper
   include Notifications
   
   def initialize(text_field)
-    observe(UIKeyboardDidShowNotification, 'keyboardDidShow')
-    observe(UIKeyboardWillHideNotification, 'keyboardWillHide')
+    observe(UIKeyboardDidShowNotification, action:'keyboardDidShow')
+    observe(UIKeyboardWillHideNotification, action:'keyboardWillHide')
     @text_field = text_field
   end
   
