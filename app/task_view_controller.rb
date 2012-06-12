@@ -1,8 +1,8 @@
 class TaskViewController < UIViewController
   include Notifications
   
-  TaskHeight = 50
-  TextEntryHeight = 50
+  TaskHeight = 40
+  TextEntryHeight = 40
   
   def initWithStore(task_store)
     if init
@@ -21,6 +21,8 @@ class TaskViewController < UIViewController
     text_field_frame = CGRectMake(0, view.frame.size.height - TextEntryHeight, view.frame.size.width, TextEntryHeight)
     @text_field = UITextField.alloc.initWithFrame(text_field_frame)
     @text_field.delegate = self
+    @text_field.borderStyle = UITextBorderStyleRoundedRect
+    @text_field.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter
     @text_field.backgroundColor = UIColor.lightGrayColor
     view.addSubview(@text_field)
 
