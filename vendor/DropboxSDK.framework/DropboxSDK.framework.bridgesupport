@@ -1,0 +1,1830 @@
+<?xml version='1.0'?>
+<signatures version='1.0'>
+<constant type='@' name='DBErrorDomain' declared_type='NSString*'/>
+<constant type='@' name='DBJSONErrorDomain' declared_type='NSString*'/>
+<constant type='@' name='MPOAuthAccessTokenURLKey' declared_type='NSString*' const='true'/>
+<constant type='@' name='MPOAuthCredentialAccessTokenKey' declared_type='NSString*' const='true'/>
+<constant type='@' name='MPOAuthCredentialAccessTokenSecretKey' declared_type='NSString*' const='true'/>
+<constant type='@' name='MPOAuthCredentialRequestTokenKey' declared_type='NSString*' const='true'/>
+<constant type='@' name='MPOAuthCredentialRequestTokenSecretKey' declared_type='NSString*' const='true'/>
+<constant type='@' name='MPOAuthCredentialSessionHandleKey' declared_type='NSString*' const='true'/>
+<constant type='@' name='MPOAuthNotificationAccessTokenReceived' declared_type='NSString*' const='true'/>
+<constant type='@' name='MPOAuthNotificationAccessTokenRefreshed' declared_type='NSString*' const='true'/>
+<constant type='@' name='MPOAuthNotificationAccessTokenRejected' declared_type='NSString*' const='true'/>
+<constant type='@' name='MPOAuthNotificationErrorHasOccurred' declared_type='NSString*' const='true'/>
+<constant type='@' name='MPOAuthNotificationOAuthCredentialsReady' declared_type='NSString*' const='true'/>
+<constant type='@' name='MPOAuthNotificationRequestTokenReceived' declared_type='NSString*' const='true'/>
+<constant type='@' name='MPOAuthNotificationRequestTokenRejected' declared_type='NSString*' const='true'/>
+<constant type='@' name='MPOAuthTokenRefreshDateDefaultsKey' declared_type='NSString*' const='true'/>
+<constant type='@' name='kDBDropboxAPIContentHost' declared_type='NSString*'/>
+<constant type='@' name='kDBDropboxAPIHost' declared_type='NSString*'/>
+<constant type='@' name='kDBDropboxAPIVersion' declared_type='NSString*'/>
+<constant type='@' name='kDBDropboxWebHost' declared_type='NSString*'/>
+<constant type='@' name='kDBProtocolHTTPS' declared_type='NSString*'/>
+<constant type='@' name='kDBRootAppFolder' declared_type='NSString*'/>
+<constant type='@' name='kDBRootDropbox' declared_type='NSString*'/>
+<constant type='@' name='kDBSDKVersion' declared_type='NSString*'/>
+<constant type='@' name='kMPOAuthCredentialAccessToken' declared_type='NSString*'/>
+<constant type='@' name='kMPOAuthCredentialAccessTokenSecret' declared_type='NSString*'/>
+<constant type='@' name='kMPOAuthCredentialConsumerKey' declared_type='NSString*'/>
+<constant type='@' name='kMPOAuthCredentialConsumerSecret' declared_type='NSString*'/>
+<constant type='@' name='kMPOAuthCredentialPassword' declared_type='NSString*'/>
+<constant type='@' name='kMPOAuthCredentialRealm' declared_type='NSString*'/>
+<constant type='@' name='kMPOAuthCredentialRequestToken' declared_type='NSString*'/>
+<constant type='@' name='kMPOAuthCredentialRequestTokenSecret' declared_type='NSString*'/>
+<constant type='@' name='kMPOAuthCredentialSessionHandle' declared_type='NSString*'/>
+<constant type='@' name='kMPOAuthCredentialUsername' declared_type='NSString*'/>
+<constant type='@' name='kMPOAuthSignatureMethod' declared_type='NSString*'/>
+<string_constant value='HMAC-SHA1' name='kMPOAuthSignatureMethodHMACSHA1' nsstring='true'/>
+<string_constant value='PLAINTEXT' name='kMPOAuthSignatureMethodPlaintext' nsstring='true'/>
+<string_constant value='RSA-SHA1' name='kMPOAuthSignatureMethodRSASHA1' nsstring='true'/>
+<enum value='1001' name='DBErrorFileNotFound'/>
+<enum value='1000' name='DBErrorGenericError'/>
+<enum value='1003' name='DBErrorIllegalFileType'/>
+<enum value='1002' name='DBErrorInsufficientDiskSpace'/>
+<enum value='1004' name='DBErrorInvalidResponse'/>
+<enum value='0' name='DBErrorNone'/>
+<enum value='1' name='DBLogLevelAnalytics'/>
+<enum value='3' name='DBLogLevelError'/>
+<enum value='4' name='DBLogLevelFatal'/>
+<enum value='0' name='DBLogLevelInfo'/>
+<enum value='2' name='DBLogLevelWarning'/>
+<enum value='5' name='ECTRL'/>
+<enum value='7' name='EDEPTH'/>
+<enum value='11' name='EEOF'/>
+<enum value='8' name='EESCAPE'/>
+<enum value='4' name='EFRAGMENT'/>
+<enum value='12' name='EINPUT'/>
+<enum value='3' name='EPARSE'/>
+<enum value='2' name='EPARSENUM'/>
+<enum value='9' name='ETRAILCOMMA'/>
+<enum value='10' name='ETRAILGARBAGE'/>
+<enum value='6' name='EUNICODE'/>
+<enum value='1' name='EUNSUPPORTED'/>
+<enum value='2' name='MPOAuthAuthenticationStateAuthenticated'/>
+<enum value='1' name='MPOAuthAuthenticationStateAuthenticating'/>
+<enum value='0' name='MPOAuthAuthenticationStateUnauthenticated'/>
+<enum value='1' name='MPOAuthSignatureSchemeHMACSHA1'/>
+<enum value='0' name='MPOAuthSignatureSchemePlainText'/>
+<enum value='2' name='MPOAuthSignatureSchemeRSASHA1'/>
+<function name='Base64DecodeData'>
+<arg type='^v' name='inInputData' declared_type='void*' const='true'/>
+<arg type='L' name='inInputDataSize' declared_type='size_t'/>
+<arg type='^v' name='ioOutputData' declared_type='void*'/>
+<arg type='^I' name='ioOutputDataSize' declared_type='size_t*'/>
+<retval type='B' declared_type='_Bool'/>
+</function>
+<function name='Base64EncodeData'>
+<arg type='^v' name='inInputData' declared_type='void*' const='true'/>
+<arg type='L' name='inInputDataSize' declared_type='size_t'/>
+<arg type='*' name='outOutputData' declared_type='char*'/>
+<arg type='^I' name='ioOutputDataSize' declared_type='size_t*'/>
+<retval type='B' declared_type='_Bool'/>
+</function>
+<function name='DBLog' variadic='true'>
+<arg type='i' name='logLevel' declared_type='DBLogLevel'/>
+<arg type='@' name='format' printf_format='true' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</function>
+<function name='DBLogError' variadic='true'>
+<arg type='@' name='format' printf_format='true' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</function>
+<function name='DBLogFatal' variadic='true'>
+<arg type='@' name='format' printf_format='true' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</function>
+<function name='DBLogFilePath'>
+<retval type='@' declared_type='NSString*'/>
+</function>
+<function name='DBLogInfo' variadic='true'>
+<arg type='@' name='format' printf_format='true' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</function>
+<function name='DBLogSetCallback'>
+<arg type='^?' name='callback' function_pointer='true' declared_type='DBLogCallback*'>
+<arg type='i' declared_type='DBLogLevel'/>
+<arg type='@' declared_type='NSString*'/>
+<arg type='*' declared_type='va_list'/>
+<retval type='v' declared_type='void'/>
+</arg>
+<retval type='v' declared_type='void'/>
+</function>
+<function name='DBLogSetLevel'>
+<arg type='i' name='logLevel' declared_type='DBLogLevel'/>
+<retval type='v' declared_type='void'/>
+</function>
+<function name='DBLogWarning' variadic='true'>
+<arg type='@' name='format' printf_format='true' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</function>
+<function name='DBSetupLogToFile'>
+<retval type='v' declared_type='void'/>
+</function>
+<function name='DBStringFromLogLevel'>
+<arg type='i' name='logLevel' declared_type='DBLogLevel'/>
+<retval type='@' declared_type='NSString*'/>
+</function>
+<function name='EstimateBas64DecodedDataSize'>
+<arg type='L' name='inDataSize' declared_type='size_t'/>
+<retval type='L' declared_type='size_t'/>
+</function>
+<function name='EstimateBas64EncodedDataSize'>
+<arg type='L' name='inDataSize' declared_type='size_t'/>
+<retval type='L' declared_type='size_t'/>
+</function>
+<class name='DBAccountInfo'>
+<method selector='country'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='displayName'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='initWithDictionary:'>
+<arg type='@' name='dict' index='0' declared_type='NSDictionary*'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='quota'>
+<retval type='@' declared_type='DBQuota*'/>
+</method>
+<method selector='referralLink'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='userId'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+</class>
+<class name='DBDeltaEntry'>
+<method selector='initWithArray:'>
+<arg type='@' name='array' index='0' declared_type='NSArray*'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='lowercasePath'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='metadata'>
+<retval type='@' declared_type='DBMetadata*'/>
+</method>
+</class>
+<class name='DBJSON'>
+<method selector='fragmentWithString:error:'>
+<arg type='@' name='jsonrep' index='0' declared_type='NSString*'/>
+<arg type='^@' name='error' index='1' declared_type='NSError**'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='objectWithString:allowScalar:error:'>
+<arg type='@' name='value' index='0' declared_type='id'/>
+<arg type='B' name='x' index='1' declared_type='BOOL'/>
+<arg type='^@' name='error' index='2' declared_type='NSError**'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='objectWithString:error:'>
+<arg type='@' name='jsonrep' index='0' declared_type='NSString*'/>
+<arg type='^@' name='error' index='1' declared_type='NSError**'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='stringWithFragment:error:'>
+<arg type='@' name='value' index='0' declared_type='id'/>
+<arg type='^@' name='error' index='1' declared_type='NSError**'/>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='stringWithObject:allowScalar:error:'>
+<arg type='@' name='value' index='0' declared_type='id'/>
+<arg type='B' name='x' index='1' declared_type='BOOL'/>
+<arg type='^@' name='error' index='2' declared_type='NSError**'/>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='stringWithObject:error:'>
+<arg type='@' name='value' index='0' declared_type='id'/>
+<arg type='^@' name='error' index='1' declared_type='NSError**'/>
+<retval type='@' declared_type='NSString*'/>
+</method>
+</class>
+<class name='DBJsonBase'>
+<method selector='addErrorWithCode:description:'>
+<arg type='I' name='code' index='0' declared_type='NSUInteger'/>
+<arg type='@' name='str' index='1' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='clearErrorTrace'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='errorTrace'>
+<retval type='@' declared_type='NSArray*'/>
+</method>
+<method selector='maxDepth'>
+<retval type='I' declared_type='NSUInteger'/>
+</method>
+<method selector='setMaxDepth:'>
+<arg type='I' name='maxDepth' index='0' declared_type='NSUInteger'/>
+<retval type='v' declared_type='void'/>
+</method>
+</class>
+<class name='DBJsonParser'>
+<method selector='fragmentWithString:'>
+<arg type='@' name='repr' index='0' declared_type='id'/>
+<retval type='@' declared_type='id'/>
+</method>
+</class>
+<class name='DBJsonWriter'>
+<method selector='stringWithFragment:'>
+<arg type='@' name='value' index='0' declared_type='id'/>
+<retval type='@' declared_type='NSString*'/>
+</method>
+</class>
+<class name='DBMetadata'>
+<method selector='clientMtime'>
+<retval type='@' declared_type='NSDate*'/>
+</method>
+<method selector='contents'>
+<retval type='@' declared_type='NSArray*'/>
+</method>
+<method selector='filename'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='hash'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='humanReadableSize'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='icon'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='initWithDictionary:'>
+<arg type='@' name='dict' index='0' declared_type='NSDictionary*'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='isDeleted'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='isDirectory'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='lastModifiedDate'>
+<retval type='@' declared_type='NSDate*'/>
+</method>
+<method selector='path'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='rev'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='revision'>
+<retval type='q' declared_type='long long'/>
+</method>
+<method selector='root'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='thumbnailExists'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='totalBytes'>
+<retval type='q' declared_type='long long'/>
+</method>
+</class>
+<class name='DBQuota'>
+<method selector='initWithDictionary:'>
+<arg type='@' name='dict' index='0' declared_type='NSDictionary*'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='normalConsumedBytes'>
+<retval type='q' declared_type='long long'/>
+</method>
+<method selector='sharedConsumedBytes'>
+<retval type='q' declared_type='long long'/>
+</method>
+<method selector='totalBytes'>
+<retval type='q' declared_type='long long'/>
+</method>
+<method selector='totalConsumedBytes'>
+<retval type='q' declared_type='long long'/>
+</method>
+</class>
+<class name='DBRequest'>
+<method selector='cancel'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='downloadProgress'>
+<retval type='i' declared_type='int'/>
+</method>
+<method selector='downloadProgressSelector'>
+<retval type=':' declared_type='SEL'/>
+</method>
+<method selector='error'>
+<retval type='@' declared_type='NSError*'/>
+</method>
+<method selector='failureSelector'>
+<retval type=':' declared_type='SEL'/>
+</method>
+<method selector='initWithURLRequest:andInformTarget:selector:'>
+<arg type='@' name='request' index='0' declared_type='NSURLRequest*'/>
+<arg type='@' name='target' index='1' declared_type='id'/>
+<arg type=':' name='selector' index='2' declared_type='SEL'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='parseResponseAsType:'>
+<arg type='#' name='cls' index='0' declared_type='Class'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='request'>
+<retval type='@' declared_type='NSURLRequest*'/>
+</method>
+<method selector='response'>
+<retval type='@' declared_type='NSHTTPURLResponse*'/>
+</method>
+<method selector='resultData'>
+<retval type='@' declared_type='NSData*'/>
+</method>
+<method selector='resultFilename'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='resultJSON'>
+<retval type='@' declared_type='NSObject*'/>
+</method>
+<method selector='resultString'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='setDownloadProgressSelector:'>
+<arg type=':' name='downloadProgressSelector' index='0' declared_type='SEL'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setFailureSelector:'>
+<arg type=':' name='failureSelector' index='0' declared_type='SEL'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method class_method='true' selector='setNetworkRequestDelegate:'>
+<arg type='@' name='delegate' index='0' declared_type='id'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setResultFilename:'>
+<arg type='@' name='resultFilename' index='0' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setUploadProgressSelector:'>
+<arg type=':' name='uploadProgressSelector' index='0' declared_type='SEL'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setUserInfo:'>
+<arg type='@' name='userInfo' index='0' declared_type='NSDictionary*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='statusCode'>
+<retval type='i' declared_type='NSInteger'/>
+</method>
+<method selector='uploadProgress'>
+<retval type='i' declared_type='int'/>
+</method>
+<method selector='uploadProgressSelector'>
+<retval type=':' declared_type='SEL'/>
+</method>
+<method selector='userInfo'>
+<retval type='@' declared_type='NSDictionary*'/>
+</method>
+<method selector='xDropboxMetadataJSON'>
+<retval type='@' declared_type='NSDictionary*'/>
+</method>
+</class>
+<class name='DBRestClient'>
+<method selector='cancelAllRequests'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='cancelFileLoad:'>
+<arg type='@' name='path' index='0' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='cancelFileUpload:'>
+<arg type='@' name='path' index='0' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='cancelThumbnailLoad:size:'>
+<arg type='@' name='path' index='0' declared_type='NSString*'/>
+<arg type='@' name='size' index='1' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='copyFrom:toPath:'>
+<arg type='@' name='fromPath' index='0' declared_type='NSString*'/>
+<arg type='@' name='toPath' index='1' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='copyFromRef:toPath:'>
+<arg type='@' name='copyRef' index='0' declared_type='NSString*'/>
+<arg type='@' name='toPath' index='1' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='createCopyRef:'>
+<arg type='@' name='path' index='0' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='createFolder:'>
+<arg type='@' name='path' index='0' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='delegate'>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='deletePath:'>
+<arg type='@' name='path' index='0' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='initWithSession:'>
+<arg type='@' name='session' index='0' declared_type='DBSession*'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='initWithSession:userId:'>
+<arg type='@' name='session' index='0' declared_type='DBSession*'/>
+<arg type='@' name='userId' index='1' declared_type='NSString*'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='loadAccountInfo'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='loadDelta:'>
+<arg type='@' name='cursor' index='0' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='loadFile:atRev:intoPath:'>
+<arg type='@' name='path' index='0' declared_type='NSString*'/>
+<arg type='@' name='rev' index='1' declared_type='NSString*'/>
+<arg type='@' name='destPath' index='2' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='loadFile:intoPath:'>
+<arg type='@' name='path' index='0' declared_type='NSString*'/>
+<arg type='@' name='destinationPath' index='1' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='loadMetadata:'>
+<arg type='@' name='path' index='0' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='loadMetadata:atRev:'>
+<arg type='@' name='path' index='0' declared_type='NSString*'/>
+<arg type='@' name='rev' index='1' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='loadMetadata:withHash:'>
+<arg type='@' name='path' index='0' declared_type='NSString*'/>
+<arg type='@' name='hash' index='1' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='loadRevisionsForFile:'>
+<arg type='@' name='path' index='0' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='loadRevisionsForFile:limit:'>
+<arg type='@' name='path' index='0' declared_type='NSString*'/>
+<arg type='i' name='limit' index='1' declared_type='NSInteger'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='loadSharableLinkForFile:'>
+<arg type='@' name='path' index='0' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='loadStreamableURLForFile:'>
+<arg type='@' name='path' index='0' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='loadThumbnail:ofSize:intoPath:'>
+<arg type='@' name='path' index='0' declared_type='NSString*'/>
+<arg type='@' name='size' index='1' declared_type='NSString*'/>
+<arg type='@' name='destinationPath' index='2' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='moveFrom:toPath:'>
+<arg type='@' name='fromPath' index='0' declared_type='NSString*'/>
+<arg type='@' name='toPath' index='1' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='requestCount'>
+<retval type='I' declared_type='NSUInteger'/>
+</method>
+<method selector='restoreFile:toRev:'>
+<arg type='@' name='path' index='0' declared_type='NSString*'/>
+<arg type='@' name='rev' index='1' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='searchPath:forKeyword:'>
+<arg type='@' name='path' index='0' declared_type='NSString*'/>
+<arg type='@' name='keyword' index='1' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setDelegate:'>
+<arg type='@' name='delegate' index='0' declared_type='id'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='uploadFile:toPath:fromPath:'>
+<arg type='@' name='filename' index='0' declared_type='NSString*'/>
+<arg type='@' name='path' index='1' declared_type='NSString*'/>
+<arg type='@' name='sourcePath' index='2' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='uploadFile:toPath:withParentRev:fromPath:'>
+<arg type='@' name='filename' index='0' declared_type='NSString*'/>
+<arg type='@' name='path' index='1' declared_type='NSString*'/>
+<arg type='@' name='parentRev' index='2' declared_type='NSString*'/>
+<arg type='@' name='sourcePath' index='3' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+</class>
+<class name='DBSession'>
+<method selector='appScheme'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='credentialStoreForUserId:'>
+<arg type='@' name='userId' index='0' declared_type='NSString*'/>
+<retval type='@' declared_type='MPOAuthCredentialConcreteStore*'/>
+</method>
+<method selector='delegate'>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='handleOpenURL:'>
+<arg type='@' name='url' index='0' declared_type='NSURL*'/>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='initWithAppKey:appSecret:root:'>
+<arg type='@' name='key' index='0' declared_type='NSString*'/>
+<arg type='@' name='secret' index='1' declared_type='NSString*'/>
+<arg type='@' name='root' index='2' declared_type='NSString*'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='isLinked'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='linkFromController:'>
+<arg type='@' name='rootController' index='0' declared_type='id'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='linkUserId:fromController:'>
+<arg type='@' name='userId' index='0' declared_type='NSString*'/>
+<arg type='@' name='rootController' index='1' declared_type='id'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method class_method='true' selector='parseURLParams:'>
+<arg type='@' name='query' index='0' declared_type='NSString*'/>
+<retval type='@' declared_type='NSDictionary*'/>
+</method>
+<method selector='root'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='setDelegate:'>
+<arg type='@' name='delegate' index='0' declared_type='id'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method class_method='true' selector='setSharedSession:'>
+<arg type='@' name='session' index='0' declared_type='DBSession*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method class_method='true' selector='sharedSession'>
+<retval type='@' declared_type='DBSession*'/>
+</method>
+<method selector='unlinkAll'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='unlinkUserId:'>
+<arg type='@' name='userId' index='0' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='updateAccessToken:accessTokenSecret:forUserId:'>
+<arg type='@' name='token' index='0' declared_type='NSString*'/>
+<arg type='@' name='secret' index='1' declared_type='NSString*'/>
+<arg type='@' name='userId' index='2' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='userIds'>
+<retval type='@' declared_type='NSArray*'/>
+</method>
+</class>
+<class name='MPOAuthAPI'>
+<method selector='authenticate'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='authenticationMethod'>
+<retval type='@' declared_type='MPOAuthAuthenticationMethod*'/>
+</method>
+<method selector='authenticationState'>
+<retval type='i' declared_type='MPOAuthAuthenticationState'/>
+</method>
+<method selector='authenticationURL'>
+<retval type='@' declared_type='NSURL*'/>
+</method>
+<method selector='baseURL'>
+<retval type='@' declared_type='NSURL*'/>
+</method>
+<method selector='credentialNamed:'>
+<arg type='@' name='inCredentialName' index='0' declared_type='NSString*'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='credentials'>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='dataForMethod:'>
+<arg type='@' name='inMethod' index='0' declared_type='NSString*'/>
+<retval type='@' declared_type='NSData*'/>
+</method>
+<method selector='dataForMethod:withParameters:'>
+<arg type='@' name='inMethod' index='0' declared_type='NSString*'/>
+<arg type='@' name='inParameters' index='1' declared_type='NSArray*'/>
+<retval type='@' declared_type='NSData*'/>
+</method>
+<method selector='dataForURL:andMethod:withParameters:'>
+<arg type='@' name='inURL' index='0' declared_type='NSURL*'/>
+<arg type='@' name='inMethod' index='1' declared_type='NSString*'/>
+<arg type='@' name='inParameters' index='2' declared_type='NSArray*'/>
+<retval type='@' declared_type='NSData*'/>
+</method>
+<method selector='discardCredentials'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='initWithCredentials:andBaseURL:'>
+<arg type='@' name='inCredentials' index='0' declared_type='NSDictionary*'/>
+<arg type='@' name='inURL' index='1' declared_type='NSURL*'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='initWithCredentials:authenticationURL:andBaseURL:'>
+<arg type='@' name='inCredentials' index='0' declared_type='NSDictionary*'/>
+<arg type='@' name='inAuthURL' index='1' declared_type='NSURL*'/>
+<arg type='@' name='inBaseURL' index='2' declared_type='NSURL*'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='initWithCredentials:authenticationURL:andBaseURL:autoStart:'>
+<arg type='@' name='inCredentials' index='0' declared_type='NSDictionary*'/>
+<arg type='@' name='inAuthURL' index='1' declared_type='NSURL*'/>
+<arg type='@' name='inBaseURL' index='2' declared_type='NSURL*'/>
+<arg type='B' name='aFlag' index='3' declared_type='BOOL'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='isAuthenticated'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='performMethod:atURL:withParameters:withTarget:andAction:'>
+<arg type='@' name='inMethod' index='0' declared_type='NSString*'/>
+<arg type='@' name='inURL' index='1' declared_type='NSURL*'/>
+<arg type='@' name='inParameters' index='2' declared_type='NSArray*'/>
+<arg type='@' name='inTarget' index='3' declared_type='id'/>
+<arg type=':' name='inAction' index='4' declared_type='SEL'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='performMethod:withTarget:andAction:'>
+<arg type='@' name='inMethod' index='0' declared_type='NSString*'/>
+<arg type='@' name='inTarget' index='1' declared_type='id'/>
+<arg type=':' name='inAction' index='2' declared_type='SEL'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='performPOSTMethod:atURL:withParameters:withTarget:andAction:'>
+<arg type='@' name='inMethod' index='0' declared_type='NSString*'/>
+<arg type='@' name='inURL' index='1' declared_type='NSURL*'/>
+<arg type='@' name='inParameters' index='2' declared_type='NSArray*'/>
+<arg type='@' name='inTarget' index='3' declared_type='id'/>
+<arg type=':' name='inAction' index='4' declared_type='SEL'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='performURLRequest:withTarget:andAction:'>
+<arg type='@' name='inRequest' index='0' declared_type='NSURLRequest*'/>
+<arg type='@' name='inTarget' index='1' declared_type='id'/>
+<arg type=':' name='inAction' index='2' declared_type='SEL'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='removeCredentialNamed:'>
+<arg type='@' name='inName' index='0' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setAuthenticationMethod:'>
+<arg type='@' name='authenticationMethod' index='0' declared_type='MPOAuthAuthenticationMethod*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setCredential:withName:'>
+<arg type='@' name='inCredential' index='0' declared_type='id'/>
+<arg type='@' name='inName' index='1' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setSignatureScheme:'>
+<arg type='i' name='signatureScheme' index='0' declared_type='MPOAuthSignatureScheme'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='signatureScheme'>
+<retval type='i' declared_type='MPOAuthSignatureScheme'/>
+</method>
+</class>
+<class name='MPOAuthAPIRequestLoader'>
+<method selector='action'>
+<retval type=':' declared_type='SEL'/>
+</method>
+<method selector='credentials'>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='data'>
+<retval type='@' declared_type='NSData*'/>
+</method>
+<method selector='initWithRequest:'>
+<arg type='@' name='inRequest' index='0' declared_type='MPOAuthURLRequest*'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='initWithURL:'>
+<arg type='@' name='inURL' index='0' declared_type='NSURL*'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='loadSynchronously:'>
+<arg type='B' name='inSynchronous' index='0' declared_type='BOOL'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='oauthRequest'>
+<retval type='@' declared_type='MPOAuthURLRequest*'/>
+</method>
+<method selector='oauthResponse'>
+<retval type='@' declared_type='MPOAuthURLResponse*'/>
+</method>
+<method selector='responseString'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='setAction:'>
+<arg type=':' name='action' index='0' declared_type='SEL'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setCredentials:'>
+<arg type='@' name='credentials' index='0' declared_type='id'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setOauthRequest:'>
+<arg type='@' name='oauthRequest' index='0' declared_type='MPOAuthURLRequest*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setOauthResponse:'>
+<arg type='@' name='oauthResponse' index='0' declared_type='MPOAuthURLResponse*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setTarget:'>
+<arg type='@' name='target' index='0' declared_type='id'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='target'>
+<retval type='@' declared_type='id'/>
+</method>
+</class>
+<class name='MPOAuthAuthenticationMethod'>
+<method selector='authenticate'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='initWithAPI:forURL:'>
+<arg type='@' name='inAPI' index='0' declared_type='MPOAuthAPI*'/>
+<arg type='@' name='inURL' index='1' declared_type='NSURL*'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='initWithAPI:forURL:withConfiguration:'>
+<arg type='@' name='inAPI' index='0' declared_type='MPOAuthAPI*'/>
+<arg type='@' name='inURL' index='1' declared_type='NSURL*'/>
+<arg type='@' name='inConfig' index='2' declared_type='NSDictionary*'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='oauthAPI'>
+<retval type='@' declared_type='MPOAuthAPI*'/>
+</method>
+<method selector='oauthGetAccessTokenURL'>
+<retval type='@' declared_type='NSURL*'/>
+</method>
+<method selector='refreshAccessToken'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setOauthAPI:'>
+<arg type='@' name='oauthAPI' index='0' declared_type='MPOAuthAPI*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setOauthGetAccessTokenURL:'>
+<arg type='@' name='oauthGetAccessTokenURL' index='0' declared_type='NSURL*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setTokenRefreshInterval:'>
+<arg type='d' name='inTimeInterval' index='0' declared_type='NSTimeInterval'/>
+<retval type='v' declared_type='void'/>
+</method>
+</class>
+<class name='MPOAuthAuthenticationMethodOAuth'>
+<method selector='authenticate'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='delegate'>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='oauthAuthorizeTokenURL'>
+<retval type='@' declared_type='NSURL*'/>
+</method>
+<method selector='oauthRequestTokenURL'>
+<retval type='@' declared_type='NSURL*'/>
+</method>
+<method selector='setDelegate:'>
+<arg type='@' name='delegate' index='0' declared_type='id'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setOauthAuthorizeTokenURL:'>
+<arg type='@' name='oauthAuthorizeTokenURL' index='0' declared_type='NSURL*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setOauthRequestTokenURL:'>
+<arg type='@' name='oauthRequestTokenURL' index='0' declared_type='NSURL*'/>
+<retval type='v' declared_type='void'/>
+</method>
+</class>
+<class name='MPOAuthConnection'>
+<method class_method='true' selector='connectionWithRequest:delegate:credentials:'>
+<arg type='@' name='inRequest' index='0' declared_type='MPOAuthURLRequest*'/>
+<arg type='@' name='inDelegate' index='1' declared_type='id'/>
+<arg type='@' name='inCredentials' index='2' declared_type='NSObject*'/>
+<retval type='@' declared_type='MPOAuthConnection*'/>
+</method>
+<method selector='credentials'>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='initWithRequest:delegate:credentials:'>
+<arg type='@' name='inRequest' index='0' declared_type='MPOAuthURLRequest*'/>
+<arg type='@' name='inDelegate' index='1' declared_type='id'/>
+<arg type='@' name='inCredentials' index='2' declared_type='NSObject*'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method class_method='true' selector='sendSynchronousRequest:usingCredentials:returningResponse:error:'>
+<arg type='@' name='inRequest' index='0' declared_type='MPOAuthURLRequest*'/>
+<arg type='@' name='inCredentials' index='1' declared_type='NSObject*'/>
+<arg type='^@' name='outResponse' index='2' declared_type='MPOAuthURLResponse**'/>
+<arg type='^@' name='inError' index='3' declared_type='NSError**'/>
+<retval type='@' declared_type='NSData*'/>
+</method>
+</class>
+<class name='MPOAuthCredentialConcreteStore'>
+<method selector='accessToken'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='accessTokenSecret'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='addToKeychainUsingName:andValue:'>
+<arg type='@' name='inName' index='0' declared_type='NSString*'/>
+<arg type='@' name='inValue' index='1' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='authenticationURL'>
+<retval type='@' declared_type='NSURL*'/>
+</method>
+<method selector='baseURL'>
+<retval type='@' declared_type='NSURL*'/>
+</method>
+<method selector='findValueFromKeychainUsingName:'>
+<arg type='@' name='inName' index='0' declared_type='NSString*'/>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='initWithCredentials:'>
+<arg type='@' name='inCredential' index='0' declared_type='NSDictionary*'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='initWithCredentials:forBaseURL:'>
+<arg type='@' name='inCredentials' index='0' declared_type='NSDictionary*'/>
+<arg type='@' name='inBaseURL' index='1' declared_type='NSURL*'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='initWithCredentials:forBaseURL:withAuthenticationURL:'>
+<arg type='@' name='inCredentials' index='0' declared_type='NSDictionary*'/>
+<arg type='@' name='inBaseURL' index='1' declared_type='NSURL*'/>
+<arg type='@' name='inAuthenticationURL' index='2' declared_type='NSURL*'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='removeCredentialNamed:'>
+<arg type='@' name='inName' index='0' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='removeValueFromKeychainUsingName:'>
+<arg type='@' name='inName' index='0' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='requestToken'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='requestTokenSecret'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='sessionHandle'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='setAccessToken:'>
+<arg type='@' name='accessToken' index='0' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setAccessTokenSecret:'>
+<arg type='@' name='accessTokenSecret' index='0' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setCredential:withName:'>
+<arg type='@' name='inCredential' index='0' declared_type='id'/>
+<arg type='@' name='inName' index='1' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setRequestToken:'>
+<arg type='@' name='requestToken' index='0' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setRequestTokenSecret:'>
+<arg type='@' name='requestTokenSecret' index='0' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setSessionHandle:'>
+<arg type='@' name='sessionHandle' index='0' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='signingKey'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='tokenSecret'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+</class>
+<class name='MPOAuthSignatureParameter'>
+<method class_method='true' selector='HMAC_SHA1SignatureForText:usingSecret:'>
+<arg type='@' name='inText' index='0' declared_type='NSString*'/>
+<arg type='@' name='inSecret' index='1' declared_type='NSString*'/>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='initWithText:andSecret:forRequest:usingMethod:'>
+<arg type='@' name='inText' index='0' declared_type='NSString*'/>
+<arg type='@' name='inSecret' index='1' declared_type='NSString*'/>
+<arg type='@' name='inRequest' index='2' declared_type='MPOAuthURLRequest*'/>
+<arg type='@' name='inMethod' index='3' declared_type='NSString*'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method class_method='true' selector='signatureBaseStringUsingParameterString:forRequest:'>
+<arg type='@' name='inParameterString' index='0' declared_type='NSString*'/>
+<arg type='@' name='inRequest' index='1' declared_type='MPOAuthURLRequest*'/>
+<retval type='@' declared_type='NSString*'/>
+</method>
+</class>
+<class name='MPOAuthURLRequest'>
+<method selector='HTTPMethod'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='addParameters:'>
+<arg type='@' name='inParameters' index='0' declared_type='NSArray*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='initWithURL:andParameters:'>
+<arg type='@' name='inURL' index='0' declared_type='NSURL*'/>
+<arg type='@' name='parameters' index='1' declared_type='NSArray*'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='initWithURLRequest:'>
+<arg type='@' name='inRequest' index='0' declared_type='NSURLRequest*'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='parameters'>
+<retval type='@' declared_type='NSMutableArray*'/>
+</method>
+<method selector='setHTTPMethod:'>
+<arg type='@' name='HTTPMethod' index='0' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setParameters:'>
+<arg type='@' name='parameters' index='0' declared_type='NSMutableArray*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setUrl:'>
+<arg type='@' name='url' index='0' declared_type='NSURL*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='url'>
+<retval type='@' declared_type='NSURL*'/>
+</method>
+<method selector='urlRequest'>
+<retval type='@' declared_type='NSURLRequest*'/>
+</method>
+<method selector='urlRequestSignedWithSecret:usingMethod:'>
+<arg type='@' name='inSecret' index='0' declared_type='NSString*'/>
+<arg type='@' name='inScheme' index='1' declared_type='NSString*'/>
+<retval type='@' declared_type='NSMutableURLRequest*'/>
+</method>
+</class>
+<class name='MPOAuthURLResponse'>
+<method selector='oauthParameters'>
+<retval type='@' declared_type='NSDictionary*'/>
+</method>
+<method selector='urlResponse'>
+<retval type='@' declared_type='NSURLResponse*'/>
+</method>
+</class>
+<class name='MPURLRequestParameter'>
+<method selector='URLEncodedParameterString'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='initWithName:andValue:'>
+<arg type='@' name='inName' index='0' declared_type='NSString*'/>
+<arg type='@' name='inValue' index='1' declared_type='NSString*'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='name'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method class_method='true' selector='parameterDictionaryFromString:'>
+<arg type='@' name='inString' index='0' declared_type='NSString*'/>
+<retval type='@' declared_type='NSDictionary*'/>
+</method>
+<method class_method='true' selector='parameterStringForDictionary:'>
+<arg type='@' name='inParameterDictionary' index='0' declared_type='NSDictionary*'/>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method class_method='true' selector='parameterStringForParameters:'>
+<arg type='@' name='inParameters' index='0' declared_type='NSArray*'/>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method class_method='true' selector='parametersFromDictionary:'>
+<arg type='@' name='inDictionary' index='0' declared_type='NSDictionary*'/>
+<retval type='@' declared_type='NSArray*'/>
+</method>
+<method class_method='true' selector='parametersFromString:'>
+<arg type='@' name='inString' index='0' declared_type='NSString*'/>
+<retval type='@' declared_type='NSArray*'/>
+</method>
+<method selector='setName:'>
+<arg type='@' name='name' index='0' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setValue:'>
+<arg type='@' name='value' index='0' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='value'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+</class>
+<class name='NSDictionary'>
+<method class_method='true' selector='dictionaryWithQueryString:'>
+<arg type='@' name='query' index='0' declared_type='NSString*'/>
+<retval type='@' declared_type='NSDictionary*'/>
+</method>
+<method selector='urlRepresentation'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+</class>
+<class name='NSObject'>
+<method selector='JSONFragment'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='JSONRepresentation'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='accessToken'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='accessTokenSecret'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='authenticationDidFailWithError:'>
+<arg type='@' name='error' index='0' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='automaticallyRequestAuthenticationFromURL:withCallbackURL:'>
+<arg type='@' name='inAuthURL' index='0' declared_type='NSURL*'/>
+<arg type='@' name='inCallbackURL' index='1' declared_type='NSURL*'/>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='callbackURLForCompletedUserAuthorization'>
+<retval type='@' declared_type='NSURL*'/>
+</method>
+<method selector='consumerKey'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='consumerSecret'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='credentialNamed:'>
+<arg type='@' name='inCredentialName' index='0' declared_type='NSString*'/>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='discardOAuthCredentials'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='humanReadable'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='networkRequestStarted'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='networkRequestStopped'>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='oauthConsumerKeyParameter'>
+<retval type='@' declared_type='MPURLRequestParameter*'/>
+</method>
+<method selector='oauthNonceParameter'>
+<retval type='@' declared_type='MPURLRequestParameter*'/>
+</method>
+<method selector='oauthParameters'>
+<retval type='@' declared_type='NSArray*'/>
+</method>
+<method selector='oauthSignatureMethodParameter'>
+<retval type='@' declared_type='MPURLRequestParameter*'/>
+</method>
+<method selector='oauthTimestampParameter'>
+<retval type='@' declared_type='MPURLRequestParameter*'/>
+</method>
+<method selector='oauthTokenParameter'>
+<retval type='@' declared_type='MPURLRequestParameter*'/>
+</method>
+<method selector='oauthVerifierForCompletedUserAuthorization'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='oauthVersionParameter'>
+<retval type='@' declared_type='MPURLRequestParameter*'/>
+</method>
+<method selector='objectWithString:'>
+<arg type='@' name='repr' index='0' declared_type='NSString*'/>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='password'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='proxyForJson'>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='requestToken'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='requestTokenSecret'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='restClient:copiedPath:to:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='fromPath' index='1' declared_type='NSString*'/>
+<arg type='@' name='to' index='2' declared_type='DBMetadata*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:copiedRef:to:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='copyRef' index='1' declared_type='NSString*'/>
+<arg type='@' name='to' index='2' declared_type='DBMetadata*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:copyFromRefFailedWithError:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='error' index='1' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:copyPathFailedWithError:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='error' index='1' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:createCopyRefFailedWithError:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='error' index='1' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:createFolderFailedWithError:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='error' index='1' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:createdCopyRef:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='copyRef' index='1' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:createdFolder:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='folder' index='1' declared_type='DBMetadata*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:deletePathFailedWithError:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='error' index='1' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:deletedPath:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='path' index='1' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:loadAccountInfoFailedWithError:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='error' index='1' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:loadDeltaFailedWithError:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='error' index='1' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:loadFileFailedWithError:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='error' index='1' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:loadMetadataFailedWithError:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='error' index='1' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:loadProgress:forFile:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='progress' index='1' declared_type='id'/>
+<arg type='@' name='destPath' index='2' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:loadRevisionsFailedWithError:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='error' index='1' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:loadSharableLinkFailedWithError:'>
+<arg type='@' name='restClient' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='error' index='1' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:loadStreamableURLFailedWithError:'>
+<arg type='@' name='restClient' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='error' index='1' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:loadThumbnailFailedWithError:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='error' index='1' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:loadedAccountInfo:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='info' index='1' declared_type='DBAccountInfo*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:loadedDeltaEntries:reset:cursor:hasMore:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='entries' index='1' declared_type='NSArray*'/>
+<arg type='B' name='shouldReset' index='2' declared_type='BOOL'/>
+<arg type='@' name='cursor' index='3' declared_type='NSString*'/>
+<arg type='B' name='hasMore' index='4' declared_type='BOOL'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:loadedFile:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='destPath' index='1' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:loadedFile:contentType:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='destPath' index='1' declared_type='NSString*'/>
+<arg type='@' name='contentType' index='2' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:loadedFile:contentType:metadata:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='destPath' index='1' declared_type='NSString*'/>
+<arg type='@' name='contentType' index='2' declared_type='NSString*'/>
+<arg type='@' name='metadata' index='3' declared_type='DBMetadata*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:loadedMetadata:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='metadata' index='1' declared_type='DBMetadata*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:loadedRevisions:forFile:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='revisions' index='1' declared_type='NSArray*'/>
+<arg type='@' name='path' index='2' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:loadedSearchResults:forPath:keyword:'>
+<arg type='@' name='restClient' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='results' index='1' declared_type='NSArray*'/>
+<arg type='@' name='path' index='2' declared_type='NSString*'/>
+<arg type='@' name='keyword' index='3' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:loadedSharableLink:forFile:'>
+<arg type='@' name='restClient' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='link' index='1' declared_type='NSString*'/>
+<arg type='@' name='path' index='2' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:loadedStreamableURL:forFile:'>
+<arg type='@' name='restClient' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='url' index='1' declared_type='NSURL*'/>
+<arg type='@' name='path' index='2' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:loadedThumbnail:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='destPath' index='1' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:loadedThumbnail:metadata:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='destPath' index='1' declared_type='NSString*'/>
+<arg type='@' name='metadata' index='2' declared_type='DBMetadata*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:metadataUnchangedAtPath:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='path' index='1' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:movePathFailedWithError:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='error' index='1' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:movedPath:to:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='from_path' index='1' declared_type='NSString*'/>
+<arg type='@' name='result' index='2' declared_type='DBMetadata*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:restoreFileFailedWithError:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='error' index='1' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:restoredFile:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='fileMetadata' index='1' declared_type='DBMetadata*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:searchFailedWithError:'>
+<arg type='@' name='restClient' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='error' index='1' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:uploadFileFailedWithError:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='error' index='1' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:uploadProgress:forFile:from:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='progress' index='1' declared_type='id'/>
+<arg type='@' name='destPath' index='2' declared_type='NSString*'/>
+<arg type='@' name='srcPath' index='3' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:uploadedFile:from:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='destPath' index='1' declared_type='NSString*'/>
+<arg type='@' name='srcPath' index='2' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='restClient:uploadedFile:from:metadata:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='destPath' index='1' declared_type='NSString*'/>
+<arg type='@' name='srcPath' index='2' declared_type='NSString*'/>
+<arg type='@' name='metadata' index='3' declared_type='DBMetadata*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='sessionDidReceiveAuthorizationFailure:userId:'>
+<arg type='@' name='session' index='0' declared_type='DBSession*'/>
+<arg type='@' name='userId' index='1' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setHumanReadable:'>
+<arg type='B' name='humanReadable' index='0' declared_type='BOOL'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setSignatureMethod:'>
+<arg type='@' name='signatureMethod' index='0' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='setSortKeys:'>
+<arg type='B' name='sortKeys' index='0' declared_type='BOOL'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method selector='signatureMethod'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='signingKey'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='sortKeys'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='stringWithObject:'>
+<arg type='@' name='value' index='0' declared_type='id'/>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='timestamp'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='username'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+</class>
+<class name='NSString'>
+<method selector='JSONFragmentValue'>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='JSONValue'>
+<retval type='@' declared_type='id'/>
+</method>
+<method selector='isEqualToDropboxPath:'>
+<arg type='@' name='otherPath' index='0' declared_type='NSString*'/>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='isIPAddress'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='normalizedDropboxPath'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='stringByAddingURIPercentEscapesUsingEncoding:'>
+<arg type='I' name='inEncoding' index='0' declared_type='NSStringEncoding'/>
+<retval type='@' declared_type='NSString*'/>
+</method>
+</class>
+<class name='NSURL'>
+<method selector='absoluteNormalizedString'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='domainMatches:'>
+<arg type='@' name='inString' index='0' declared_type='NSString*'/>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method selector='stringByAddingURIPercentEscapesUsingEncoding:'>
+<arg type='I' name='inEncoding' index='0' declared_type='NSStringEncoding'/>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method selector='urlByAddingParameterDictionary:'>
+<arg type='@' name='inParameters' index='0' declared_type='NSDictionary*'/>
+<retval type='@' declared_type='NSURL*'/>
+</method>
+<method selector='urlByAddingParameters:'>
+<arg type='@' name='inParameters' index='0' declared_type='NSArray*'/>
+<retval type='@' declared_type='NSURL*'/>
+</method>
+<method selector='urlByRemovingQuery'>
+<retval type='@' declared_type='NSURL*'/>
+</method>
+</class>
+<class name='NSURLResponse'>
+<method selector='encoding'>
+<retval type='I' declared_type='NSStringEncoding'/>
+</method>
+</class>
+<informal_protocol name='DBJsonParser'>
+<method type='@12@0:4@8' selector='objectWithString:'>
+<arg type='@' name='repr' index='0' declared_type='NSString*'/>
+<retval type='@' declared_type='id'/>
+</method>
+</informal_protocol>
+<informal_protocol name='DBJsonWriter'>
+<method type='B8@0:4' selector='humanReadable'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method type='v12@0:4B8' selector='setHumanReadable:'>
+<arg type='B' name='humanReadable' index='0' declared_type='BOOL'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v12@0:4B8' selector='setSortKeys:'>
+<arg type='B' name='sortKeys' index='0' declared_type='BOOL'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='B8@0:4' selector='sortKeys'>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method type='@12@0:4@8' selector='stringWithObject:'>
+<arg type='@' name='value' index='0' declared_type='id'/>
+<retval type='@' declared_type='NSString*'/>
+</method>
+</informal_protocol>
+<informal_protocol name='DBNetworkRequestDelegate'>
+<method type='v8@0:4' selector='networkRequestStarted'>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v8@0:4' selector='networkRequestStopped'>
+<retval type='v' declared_type='void'/>
+</method>
+</informal_protocol>
+<informal_protocol name='DBRestClientDelegate'>
+<method type='v20@0:4@8@12@16' selector='restClient:copiedPath:to:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='fromPath' index='1' declared_type='NSString*'/>
+<arg type='@' name='to' index='2' declared_type='DBMetadata*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v20@0:4@8@12@16' selector='restClient:copiedRef:to:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='copyRef' index='1' declared_type='NSString*'/>
+<arg type='@' name='to' index='2' declared_type='DBMetadata*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v16@0:4@8@12' selector='restClient:copyFromRefFailedWithError:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='error' index='1' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v16@0:4@8@12' selector='restClient:copyPathFailedWithError:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='error' index='1' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v16@0:4@8@12' selector='restClient:createCopyRefFailedWithError:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='error' index='1' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v16@0:4@8@12' selector='restClient:createFolderFailedWithError:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='error' index='1' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v16@0:4@8@12' selector='restClient:createdCopyRef:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='copyRef' index='1' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v16@0:4@8@12' selector='restClient:createdFolder:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='folder' index='1' declared_type='DBMetadata*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v16@0:4@8@12' selector='restClient:deletePathFailedWithError:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='error' index='1' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v16@0:4@8@12' selector='restClient:deletedPath:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='path' index='1' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v16@0:4@8@12' selector='restClient:loadAccountInfoFailedWithError:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='error' index='1' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v16@0:4@8@12' selector='restClient:loadDeltaFailedWithError:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='error' index='1' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v16@0:4@8@12' selector='restClient:loadFileFailedWithError:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='error' index='1' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v16@0:4@8@12' selector='restClient:loadMetadataFailedWithError:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='error' index='1' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v20@0:4@8@12@16' selector='restClient:loadProgress:forFile:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='progress' index='1' declared_type='id'/>
+<arg type='@' name='destPath' index='2' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v16@0:4@8@12' selector='restClient:loadRevisionsFailedWithError:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='error' index='1' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v16@0:4@8@12' selector='restClient:loadSharableLinkFailedWithError:'>
+<arg type='@' name='restClient' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='error' index='1' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v16@0:4@8@12' selector='restClient:loadStreamableURLFailedWithError:'>
+<arg type='@' name='restClient' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='error' index='1' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v16@0:4@8@12' selector='restClient:loadThumbnailFailedWithError:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='error' index='1' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v16@0:4@8@12' selector='restClient:loadedAccountInfo:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='info' index='1' declared_type='DBAccountInfo*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v28@0:4@8@12B16@20B24' selector='restClient:loadedDeltaEntries:reset:cursor:hasMore:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='entries' index='1' declared_type='NSArray*'/>
+<arg type='B' name='shouldReset' index='2' declared_type='BOOL'/>
+<arg type='@' name='cursor' index='3' declared_type='NSString*'/>
+<arg type='B' name='hasMore' index='4' declared_type='BOOL'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v16@0:4@8@12' selector='restClient:loadedFile:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='destPath' index='1' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v20@0:4@8@12@16' selector='restClient:loadedFile:contentType:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='destPath' index='1' declared_type='NSString*'/>
+<arg type='@' name='contentType' index='2' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v24@0:4@8@12@16@20' selector='restClient:loadedFile:contentType:metadata:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='destPath' index='1' declared_type='NSString*'/>
+<arg type='@' name='contentType' index='2' declared_type='NSString*'/>
+<arg type='@' name='metadata' index='3' declared_type='DBMetadata*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v16@0:4@8@12' selector='restClient:loadedMetadata:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='metadata' index='1' declared_type='DBMetadata*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v20@0:4@8@12@16' selector='restClient:loadedRevisions:forFile:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='revisions' index='1' declared_type='NSArray*'/>
+<arg type='@' name='path' index='2' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v24@0:4@8@12@16@20' selector='restClient:loadedSearchResults:forPath:keyword:'>
+<arg type='@' name='restClient' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='results' index='1' declared_type='NSArray*'/>
+<arg type='@' name='path' index='2' declared_type='NSString*'/>
+<arg type='@' name='keyword' index='3' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v20@0:4@8@12@16' selector='restClient:loadedSharableLink:forFile:'>
+<arg type='@' name='restClient' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='link' index='1' declared_type='NSString*'/>
+<arg type='@' name='path' index='2' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v20@0:4@8@12@16' selector='restClient:loadedStreamableURL:forFile:'>
+<arg type='@' name='restClient' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='url' index='1' declared_type='NSURL*'/>
+<arg type='@' name='path' index='2' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v16@0:4@8@12' selector='restClient:loadedThumbnail:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='destPath' index='1' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v20@0:4@8@12@16' selector='restClient:loadedThumbnail:metadata:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='destPath' index='1' declared_type='NSString*'/>
+<arg type='@' name='metadata' index='2' declared_type='DBMetadata*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v16@0:4@8@12' selector='restClient:metadataUnchangedAtPath:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='path' index='1' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v16@0:4@8@12' selector='restClient:movePathFailedWithError:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='error' index='1' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v20@0:4@8@12@16' selector='restClient:movedPath:to:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='from_path' index='1' declared_type='NSString*'/>
+<arg type='@' name='result' index='2' declared_type='DBMetadata*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v16@0:4@8@12' selector='restClient:restoreFileFailedWithError:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='error' index='1' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v16@0:4@8@12' selector='restClient:restoredFile:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='fileMetadata' index='1' declared_type='DBMetadata*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v16@0:4@8@12' selector='restClient:searchFailedWithError:'>
+<arg type='@' name='restClient' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='error' index='1' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v16@0:4@8@12' selector='restClient:uploadFileFailedWithError:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='error' index='1' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v24@0:4@8@12@16@20' selector='restClient:uploadProgress:forFile:from:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='progress' index='1' declared_type='id'/>
+<arg type='@' name='destPath' index='2' declared_type='NSString*'/>
+<arg type='@' name='srcPath' index='3' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v20@0:4@8@12@16' selector='restClient:uploadedFile:from:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='destPath' index='1' declared_type='NSString*'/>
+<arg type='@' name='srcPath' index='2' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='v24@0:4@8@12@16@20' selector='restClient:uploadedFile:from:metadata:'>
+<arg type='@' name='client' index='0' declared_type='DBRestClient*'/>
+<arg type='@' name='destPath' index='1' declared_type='NSString*'/>
+<arg type='@' name='srcPath' index='2' declared_type='NSString*'/>
+<arg type='@' name='metadata' index='3' declared_type='DBMetadata*'/>
+<retval type='v' declared_type='void'/>
+</method>
+</informal_protocol>
+<informal_protocol name='DBSessionDelegate'>
+<method type='v16@0:4@8@12' selector='sessionDidReceiveAuthorizationFailure:userId:'>
+<arg type='@' name='session' index='0' declared_type='DBSession*'/>
+<arg type='@' name='userId' index='1' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+</informal_protocol>
+<informal_protocol name='MPOAuthAuthenticationMethodOAuthDelegate'>
+<method type='v12@0:4@8' selector='authenticationDidFailWithError:'>
+<arg type='@' name='error' index='0' declared_type='NSError*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='B16@0:4@8@12' selector='automaticallyRequestAuthenticationFromURL:withCallbackURL:'>
+<arg type='@' name='inAuthURL' index='0' declared_type='NSURL*'/>
+<arg type='@' name='inCallbackURL' index='1' declared_type='NSURL*'/>
+<retval type='B' declared_type='BOOL'/>
+</method>
+<method type='@8@0:4' selector='callbackURLForCompletedUserAuthorization'>
+<retval type='@' declared_type='NSURL*'/>
+</method>
+<method type='@8@0:4' selector='oauthVerifierForCompletedUserAuthorization'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+</informal_protocol>
+<informal_protocol name='MPOAuthCredentialStore'>
+<method type='@8@0:4' selector='accessToken'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method type='@8@0:4' selector='accessTokenSecret'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method type='@8@0:4' selector='consumerKey'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method type='@8@0:4' selector='consumerSecret'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method type='@12@0:4@8' selector='credentialNamed:'>
+<arg type='@' name='inCredentialName' index='0' declared_type='NSString*'/>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method type='v8@0:4' selector='discardOAuthCredentials'>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='@8@0:4' selector='password'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method type='@8@0:4' selector='requestToken'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method type='@8@0:4' selector='requestTokenSecret'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method type='@8@0:4' selector='username'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+</informal_protocol>
+<informal_protocol name='MPOAuthParameterFactory'>
+<method type='@8@0:4' selector='oauthConsumerKeyParameter'>
+<retval type='@' declared_type='MPURLRequestParameter*'/>
+</method>
+<method type='@8@0:4' selector='oauthNonceParameter'>
+<retval type='@' declared_type='MPURLRequestParameter*'/>
+</method>
+<method type='@8@0:4' selector='oauthParameters'>
+<retval type='@' declared_type='NSArray*'/>
+</method>
+<method type='@8@0:4' selector='oauthSignatureMethodParameter'>
+<retval type='@' declared_type='MPURLRequestParameter*'/>
+</method>
+<method type='@8@0:4' selector='oauthTimestampParameter'>
+<retval type='@' declared_type='MPURLRequestParameter*'/>
+</method>
+<method type='@8@0:4' selector='oauthTokenParameter'>
+<retval type='@' declared_type='MPURLRequestParameter*'/>
+</method>
+<method type='@8@0:4' selector='oauthVersionParameter'>
+<retval type='@' declared_type='MPURLRequestParameter*'/>
+</method>
+<method type='v12@0:4@8' selector='setSignatureMethod:'>
+<arg type='@' name='signatureMethod' index='0' declared_type='NSString*'/>
+<retval type='v' declared_type='void'/>
+</method>
+<method type='@8@0:4' selector='signatureMethod'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method type='@8@0:4' selector='signingKey'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method type='@8@0:4' selector='timestamp'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+</informal_protocol>
+<informal_protocol name='NSObject_DBJSON'>
+<method type='@8@0:4' selector='JSONFragment'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+<method type='@8@0:4' selector='JSONRepresentation'>
+<retval type='@' declared_type='NSString*'/>
+</method>
+</informal_protocol>
+<informal_protocol name='SBProxyForJson'>
+<method type='@8@0:4' selector='proxyForJson'>
+<retval type='@' declared_type='id'/>
+</method>
+</informal_protocol>
+</signatures>
