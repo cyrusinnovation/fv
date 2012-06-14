@@ -1,0 +1,16 @@
+exit
+NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, true)
+foo = _
+foo[0]
+foos = _
+foos.class
+NSString.alloc.initWithContentsOfFile("#{foos}/textfile.txt")
+exit
+NSFileManager.defaultManager.URLForDirectory(NSItemReplacementDirectory, inDomain:NSUserDomainMask, appropriateForURL:NSURL.fileURLWithPath("fv"), create:true, error:nil)
+x = _
+x.path
+exit
+exit
+exit
+exit
+exit
