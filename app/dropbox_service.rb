@@ -1,4 +1,4 @@
-class DropboxFoo
+class DropboxService
   include Notifications
   
   def initialize
