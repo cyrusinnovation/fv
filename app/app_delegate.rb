@@ -1,33 +1,24 @@
 class AppDelegate
   def application(application, didFinishLaunchingWithOptions:launchOptions)
-    @window = UIWindow.alloc.initWithFrame(UIScreen.mainScreen.bounds)
     
-    tab_controller = UITabBarController.alloc.init
-    task_view_controller = TaskViewController.alloc.initWithStore(TaskStore.alloc.init)
-    task_view_controller.title = 'Tasks'
-    export_view_controller = ExportViewController.alloc.init
-    export_view_controller.title = 'Export'
-    tab_controller.viewControllers = [task_view_controller, export_view_controller]
-    @window.rootViewController = tab_controller
+    @task_store = TaskStore.new
+    @dropbox_service = DropboxService.new
 
-    # Dropbox settings, likely can be done later.
-    dbSession = DBSession.alloc.initWithAppKey("ttgx76yturz2rqt", appSecret:"hgasr9fz5g0r7no", root:"sandbox")
-    DBSession.setSharedSession(dbSession)
+    @window = UIWindow.alloc.initWithFrame(UIScreen.mainScreen.bounds)
+    tab_controller = UITabBarController.alloc.init
+    task_view_controller = TaskViewController.alloc.initWithStore(@task_store)
     
+    export_view_controller = ExportViewController.alloc.initWithStore(@task_store, dropbox_service:@dropbox_service)
+    
+    tab_controller.viewControllers = [task_view_controller, export_view_controller]
+
+    @window.rootViewController = tab_controller
     @window.makeKeyAndVisible
     true
   end
   
   def application(application, handleOpenURL:url)
-    if DBSession.sharedSession.handleOpenURL(url)
-      if DBSession.sharedSession.isLinked
-        NSLog("App linked successfully! #{url}");
-        # At this point you can start making API calls
-      end
-      return true;
-    end
-    # Add whatever other url handling code your app requires here
-    return false;
+    return @dropboxService.handleOpenURL(url)
   end
 
   

@@ -7,6 +7,7 @@ class TaskViewController < UIViewController
   def initWithStore(task_store)
     if init
       @task_store = task_store
+      self.title = 'Tasks'
     end
     self
   end
@@ -25,7 +26,7 @@ class TaskViewController < UIViewController
     @text_field.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter
     @text_field.backgroundColor = UIColor.lightGrayColor
     view.addSubview(@text_field)
-
+    
     # Observe model changes.
     observe(TaskAddedNotification, action:'handleTaskAdded')
     observe(TaskChangedNotification, action:'handleTaskChanged')

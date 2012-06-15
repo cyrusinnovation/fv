@@ -1,8 +1,17 @@
 class ExportViewController < UIViewController
+  
+  def initWithStore(task_store, dropbox_service:dropbox_service)
+    if init
+      @task_store = task_store
+      @dropbox_service = dropbox_service
+      self.title = 'Export'
+    end
+    self
+  end  
+  
   def loadView
     self.view = UIView.alloc.initWithFrame(UIScreen.mainScreen.applicationFrame)
     
-
     button = UIButton.buttonWithType(UIButtonTypeRoundedRect)
     button.frame = CGRectMake(10,10,view.frame.size.width - 20,50)
     button.addTarget(self, action:'buttonClicked', forControlEvents:UIControlEventTouchUpInside)
@@ -12,32 +21,13 @@ class ExportViewController < UIViewController
   end
   
   def buttonClicked
-    
-    puts "foo"
-    DBSession.sharedSession.linkFromController(self) unless DBSession.sharedSession.isLinked
-
-    
     localPath = writeToTempFile
-    filename = "foo.txt";
-    destDir = "/";
-    restClient.uploadFile(filename, toPath:destDir, withParentRev:nil, fromPath:localPath);
+    filename = "foo.txt"
+    destDir = "/"
+    
+    @dropbox_service.uploadFile(filename, toPath:destDir, fromPath:localPath, fromController:self)
   end
 
-  def restClient
-    @rest_client ||= begin
-      rest_client = DBRestClient.alloc.initWithSession(DBSession.sharedSession)
-      rest_client.delegate = self
-      rest_client
-    end
-  end
-  
-  def restClient(client, uploadedFile:destPath, from:srcPath, metadata:metadata)
-    NSLog("File uploaded successfully to path: #{metadata.path}");
-  end
-
-  def restClient(client, uploadFileFailedWithError:error)
-    NSLog("File upload failed with error - #{error}");
-  end
   
   def writeToTempFile
     dirURL = NSFileManager.defaultManager.URLForDirectory(NSItemReplacementDirectory, inDomain:NSUserDomainMask, appropriateForURL:NSURL.fileURLWithPath("fv"), create:true, error:nil)
