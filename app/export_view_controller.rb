@@ -1,6 +1,7 @@
 class ExportViewController < UIViewController
+  include Notifications
   
-  def initWithDropboxService(dropbox_service, file_exporter:file_exporter)
+  def initWithDropboxFoo(dropbox_service, file_exporter:file_exporter)
     if init
       @dropbox_service = dropbox_service
       @file_exporter = file_exporter
@@ -17,7 +18,19 @@ class ExportViewController < UIViewController
     button.addTarget(self, action:'buttonClicked', forControlEvents:UIControlEventTouchUpInside)
     button.setTitle("Export to Dropbox",forState:UIControlStateNormal)
 
+    # Observe export events
+    observe(DropboxFileUploadedNotification, action:'handleDropboxFileUploaded')
+    observe(DropboxFileUploadFailedNotification, action:'handleDropboxFileUploadFailed')
+
     view.addSubview(button)    
+  end
+  
+  def handleDropboxFileUploaded(notification)
+    NSLog("Uploaded")
+  end
+  
+  def handleDropboxFileUploadFailed(notification)
+    NSLog("Upload failed.")
   end
   
   def buttonClicked

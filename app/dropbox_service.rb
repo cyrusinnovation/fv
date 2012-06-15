@@ -1,4 +1,5 @@
-class DropboxService
+class DropboxFoo
+  include Notifications
   
   def initialize
     @dbSession = DBSession.alloc.initWithAppKey("ttgx76yturz2rqt", appSecret:"hgasr9fz5g0r7no", root:"sandbox")
@@ -30,11 +31,11 @@ class DropboxService
   end
   
   def restClient(client, uploadedFile:destPath, from:srcPath, metadata:metadata)
-    NSLog("File uploaded successfully to path: #{metadata.path}");
+    publish(DropboxFileUploadedNotification)
   end
 
   def restClient(client, uploadFileFailedWithError:error)
-    NSLog("File upload failed with error - #{error}");
+    publish(DropboxFileUploadFailedNotification)
   end
   
 end
