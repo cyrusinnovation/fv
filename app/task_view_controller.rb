@@ -33,7 +33,7 @@ class TaskViewController < UIViewController
     observe(AddTappedNotification, action:'handleAddTapped')
     observe(UIKeyboardDidShowNotification, action:'handleKeyboardDidShow')
     
-    @scroll_view.drawTasks
+    @scroll_view.drawTasks(@task_store.tasks)
   end
 
   def handleAddTapped(notification)
@@ -73,7 +73,7 @@ class TaskViewController < UIViewController
   end
   
   def redraw_tasks
-    @scroll_view.redraw_tasks
+    @scroll_view.redraw_tasks(@task_store.tasks)
   end
   
   def scrollViewDidScroll(scrollView)

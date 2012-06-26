@@ -4,17 +4,16 @@ class TaskListView < UIScrollView
   def initWithFrame(frame, taskStore:task_store)
     if initWithFrame(frame)
       @task_store = task_store
-      NSLog("Task_store: #{@task_store}")
     end
     self
   end
 
 
-  def drawTasks
-
+  def drawTasks(tasks)
+    
     selected_indexes = []
-    @task_store.tasks.each_index do |index|
-      task = @task_store.tasks[index]
+    tasks.each_index do |index|
+      task = tasks[index]
       if task.dotted?
         selected_indexes << index
       end
@@ -23,8 +22,8 @@ class TaskListView < UIScrollView
     yoffset = self.contentOffset.y
 
     task_views = []
-    @task_store.tasks.each_index do |index|
-      task = @task_store.tasks[index]
+    tasks.each_index do |index|
+      task = tasks[index]
       y = y_for_view(index, selected_indexes, yoffset)
       task_frame = CGRectMake(0, y, self.frame.size.width, TaskHeight)
       subview = TaskView.alloc.initWithFrame(task_frame, task:task, position:index)
@@ -36,9 +35,9 @@ class TaskListView < UIScrollView
       self.bringSubviewToFront(task_views[index])
     end
     
-    self.contentSize = CGSizeMake(self.frame.size.width, @task_store.tasks.size * TaskHeight)
+    self.contentSize = CGSizeMake(self.frame.size.width, tasks.size * TaskHeight)
     
-    collect_adjust_data
+    collect_adjust_data(tasks)
 
   end
   
@@ -83,15 +82,15 @@ class TaskListView < UIScrollView
   end
 
 
-  def collect_adjust_data
+  def collect_adjust_data(tasks)
     @task_views_for_adjust = []
     self.subviews.each do |subview|
       @task_views_for_adjust[subview.position] = subview
     end
 
     @selected_indexes_for_adjust = []
-    @task_store.tasks.each_index do |index|
-      task = @task_store.tasks[index]
+    tasks.each_index do |index|
+      task = tasks[index]
       if task.dotted?
         @selected_indexes_for_adjust << index
       end
@@ -107,11 +106,11 @@ class TaskListView < UIScrollView
     end    
   end
   
-  def redraw_tasks
+  def redraw_tasks(tasks)
     self.subviews.each do |task_view|
       task_view.removeFromSuperview
     end
-    self.drawTasks
+    self.drawTasks(tasks)
   end
   
   
