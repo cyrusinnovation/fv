@@ -13,18 +13,13 @@ class TaskViewController < UIViewController
   
   def loadView
     self.view = UIView.alloc.initWithFrame(UIScreen.mainScreen.applicationFrame)
+    
     scroll_view_frame = CGRectMake(0, 0, view.frame.size.width, view.frame.size.height - TextEntryHeight)
     @scroll_view = UIScrollView.alloc.initWithFrame(scroll_view_frame)
     view.addSubview(@scroll_view)
     @scroll_view.delegate = self
-    
-    text_field_frame = CGRectMake(0, view.frame.size.height - TextEntryHeight, view.frame.size.width, TextEntryHeight)
-    @text_field = UITextField.alloc.initWithFrame(text_field_frame)
-    @text_field.delegate = self
-    @text_field.borderStyle = UITextBorderStyleRoundedRect
-    @text_field.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter
-    @text_field.backgroundColor = UIColor.lightGrayColor
-    view.addSubview(@text_field)
+
+    add_button_view
 
     # Observe model changes.
     observe(TaskAddedNotification, action:'handleTaskAdded')
@@ -36,11 +31,14 @@ class TaskViewController < UIViewController
     observe(TaskViewTapNotification, action:'handleTaskViewTap')
     observe(TaskViewRightSwipeNotification, action:'handleTaskViewRightSwipe')
     observe(TaskViewLeftSwipeNotification, action:'handleTaskViewLeftSwipe')
-    
-    # Make the helper a field so that it isn't garbage collected.
-    @textfield_visibility_helper = TextFieldVisibilityHelper.new(@text_field)
+    observe(AddTappedNotification, action:'handleAddTapped')
+    observe(UIKeyboardDidShowNotification, action:'handleKeyboardDidShow')
     
     drawTasks
+  end
+
+  def handleAddTapped(notification)
+    show_task_input
   end
 
   def handleTaskViewTap(notification)
@@ -185,16 +183,67 @@ class TaskViewController < UIViewController
     end
   end
   
-  # Defined for UITextFieldDelegate
-  def textFieldShouldReturn(textField)
-    textField.resignFirstResponder
-    textField.text = nil
+  
+  # presenter method
+  def show_task_input
+    text_field_frame = CGRectMake(0, view.frame.size.height - TextEntryHeight, view.frame.size.width, TextEntryHeight)
+    @text_field = TaskEntryView.alloc.initWithFrame(text_field_frame)
+    @text_field.delegate = self
+    
+    view.addSubview(@text_field)
+    @text_field.becomeFirstResponder
+  end
+  
+  def textFieldShouldReturn(text_field)
+    text_field.resignFirstResponder
     true
   end
   
-  def textFieldDidEndEditing(textField)
-    @task_store.add_task(textField.text)
+  def textFieldDidEndEditing(text_field)
+    @task_store.add_task(text_field.text)
+    hide_task_input
+    redraw_tasks
     true
   end
+  
+  def hide_task_input
+    @text_field.removeFromSuperview
+    @text_field = nil    
+  end
+  
+  
+  def handleKeyboardDidShow(notification)
+    adjust_input_size_to_account_for_keyboard(notification.keyboard_height)
+  end
+  
+  
+  def adjust_input_size_to_account_for_keyboard(keyboard_height)
+    new_frame = CGRectMake(0, view.frame.size.height - TextEntryHeight - keyboard_height, view.frame.size.width, TextEntryHeight)
+    UIView.beginAnimations('animationID', context:nil)
+    @text_field.frame = new_frame
+    UIView.commitAnimations
+  end
+  
+  
+  private
+  
+  def lower_right_frame(subview, padding:padding)
+    CGRectMake(view.frame.size.width - padding - subview.frame.size.width, 
+               view.frame.size.height - padding - subview.frame.size.height, 
+               subview.frame.size.width, 
+               subview.frame.size.height)    
+  end
 
+  def add_button_view
+    button_view = AddButtonView.alloc.init
+    button_view.frame = lower_right_frame(button_view, padding:10)
+    view.addSubview(button_view)
+  end
 end
+
+class NSConcreteNotification
+  def keyboard_height
+    userInfo.objectForKey(UIKeyboardBoundsUserInfoKey).CGRectValue.size.height
+  end
+end
+

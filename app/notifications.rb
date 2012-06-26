@@ -1,4 +1,6 @@
 module Notifications
+  AddTappedNotification = 'AddTapped'
+
   TaskAddedNotification = 'TaskAdded'
   TaskChangedNotification = 'TaskChanged'
   TaskRemovedNotification = 'TaskRemoved'
