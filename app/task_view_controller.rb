@@ -14,7 +14,7 @@ class TaskViewController < UIViewController
   def loadView
     self.view = UIView.alloc.initWithFrame(UIScreen.mainScreen.applicationFrame)
     
-    scroll_view_frame = CGRectMake(0, 0, view.frame.size.width, view.frame.size.height - TextEntryHeight)
+    scroll_view_frame = CGRectMake(0, 0, view.frame.size.width, view.frame.size.height)
     @scroll_view = UIScrollView.alloc.initWithFrame(scroll_view_frame)
     view.addSubview(@scroll_view)
     @scroll_view.delegate = self
