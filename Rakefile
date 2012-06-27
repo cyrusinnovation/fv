@@ -7,5 +7,6 @@ Motion::Project::App.setup do |app|
   app.frameworks += ['CoreData', 'MessageUI']
 
   app.files_dependencies 'app/models/task_store.rb' => 'app/notifications.rb'
+  app.files_dependencies 'app/controllers/task_view_controller.rb' => 'app/notifications.rb'
 
 end
