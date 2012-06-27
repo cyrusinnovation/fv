@@ -18,7 +18,7 @@ class TaskViewController < UIViewController
     view.addSubview(@scroll_view)
     @scroll_view.delegate = self
 
-    add_button_view
+    add_button_views
 
     # Observe model changes.
     observe(TaskAddedNotification, action:'handleTaskAdded')
@@ -31,6 +31,7 @@ class TaskViewController < UIViewController
     observe(TaskViewRightSwipeNotification, action:'handleTaskViewRightSwipe')
     observe(TaskViewLeftSwipeNotification, action:'handleTaskViewLeftSwipe')
     observe(AddTappedNotification, action:'handleAddTapped')
+    observe(EmailTappedNotification, action:'handleEmailTapped')
     observe(UIKeyboardDidShowNotification, action:'handleKeyboardDidShow')
     
     @scroll_view.drawTasks(@task_store.tasks)
@@ -38,6 +39,10 @@ class TaskViewController < UIViewController
 
   def handleAddTapped(notification)
     show_task_input
+  end
+  
+  def handleEmailTapped(notification)
+    NSLog("Email tapped")
   end
 
   def handleTaskViewTap(notification)
@@ -131,12 +136,31 @@ class TaskViewController < UIViewController
                subview.frame.size.width, 
                subview.frame.size.height)    
   end
-
-  def add_button_view
-    button_view = AddButtonView.alloc.init
-    button_view.frame = lower_right_frame(button_view, padding:10)
-    view.addSubview(button_view)
+  
+  def lower_left_frame(subview, padding:padding)
+    CGRectMake(padding, 
+               view.frame.size.height - padding - subview.frame.size.height, 
+               subview.frame.size.width, 
+               subview.frame.size.height)    
   end
+  
+  def upper_right_frame(subview, padding:padding)
+    CGRectMake(view.frame.size.width - padding - subview.frame.size.width, 
+               padding, 
+               subview.frame.size.width, 
+               subview.frame.size.height)    
+  end
+
+  def add_button_views
+    add_button_view = AddButtonView.alloc.init
+    add_button_view.frame = lower_right_frame(add_button_view, padding:10)
+    view.addSubview(add_button_view)
+
+    email_button_view = EmailButtonView.alloc.init
+    email_button_view.frame = upper_right_frame(email_button_view, padding:10)
+    view.addSubview(email_button_view)
+  end
+  
 end
 
 class NSConcreteNotification

@@ -1,5 +1,6 @@
 module Notifications
   AddTappedNotification = 'AddTapped'
+  EmailTappedNotification = 'EmailTapped'
 
   TaskAddedNotification = 'TaskAdded'
   TaskChangedNotification = 'TaskChanged'
