@@ -4,7 +4,9 @@ class Task < NSManagedObject
       entity = NSEntityDescription.alloc.init
       entity.name = 'Task'
       entity.managedObjectClassName = 'Task'
-      entity.properties = ['dotted', NSBooleanAttributeType,
+      entity.properties = [
+          'dotted', NSBooleanAttributeType,
+          'active', NSBooleanAttributeType,
           'date_moved', NSDateAttributeType,
           'text', NSStringAttributeType].each_slice(2).map do |name, type|
             property = NSAttributeDescription.alloc.init
@@ -19,6 +21,10 @@ class Task < NSManagedObject
   
   def dotted?
     dotted == 1
+  end
+  
+  def active?
+    active == 1
   end
   
 end

@@ -15,15 +15,19 @@ class TaskView < UIView
   def update(task, position)
     @taskID = task.objectID
     @label.text = task.text
-    if task.dotted?
-      @label.backgroundColor = self.backgroundColor = UIColor.grayColor
+
+    if task.active?
       addGestureRecognizer(UISwipeGestureRecognizer.alloc.initWithTarget(self, action:"handleRightSwipe"))
       leftRecognizer = UISwipeGestureRecognizer.alloc.initWithTarget(self, action:"handleLeftSwipe")
       leftRecognizer.direction = UISwipeGestureRecognizerDirectionLeft
       addGestureRecognizer(leftRecognizer)
+      @label.backgroundColor = self.backgroundColor = UIColor.redColor
+    elsif task.dotted?
+      @label.backgroundColor = self.backgroundColor = UIColor.grayColor
     else
       @label.backgroundColor = self.backgroundColor = UIColor.whiteColor
     end
+    
     @position = position
   end
 

@@ -15,6 +15,7 @@ class TaskStore
     task.date_moved = NSDate.date
     task.text = text
     task.dotted = false
+    task.active = false
     save
     publish(TaskAddedNotification)
   end
@@ -38,6 +39,7 @@ class TaskStore
     task = @context.objectWithID(taskID)
     if task.dotted?
       task.dotted = DB_FALSE
+      task.active = DB_FALSE
     else
       task.dotted = DB_TRUE
     end
@@ -66,14 +68,19 @@ class TaskStore
   def save
     do_save
     
+    update_state
+    
+  end
+  
+  def update_state
     @tasks = load_tasks
 
-    return if @tasks.empty? or tasks[0].dotted?
-
-    tasks[0].dotted = 1
+    return if @tasks.empty?
+    tasks.first.dotted = DB_TRUE
+    tasks.each { |task| task.active = DB_FALSE }
+    tasks.reverse.find { |task| task.dotted? }.active = DB_TRUE
     
     do_save
-    
   end
   
   def do_save
