@@ -18,6 +18,12 @@ class PullTabView < UIView
     self
   end
   
+  def willMoveToSuperview(superview)
+    new_x = superview.frame.size.width - self.frame.size.width
+    new_y = superview.frame.size.height - self.frame.size.height
+    self.frame = CGRectMake(new_x, new_y, self.frame.size.width, self.frame.size.height)
+  end
+  
   
   
 end

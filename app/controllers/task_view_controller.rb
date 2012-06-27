@@ -177,12 +177,6 @@ class TaskViewController < UIViewController
 
   def add_button_views
     pull_tab = PullTabView.alloc.initWithButtons([AddButtonView.alloc.init, EmailButtonView.alloc.init])
-    pull_tab_x = view.frame.size.width - pull_tab.frame.size.width
-    pull_tab_y = view.frame.size.height - pull_tab.frame.size.height
-    
-    NSLog("#{pull_tab_x}, #{pull_tab_y}")
-    
-    pull_tab.frame = CGRectMake(pull_tab_x, pull_tab_y, pull_tab.frame.size.width, pull_tab.frame.size.height)
     view.addSubview(pull_tab)
   end
   
