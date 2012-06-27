@@ -8,6 +8,7 @@ class AddButtonView < UIImageView
       button_recognizer = UITapGestureRecognizer.alloc.initWithTarget(self, action:'handleAddTapped')
       self.addGestureRecognizer(button_recognizer)  
     end
+    
     self
   end
   

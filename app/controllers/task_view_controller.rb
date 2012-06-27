@@ -177,7 +177,7 @@ class TaskViewController < UIViewController
 
   def add_button_views
     pull_tab = PullTabView.alloc.initWithButtons([AddButtonView.alloc.init, EmailButtonView.alloc.init])
-    view.addSubview(pull_tab)
+    self.view.addSubview(pull_tab)
   end
   
 end
