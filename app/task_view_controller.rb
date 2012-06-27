@@ -34,6 +34,8 @@ class TaskViewController < UIViewController
     observe(EmailTappedNotification, action:'handleEmailTapped')
     observe(UIKeyboardDidShowNotification, action:'handleKeyboardDidShow')
     
+    @editing_task = false
+    
     @scroll_view.drawTasks(@task_store.tasks)
   end
 
@@ -42,7 +44,22 @@ class TaskViewController < UIViewController
   end
   
   def handleEmailTapped(notification)
-    NSLog("Email tapped")
+    picker = MFMailComposeViewController.alloc.init
+    picker.mailComposeDelegate = self
+
+    message = "Foo list"
+    subject = "fv list"
+
+    picker.setSubject(subject)
+    picker.setMessageBody(message,isHTML:true)
+
+    picker.navigationBar.barStyle = UIBarStyleBlack
+    presentModalViewController(picker, animated:true)
+  end
+
+  # delegate method for mailer
+  def mailComposeController(controller, didFinishWithResult:result, error:error)
+    controller.dismissModalViewControllerAnimated(true)
   end
 
   def handleTaskViewTap(notification)
@@ -89,6 +106,8 @@ class TaskViewController < UIViewController
   
   # presenter method
   def show_task_input
+    @editing_task = true
+
     text_field_frame = CGRectMake(0, view.frame.size.height - TextEntryHeight, view.frame.size.width, TextEntryHeight)
     @text_field = TaskEntryView.alloc.initWithFrame(text_field_frame)
     @text_field.delegate = self
@@ -112,11 +131,12 @@ class TaskViewController < UIViewController
   def hide_task_input
     @text_field.removeFromSuperview
     @text_field = nil    
+    @editing_task = false
   end
   
   
   def handleKeyboardDidShow(notification)
-    adjust_input_size_to_account_for_keyboard(notification.keyboard_height)
+    adjust_input_size_to_account_for_keyboard(notification.keyboard_height) if @editing_task
   end
   
   
