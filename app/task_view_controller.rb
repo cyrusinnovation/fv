@@ -47,11 +47,15 @@ class TaskViewController < UIViewController
     picker = MFMailComposeViewController.alloc.init
     picker.mailComposeDelegate = self
 
-    message = "Foo list"
+    message = ""
+    @task_store.tasks.each do |task|
+      message << (task.dotted? ? "* " : "  ")
+      message << task.text << "\n"
+    end
     subject = "fv list"
 
     picker.setSubject(subject)
-    picker.setMessageBody(message,isHTML:true)
+    picker.setMessageBody(message,isHTML:false)
 
     picker.navigationBar.barStyle = UIBarStyleBlack
     presentModalViewController(picker, animated:true)
