@@ -18,27 +18,29 @@ class PullTabView < UIView
       end
     end
     
-    up_swipe_recognizer = UISwipeGestureRecognizer.alloc.initWithTarget(self, action:'handleUpSwipe')
-    up_swipe_recognizer.direction = UISwipeGestureRecognizerDirectionUp
-    self.addGestureRecognizer(up_swipe_recognizer)
-    
-    down_swipe_recognizer = UISwipeGestureRecognizer.alloc.initWithTarget(self, action:'handleDownSwipe')
-    down_swipe_recognizer.direction = UISwipeGestureRecognizerDirectionDown
-    self.addGestureRecognizer(down_swipe_recognizer)
-    
-    
+    recognizeSwipe(UISwipeGestureRecognizerDirectionUp, action:'handleUpSwipe')
+    recognizeSwipe(UISwipeGestureRecognizerDirectionDown, action:'handleDownSwipe')
+
     self
   end
   
+  def recognizeSwipe(direction, action:selector)
+    swipe_recognizer = UISwipeGestureRecognizer.alloc.initWithTarget(self, action:selector)
+    swipe_recognizer.direction = direction
+    self.addGestureRecognizer(swipe_recognizer)
+  end
+  
   def handleUpSwipe
-    UIView.beginAnimations('animationID', context:nil)
-    self.frame = upFrame
-    UIView.commitAnimations
+    animateFrameChange(upFrame)
   end
   
   def handleDownSwipe
+    animateFrameChange(downFrame)
+  end
+  
+  def animateFrameChange(new_frame)
     UIView.beginAnimations('animationID', context:nil)
-    self.frame = downFrame
+    self.frame = new_frame
     UIView.commitAnimations
   end
   
