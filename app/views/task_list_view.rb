@@ -10,6 +10,7 @@ class TaskListView < UIScrollView
 
 
   def drawTasks(tasks)
+    self.contentSize = CGSizeMake(self.frame.size.width, tasks.size * TaskHeight)
     
     selected_indexes = []
     tasks.each_index do |index|
@@ -35,7 +36,6 @@ class TaskListView < UIScrollView
       self.bringSubviewToFront(task_views[index])
     end
     
-    self.contentSize = CGSizeMake(self.frame.size.width, tasks.size * TaskHeight)
     
     collect_adjust_data(tasks)
 
