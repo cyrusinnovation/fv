@@ -1,13 +1,12 @@
 class TaskListView < UIScrollView
   TaskHeight = 40
-
-  def initWithFrame(frame, taskStore:task_store)
-    if initWithFrame(frame)
-      @task_store = task_store
+  
+  def initWithFrame(frame)
+    if super
+      @collapsed = false
     end
     self
   end
-
 
   def drawTasks(tasks)
     self.contentSize = CGSizeMake(self.frame.size.width, tasks.size * TaskHeight)
@@ -107,10 +106,21 @@ class TaskListView < UIScrollView
   end
   
   def redraw_tasks(tasks)
+    tasks = @collapsed ? tasks.select { |task| task.dotted? } : tasks
     self.subviews.each do |task_view|
       task_view.removeFromSuperview
     end
     self.drawTasks(tasks)
+  end
+  
+  def collapse(tasks)
+    @collapsed = true
+    redraw_tasks(tasks)
+  end
+  
+  def expand(tasks)
+    @collapsed = false
+    redraw_tasks(tasks)
   end
   
   

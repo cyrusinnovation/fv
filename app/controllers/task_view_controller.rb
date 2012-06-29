@@ -14,7 +14,7 @@ class TaskViewController < UIViewController
     self.view = UIView.alloc.initWithFrame(UIScreen.mainScreen.applicationFrame)
     
     scroll_view_frame = CGRectMake(0, 0, view.frame.size.width, view.frame.size.height)
-    @scroll_view = TaskListView.alloc.initWithFrame(scroll_view_frame, taskStore:@task_store)
+    @scroll_view = TaskListView.alloc.initWithFrame(scroll_view_frame)
     view.addSubview(@scroll_view)
     @scroll_view.delegate = self
 
@@ -30,17 +30,27 @@ class TaskViewController < UIViewController
     observe(TaskViewTapNotification, action:'handleTaskViewTap')
     observe(TaskViewRightSwipeNotification, action:'handleTaskViewRightSwipe')
     observe(TaskViewLeftSwipeNotification, action:'handleTaskViewLeftSwipe')
+    observe(UIKeyboardDidShowNotification, action:'handleKeyboardDidShow')
+
+    # observe events from tabbar buttons
     observe(AddTappedNotification, action:'handleAddTapped')
     observe(EmailTappedNotification, action:'handleEmailTapped')
-    observe(UIKeyboardDidShowNotification, action:'handleKeyboardDidShow')
-    
-    @editing_task = false
+    observe(ExpandTappedNotification, action:'handleExpandTapped')
+    observe(CollapseTappedNotification, action:'handleCollapseTapped')
     
     @scroll_view.drawTasks(@task_store.tasks)
   end
 
   def handleAddTapped(notification)
     show_task_input
+  end
+  
+  def handleCollapseTapped(notification)
+    @scroll_view.collapse(@task_store.tasks)
+  end
+  
+  def handleExpandTapped(notification)
+    @scroll_view.expand(@task_store.tasks)
   end
   
   def handleEmailTapped(notification)
