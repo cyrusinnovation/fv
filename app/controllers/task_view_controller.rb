@@ -178,8 +178,10 @@ class TaskViewController < UIViewController
   def add_button_views
     add_button = ButtonView.alloc.initWithImageNamed("add_button.png", tapNotification:AddTappedNotification)
     email_button = ButtonView.alloc.initWithImageNamed("email_button.png", tapNotification:EmailTappedNotification)
+    collapse_button = ButtonView.alloc.initWithImageNamed("collapse_button.png", tapNotification:CollapseTappedNotification)
+    expand_button = ButtonView.alloc.initWithImageNamed("expand_button.png", tapNotification:ExpandTappedNotification)
 
-    pull_tab = PullTabView.alloc.initWithButtons([add_button, email_button])
+    pull_tab = PullTabView.alloc.initWithButtons([add_button, email_button, expand_button, collapse_button])
 
     self.view.addSubview(pull_tab)
   end
