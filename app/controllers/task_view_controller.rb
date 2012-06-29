@@ -46,10 +46,12 @@ class TaskViewController < UIViewController
   end
   
   def handleCollapseTapped(notification)
+    @collapse_toggle_button.toggle
     @scroll_view.collapse(@task_store.tasks)
   end
   
   def handleExpandTapped(notification)
+    @collapse_toggle_button.toggle
     @scroll_view.expand(@task_store.tasks)
   end
   
@@ -190,8 +192,9 @@ class TaskViewController < UIViewController
     email_button = ButtonView.alloc.initWithImageNamed("email_button.png", tapNotification:EmailTappedNotification)
     collapse_button = ButtonView.alloc.initWithImageNamed("collapse_button.png", tapNotification:CollapseTappedNotification)
     expand_button = ButtonView.alloc.initWithImageNamed("expand_button.png", tapNotification:ExpandTappedNotification)
+    @collapse_toggle_button = ToggleButtonView.alloc.initWithFirstView(collapse_button, secondView:expand_button)
 
-    pull_tab = PullTabView.alloc.initWithButtons([add_button, email_button, expand_button, collapse_button])
+    pull_tab = PullTabView.alloc.initWithButtons([add_button, email_button, @collapse_toggle_button])
 
     self.view.addSubview(pull_tab)
   end
