@@ -1,5 +1,5 @@
 class TaskListView < UIScrollView
-  TaskHeight = 40
+  TaskHeight = 69
   
   def initWithFrame(frame)
     if super
