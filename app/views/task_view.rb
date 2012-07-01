@@ -21,16 +21,7 @@ class TaskView < UIView
       leftRecognizer = UISwipeGestureRecognizer.alloc.initWithTarget(self, action:"handleLeftSwipe")
       leftRecognizer.direction = UISwipeGestureRecognizerDirectionLeft
       addGestureRecognizer(leftRecognizer)
-      @label.backgroundColor = self.backgroundColor = UIColor.grayColor
-      
-      action_button = ButtonView.alloc.initWithImageNamed("pink_button.png", tapNotification:ActionButtonTappedNotification)
-      action_button_frame = CGRectMake(
-        self.frame.size.width - action_button.frame.size.width - 10, 
-        self.frame.size.height - action_button.frame.size.height - 10, 
-        action_button.frame.size.width, 
-        action_button.frame.size.height)
-      action_button.frame = action_button_frame
-      addSubview(action_button)
+      @label.backgroundColor = self.backgroundColor = UIColor.redColor
     elsif task.dotted?
       @label.backgroundColor = self.backgroundColor = UIColor.grayColor
     else
