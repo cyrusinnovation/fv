@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>kDKDrawingInfoTitle</key>
+	<string>fv2.artb</string>
+	<key>kdkdrawinginfocreationdate</key>
+	<date>2012-06-23T18:16:05Z</date>
+	<key>kdkdrawinginfodimensionsshortunits</key>
+	<string>pt</string>
+	<key>kdkdrawinginfodimensionsunits</key>
+	<string>points</string>
+	<key>kdkdrawinginfodraughter</key>
+	<string>Paul Infield-Harm</string>
+	<key>kdkdrawinginfodrawingdimensions.size_height</key>
+	<string>960.000000</string>
+	<key>kdkdrawinginfodrawingdimensions.size_width</key>
+	<string>640.000000</string>
+	<key>kdkdrawinginfodrawingnumber</key>
+	<string>A2-000015-0001</string>
+	<key>kdkdrawinginfodrawingnumberunformatted</key>
+	<integer>15</integer>
+	<key>kdkdrawinginfodrawingprefix</key>
+	<string>A2</string>
+	<key>kdkdrawinginfodrawingrevision</key>
+	<integer>1</integer>
+	<key>kdkdrawinginfolastmodificationdate</key>
+	<date>2012-06-23T18:16:05Z</date>
+</dict>
+</plist>
