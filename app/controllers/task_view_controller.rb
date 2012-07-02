@@ -12,24 +12,11 @@ class TaskViewController < UIViewController
   
   def loadView
     self.view = UIView.alloc.initWithFrame(UIScreen.mainScreen.applicationFrame)
-    
-    scroll_view_frame = CGRectMake(0, 0, view.frame.size.width, view.frame.size.height)
-    @scroll_view = TaskListView.alloc.initWithFrame(scroll_view_frame)
-    view.addSubview(@scroll_view)
-    @scroll_view.delegate = self
 
+    add_list_controller
     add_button_views
 
-    # Observe model changes.
-    observe(TaskAddedNotification, action:'handleTaskAdded')
-    observe(TaskChangedNotification, action:'handleTaskChanged')
-    observe(TaskRemovedNotification, action:'handleTaskRemoved')
-    observe(TaskPausedNotification, action:'handleTaskPaused')
-    
     # observe events from ui elements
-    observe(TaskViewTapNotification, action:'handleTaskViewTap')
-    observe(TaskViewRightSwipeNotification, action:'handleTaskViewRightSwipe')
-    observe(TaskViewLeftSwipeNotification, action:'handleTaskViewLeftSwipe')
     observe(UIKeyboardDidShowNotification, action:'handleKeyboardDidShow')
 
     # observe events from tabbar buttons
@@ -38,8 +25,8 @@ class TaskViewController < UIViewController
     observe(ExpandTappedNotification, action:'handleExpandTapped')
     observe(CollapseTappedNotification, action:'handleCollapseTapped')
     
-    @scroll_view.drawTasks(@task_store.tasks)
   end
+  
 
   def handleAddTapped(notification)
     show_task_input
@@ -47,12 +34,10 @@ class TaskViewController < UIViewController
   
   def handleCollapseTapped(notification)
     @collapse_toggle_button.toggle
-    @scroll_view.collapse(@task_store.tasks)
   end
   
   def handleExpandTapped(notification)
     @collapse_toggle_button.toggle
-    @scroll_view.expand(@task_store.tasks)
   end
   
   def handleEmailTapped(notification)
@@ -78,47 +63,6 @@ class TaskViewController < UIViewController
     controller.dismissModalViewControllerAnimated(true)
   end
 
-  def handleTaskViewTap(notification)
-    @task_store.toggle_dotted(notification.object.taskID)
-  end
-  
-  def handleTaskViewRightSwipe(notification)
-    @task_store.remove_task(notification.object.taskID)
-  end
-  
-  def handleTaskViewLeftSwipe(notification)
-    @task_store.pause_task(notification.object.taskID)
-  end
-  
-  def handleTaskAdded(notification)
-    #For now, we just redraw everything
-    redraw_tasks
-  end
-  
-  def handleTaskChanged(notification)
-    #For now, we just redraw everything
-    redraw_tasks
-  end
-  
-  def handleTaskRemoved(notification)
-    #For now, we just redraw everything
-    redraw_tasks
-  end
-  
-  def handleTaskPaused(notification)
-    #For now, we just redraw everything
-    redraw_tasks
-  end
-  
-  def redraw_tasks
-    @scroll_view.redraw_tasks(@task_store.tasks)
-  end
-  
-  def scrollViewDidScroll(scrollView)
-    # As currently designed, this is a display memory hog.
-    # Here is where we would allocate or deallocate views based on the contentOffset
-    @scroll_view.adjust_selected
-  end 
   
   # presenter method
   def show_task_input
@@ -198,6 +142,15 @@ class TaskViewController < UIViewController
 
     self.view.addSubview(pull_tab)
   end
+  
+  def add_list_controller
+    @list_controller = TaskListViewController.alloc.initWithStore(@task_store)
+    self.addChildViewController(@list_controller)
+    @list_controller.didMoveToParentViewController(self)
+    @list_controller.view.frame = CGRectMake(0,0,view.frame.size.width,view.frame.size.height)
+    self.view.addSubview(@list_controller.view)
+  end
+  
   
 end
 
