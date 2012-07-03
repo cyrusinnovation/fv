@@ -14,7 +14,9 @@ class TaskViewController < UIViewController
     self.view = UIView.alloc.initWithFrame(UIScreen.mainScreen.applicationFrame)
 
     add_list_controller
+    add_top_controller
     add_pull_tab_controller
+    
 
     # observe events from ui elements
     observe(UIKeyboardDidShowNotification, action:'handleKeyboardDidShow')
@@ -115,6 +117,12 @@ class TaskViewController < UIViewController
     self.view.addSubview(@pull_tab_controller.view)
   end
   
+  def add_top_controller
+    @top_controller = TopViewController.alloc.init
+    self.addChildViewController(@top_controller)
+    @top_controller.didMoveToParentViewController(self)
+    self.view.addSubview(@top_controller.view)
+  end
   
 end
 
