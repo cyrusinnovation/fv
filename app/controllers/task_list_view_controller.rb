@@ -17,10 +17,10 @@ class TaskListViewController < UIViewController
     observe(CollapseTappedNotification, action:'handleCollapseTapped')
 
     # Observe model changes.
-    observe(TaskAddedNotification, action:'handleTaskAdded')
-    observe(TaskChangedNotification, action:'handleTaskChanged')
-    observe(TaskRemovedNotification, action:'handleTaskRemoved')
-    observe(TaskPausedNotification, action:'handleTaskPaused')
+    observe(TaskAddedNotification, action:'handleModelChange')
+    observe(TaskChangedNotification, action:'handleModelChange')
+    observe(TaskRemovedNotification, action:'handleModelChange')
+    observe(TaskPausedNotification, action:'handleModelChange')
 
     # Observe ui events
     observe(TaskViewTapNotification, action:'handleTaskViewTap')
@@ -38,26 +38,6 @@ class TaskListViewController < UIViewController
   def handleExpandTapped(notification)
     view.expand(@task_store.tasks)
   end
-  
-  def handleTaskAdded(notification)
-    #For now, we just redraw everything
-    redraw_tasks
-  end
-  
-  def handleTaskChanged(notification)
-    #For now, we just redraw everything
-    redraw_tasks
-  end
-  
-  def handleTaskRemoved(notification)
-    #For now, we just redraw everything
-    redraw_tasks
-  end
-  
-  def handleTaskPaused(notification)
-    #For now, we just redraw everything
-    redraw_tasks
-  end
 
   def handleTaskViewTap(notification)
     @task_store.toggle_dotted(notification.object.taskID)
@@ -71,8 +51,7 @@ class TaskListViewController < UIViewController
     @task_store.pause_task(notification.object.taskID)
   end
   
-  
-  def redraw_tasks
+  def handleModelChange(notification)
     view.redraw_tasks(@task_store.tasks)
   end
   

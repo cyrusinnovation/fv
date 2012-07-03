@@ -118,7 +118,7 @@ class TaskViewController < UIViewController
   end
   
   def add_top_controller
-    @top_controller = TopViewController.alloc.init
+    @top_controller = TopViewController.alloc.initWithStore(@task_store)
     self.addChildViewController(@top_controller)
     @top_controller.didMoveToParentViewController(self)
     self.view.addSubview(@top_controller.view)
