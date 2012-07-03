@@ -28,15 +28,6 @@ class TaskListView < UIScrollView
     self.drawTasks(tasks)
   end
   
-  def collapse(tasks)
-    @collapsed = true
-    redraw_tasks(tasks)
-  end
-  
-  def expand(tasks)
-    @collapsed = false
-    redraw_tasks(tasks)
-  end
-  
+
   
 end

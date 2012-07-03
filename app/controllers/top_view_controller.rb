@@ -11,6 +11,8 @@ class TopViewController < UIViewController
       observe(TaskChangedNotification, action:'handleModelChange')
       observe(TaskRemovedNotification, action:'handleModelChange')
       observe(TaskPausedNotification, action:'handleModelChange')
+      observe(TaskListCollapsedNotification, action:'handleModelChange')
+      observe(TaskListExpandedNotification, action:'handleModelChange')
     end
     self
   end

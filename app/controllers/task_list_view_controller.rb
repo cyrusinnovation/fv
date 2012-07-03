@@ -21,6 +21,8 @@ class TaskListViewController < UIViewController
     observe(TaskChangedNotification, action:'handleModelChange')
     observe(TaskRemovedNotification, action:'handleModelChange')
     observe(TaskPausedNotification, action:'handleModelChange')
+    observe(TaskListCollapsedNotification, action:'handleModelChange')
+    observe(TaskListExpandedNotification, action:'handleModelChange')
 
     # Observe ui events
     observe(TaskViewTapNotification, action:'handleTaskViewTap')
@@ -32,11 +34,11 @@ class TaskListViewController < UIViewController
   end
 
   def handleCollapseTapped(notification)
-    view.collapse(@task_store.tasks)
+    @task_store.collapse
   end
   
   def handleExpandTapped(notification)
-    view.expand(@task_store.tasks)
+    @task_store.expand
   end
 
   def handleTaskViewTap(notification)

@@ -14,6 +14,8 @@ module Notifications
   TaskViewLeftSwipeNotification = 'TaskViewLeftSwipe'
   
   ScrollViewMovedNotification = 'ScrollViewMoved'
+  TaskListCollapsedNotification = 'TaskListCollapsed'
+  TaskListExpandedNotification = 'TaskListExpanded'
 
   def observe(notificationName, action:handler)
     NSNotificationCenter.defaultCenter.addObserver(self, selector:"#{handler}:", name:notificationName, object:nil)

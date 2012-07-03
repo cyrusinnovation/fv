@@ -61,6 +61,20 @@ class TaskStore
     context = NSManagedObjectContext.alloc.init
     context.persistentStoreCoordinator = store
     @context = context
+    
+    @collapsed = false
+  end
+
+  def collapse
+    @collapsed = true
+    @tasks = nil
+    publish(TaskListCollapsedNotification)
+  end
+  
+  def expand
+    @collapsed = false
+    @tasks = nil
+    publish(TaskListExpandedNotification)
   end
 
   private
@@ -100,7 +114,12 @@ class TaskStore
     if data == nil
       raise "Error when fetching data: #{error_ptr[0].description}"
     end
-    data
+    
+    if @collapsed
+      return data.select { |task| task.dotted? }
+    else
+      return data
+    end
   end
   
 end
