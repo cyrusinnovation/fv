@@ -1,0 +1,11 @@
+- tap selects and deselects tasks
+- last task is highlighted
+- highlighted task swipe right deletes
+- highlighted task swipe left moves to end of list
+- top of list shows closest selected task above top
+- plus button shows task entry
+- task entry adds a task to end of list
+- collapse hides non-dotted tasks
+- expand shows all tasks
+- expand/collapse button toggles
+- email button composes email view of list
