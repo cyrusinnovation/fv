@@ -41,23 +41,21 @@ class TopViewController < UIViewController
   def update_for_yoffset(y_offset)
     @last_y_offset = y_offset
 
-    logical_y = (y_offset / TaskListView::TaskHeight).floor
-    show_this = @selected_indexes.find { |index| index <= logical_y }
+    row_index = (y_offset / TaskListView::TaskHeight).floor
+    closest_dotted_task_index = @dotted_indexes.find { |index| index <= row_index }
     
-    if show_this.nil?
+    if closest_dotted_task_index.nil?
       @task_view.hidden = true
     else
-      next_thing = @selected_indexes.find { |index| index <= (logical_y + 1) }
-      task = @tasks[show_this]
-      @task_view.update_task(task,42)
+      task = @tasks[closest_dotted_task_index]
+      @task_view.update_task(task)
 
-      if (next_thing != show_this)
-        new_y =  -(y_offset % TaskListView::TaskHeight)
-      else
-        new_y = 0
-      end
+      closest_dotted_task_index_for_next_row = @dotted_indexes.find { |index| index <= (row_index + 1) }
+      is_rolling = closest_dotted_task_index_for_next_row != closest_dotted_task_index
+
+      new_y = is_rolling ? -(y_offset % TaskListView::TaskHeight) : 0
+
       @task_view.frame = CGRectMake(0, new_y, @task_view.frame.size.width, @task_view.frame.size.height)
-      
       @task_view.hidden = false
     end
   end
@@ -65,14 +63,14 @@ class TopViewController < UIViewController
   
   def update_indexes
     @tasks = @task_store.tasks
-    @selected_indexes = []
+    @dotted_indexes = []
     @tasks.each_index do |index|
       task = @tasks[index]
       if task.dotted?
-        @selected_indexes << index
+        @dotted_indexes << index
       end
     end
-    @selected_indexes.reverse!
+    @dotted_indexes.reverse!
   end
 
 end

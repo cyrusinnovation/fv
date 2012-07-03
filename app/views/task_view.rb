@@ -15,11 +15,10 @@ class TaskView < UIView
     self
   end
 
-  def update_task(task, position)
+  def update_task(task)
     @taskID = task.objectID
     @label.text = task.text
     @active = task.active?
-    @position = position
     @label.backgroundColor = self.backgroundColor = background_color(task)
   end
 
@@ -38,11 +37,7 @@ class TaskView < UIView
   def taskID
     @taskID
   end
-  
-  def position
-    @position
-  end
-  
+    
   private 
   
   def background_color(task)
