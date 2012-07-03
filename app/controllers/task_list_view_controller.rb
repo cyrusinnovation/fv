@@ -56,10 +56,7 @@ class TaskListViewController < UIViewController
   end
   
   def scrollViewDidScroll(scrollView)
-    # As currently designed, this is a display memory hog.
-    # Here is where we would allocate or deallocate views based on the contentOffset
     publish(ScrollViewMovedNotification)
-    view.adjust_selected
   end 
   
   
