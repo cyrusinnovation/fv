@@ -7,6 +7,10 @@ class TaskView < UIView
       @label = UILabel.alloc.initWithFrame(CGRectMake(Padding,0, frame.size.width - (Padding * 2), frame.size.height - 1))
       addSubview(@label)
       addGestureRecognizer(UITapGestureRecognizer.alloc.initWithTarget(self, action:"handleTap"))
+      addGestureRecognizer(UISwipeGestureRecognizer.alloc.initWithTarget(self, action:"handleRightSwipe"))
+      leftRecognizer = UISwipeGestureRecognizer.alloc.initWithTarget(self, action:"handleLeftSwipe")
+      leftRecognizer.direction = UISwipeGestureRecognizerDirectionLeft
+      addGestureRecognizer(leftRecognizer)
     end
     self
   end
@@ -14,20 +18,9 @@ class TaskView < UIView
   def update_task(task, position)
     @taskID = task.objectID
     @label.text = task.text
-
-    if task.active?
-      addGestureRecognizer(UISwipeGestureRecognizer.alloc.initWithTarget(self, action:"handleRightSwipe"))
-      leftRecognizer = UISwipeGestureRecognizer.alloc.initWithTarget(self, action:"handleLeftSwipe")
-      leftRecognizer.direction = UISwipeGestureRecognizerDirectionLeft
-      addGestureRecognizer(leftRecognizer)
-      @label.backgroundColor = self.backgroundColor = UIColor.redColor
-    elsif task.dotted?
-      @label.backgroundColor = self.backgroundColor = UIColor.grayColor
-    else
-      @label.backgroundColor = self.backgroundColor = UIColor.whiteColor
-    end
-    
+    @active = task.active?
     @position = position
+    @label.backgroundColor = self.backgroundColor = background_color(task)
   end
 
   def handleTap
@@ -35,11 +28,11 @@ class TaskView < UIView
   end
   
   def handleRightSwipe
-    publish(TaskViewRightSwipeNotification)
+    publish(TaskViewRightSwipeNotification) if @active
   end
   
   def handleLeftSwipe
-    publish(TaskViewLeftSwipeNotification)
+    publish(TaskViewLeftSwipeNotification) if @active
   end
   
   def taskID
@@ -48,5 +41,13 @@ class TaskView < UIView
   
   def position
     @position
+  end
+  
+  private 
+  
+  def background_color(task)
+    return UIColor.redColor if task.active?
+    return UIColor.grayColor if task.dotted?
+    return UIColor.whiteColor
   end
 end
