@@ -14,7 +14,7 @@ class TaskViewController < UIViewController
     self.view = UIView.alloc.initWithFrame(UIScreen.mainScreen.applicationFrame)
 
     add_list_controller
-    add_top_controller
+    # add_top_controller
     add_pull_tab_controller
     
 

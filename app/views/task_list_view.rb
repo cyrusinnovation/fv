@@ -26,7 +26,8 @@ class TaskListView < UIScrollView
       task = tasks[index]
       y = y_for_view(index, selected_indexes, yoffset)
       task_frame = CGRectMake(0, y, self.frame.size.width, TaskHeight)
-      subview = TaskView.alloc.initWithFrame(task_frame, task:task, position:index)
+      subview = TaskView.alloc.initWithFrame(task_frame)
+      subview.update_task(task,index)
       task_views << subview
       self.addSubview(subview)
     end

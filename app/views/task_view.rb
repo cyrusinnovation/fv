@@ -2,17 +2,16 @@ class TaskView < UIView
   include Notifications
   Padding = 5
   
-  def initWithFrame(frame, task:task, position:position)
-    if initWithFrame(frame)
+  def initWithFrame(frame)
+    if super
       @label = UILabel.alloc.initWithFrame(CGRectMake(Padding,0, frame.size.width - (Padding * 2), frame.size.height - 1))
       addSubview(@label)
-      update(task, position)
       addGestureRecognizer(UITapGestureRecognizer.alloc.initWithTarget(self, action:"handleTap"))
     end
     self
   end
 
-  def update(task, position)
+  def update_task(task, position)
     @taskID = task.objectID
     @label.text = task.text
 
