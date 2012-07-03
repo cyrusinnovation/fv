@@ -14,7 +14,7 @@ class TaskViewController < UIViewController
     self.view = UIView.alloc.initWithFrame(UIScreen.mainScreen.applicationFrame)
 
     add_list_controller
-    add_button_views
+    add_pull_tab_controller
 
     # observe events from ui elements
     observe(UIKeyboardDidShowNotification, action:'handleKeyboardDidShow')
@@ -22,9 +22,7 @@ class TaskViewController < UIViewController
     # observe events from tabbar buttons
     observe(AddTappedNotification, action:'handleAddTapped')
     observe(EmailTappedNotification, action:'handleEmailTapped')
-    observe(ExpandTappedNotification, action:'handleExpandTapped')
-    observe(CollapseTappedNotification, action:'handleCollapseTapped')
-    
+
   end
   
 
@@ -32,14 +30,7 @@ class TaskViewController < UIViewController
     show_task_input
   end
   
-  def handleCollapseTapped(notification)
-    @collapse_toggle_button.toggle
-  end
-  
-  def handleExpandTapped(notification)
-    @collapse_toggle_button.toggle
-  end
-  
+
   def handleEmailTapped(notification)
     picker = MFMailComposeViewController.alloc.init
     picker.mailComposeDelegate = self
@@ -84,7 +75,6 @@ class TaskViewController < UIViewController
   def textFieldDidEndEditing(text_field)
     @task_store.add_task(text_field.text)
     hide_task_input
-    redraw_tasks
     true
   end
   
@@ -110,45 +100,19 @@ class TaskViewController < UIViewController
   
   private
   
-  def lower_right_frame(subview, padding:padding)
-    CGRectMake(view.frame.size.width - padding - subview.frame.size.width, 
-               view.frame.size.height - padding - subview.frame.size.height, 
-               subview.frame.size.width, 
-               subview.frame.size.height)    
-  end
-  
-  def lower_left_frame(subview, padding:padding)
-    CGRectMake(padding, 
-               view.frame.size.height - padding - subview.frame.size.height, 
-               subview.frame.size.width, 
-               subview.frame.size.height)    
-  end
-  
-  def upper_right_frame(subview, padding:padding)
-    CGRectMake(view.frame.size.width - padding - subview.frame.size.width, 
-               padding, 
-               subview.frame.size.width, 
-               subview.frame.size.height)    
-  end
-
-  def add_button_views
-    add_button = ButtonView.alloc.initWithImageNamed("add_button.png", tapNotification:AddTappedNotification)
-    email_button = ButtonView.alloc.initWithImageNamed("email_button.png", tapNotification:EmailTappedNotification)
-    collapse_button = ButtonView.alloc.initWithImageNamed("collapse_button.png", tapNotification:CollapseTappedNotification)
-    expand_button = ButtonView.alloc.initWithImageNamed("expand_button.png", tapNotification:ExpandTappedNotification)
-    @collapse_toggle_button = ToggleButtonView.alloc.initWithFirstView(collapse_button, secondView:expand_button)
-
-    pull_tab = PullTabView.alloc.initWithButtons([add_button, email_button, @collapse_toggle_button])
-
-    self.view.addSubview(pull_tab)
-  end
-  
   def add_list_controller
     @list_controller = TaskListViewController.alloc.initWithStore(@task_store)
     self.addChildViewController(@list_controller)
     @list_controller.didMoveToParentViewController(self)
     @list_controller.view.frame = CGRectMake(0,0,view.frame.size.width,view.frame.size.height)
     self.view.addSubview(@list_controller.view)
+  end
+  
+  def add_pull_tab_controller
+    @pull_tab_controller = PullTabViewController.alloc.init
+    self.addChildViewController(@pull_tab_controller)
+    @pull_tab_controller.didMoveToParentViewController(self)
+    self.view.addSubview(@pull_tab_controller.view)
   end
   
   
