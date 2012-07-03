@@ -40,15 +40,24 @@ class TopViewController < UIViewController
   
   def update_for_yoffset(y_offset)
     @last_y_offset = y_offset
-    
+
     logical_y = (y_offset / TaskListView::TaskHeight).floor
     show_this = @selected_indexes.find { |index| index <= logical_y }
     
     if show_this.nil?
       @task_view.hidden = true
     else
+      next_thing = @selected_indexes.find { |index| index <= (logical_y + 1) }
       task = @tasks[show_this]
       @task_view.update_task(task,42)
+
+      if (next_thing != show_this)
+        new_y =  -(y_offset % TaskListView::TaskHeight)
+      else
+        new_y = 0
+      end
+      @task_view.frame = CGRectMake(0, new_y, @task_view.frame.size.width, @task_view.frame.size.height)
+      
       @task_view.hidden = false
     end
   end
