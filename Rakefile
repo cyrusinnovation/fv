@@ -6,9 +6,15 @@ Motion::Project::App.setup do |app|
   app.name = 'fv'
   app.frameworks += ['CoreData', 'MessageUI']
 
-  app.files_dependencies 'app/models/task_store.rb' => 'app/notifications.rb'
-  app.files_dependencies 'app/controllers/task_view_controller.rb' => 'app/notifications.rb'
-  app.files_dependencies 'app/controllers/task_list_view_controller.rb' => 'app/notifications.rb'
-  app.files_dependencies 'app/controllers/pull_tab_view_controller.rb' => 'app/notifications.rb'
+  [
+    'app/models/task_store.rb', 
+    'app/controllers/task_view_controller.rb',
+    'app/controllers/task_list_view_controller.rb',
+    'app/controllers/pull_tab_view_controller.rb',
+    'app/controllers/top_view_controller.rb'
+  ].each do |file|
+     app.files_dependencies file => 'app/notifications.rb' 
+  end
+
 
 end
