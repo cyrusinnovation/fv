@@ -1,8 +1,6 @@
 class TaskViewController < UIViewController
   include Notifications
   
-  TextEntryHeight = 40
-  
   def initWithStore(task_store)
     if init
       @task_store = task_store
@@ -17,21 +15,25 @@ class TaskViewController < UIViewController
     add_top_controller
     add_pull_tab_controller
     
-
-    # observe events from ui elements
-    observe(UIKeyboardDidShowNotification, action:'handleKeyboardDidShow')
-
     # observe events from tabbar buttons
     observe(AddTappedNotification, action:'handleAddTapped')
     observe(EmailTappedNotification, action:'handleEmailTapped')
-
+    
+    # observe completion of modal add form
+    observe(AddCompleteNotification, action:'handleAddComplete')
+    
   end
   
 
   def handleAddTapped(notification)
-    show_task_input
+    @add_form_controller = AddTaskViewController.alloc.initWithStore(@task_store)
+    presentModalViewController(@add_form_controller, animated:true)
   end
   
+  def handleAddComplete(notification)
+    @add_form_controller.dismissModalViewControllerAnimated(true)
+    @add_form_controller = nil
+  end
 
   def handleEmailTapped(notification)
     picker = MFMailComposeViewController.alloc.init
@@ -57,48 +59,7 @@ class TaskViewController < UIViewController
   end
 
   
-  # presenter method
-  def show_task_input
-    @editing_task = true
 
-    text_field_frame = CGRectMake(0, view.frame.size.height - TextEntryHeight, view.frame.size.width, TextEntryHeight)
-    @text_field = TaskEntryView.alloc.initWithFrame(text_field_frame)
-    @text_field.delegate = self
-    
-    view.addSubview(@text_field)
-    @text_field.becomeFirstResponder
-  end
-  
-  def textFieldShouldReturn(text_field)
-    text_field.resignFirstResponder
-    true
-  end
-  
-  def textFieldDidEndEditing(text_field)
-    @task_store.add_task(text_field.text)
-    hide_task_input
-    true
-  end
-  
-  def hide_task_input
-    @text_field.removeFromSuperview
-    @text_field = nil    
-    @editing_task = false
-  end
-  
-  
-  def handleKeyboardDidShow(notification)
-    adjust_input_size_to_account_for_keyboard(notification.keyboard_height) if @editing_task
-  end
-  
-  
-  def adjust_input_size_to_account_for_keyboard(keyboard_height)
-    new_frame = CGRectMake(0, view.frame.size.height - TextEntryHeight - keyboard_height, view.frame.size.width, TextEntryHeight)
-    UIView.beginAnimations('animationID', context:nil)
-    @text_field.frame = new_frame
-    UIView.commitAnimations
-  end
-  
   
   private
   

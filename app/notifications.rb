@@ -3,6 +3,9 @@ module Notifications
   EmailTappedNotification = 'EmailTapped'
   CollapseTappedNotification = 'CollapseTapped'
   ExpandTappedNotification = 'ExpandTapped'
+  
+  AddCompleteNotification = 'AddComplete'
+  
 
   TaskAddedNotification = 'TaskAdded'
   TaskChangedNotification = 'TaskChanged'

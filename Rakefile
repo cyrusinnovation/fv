@@ -8,6 +8,7 @@ Motion::Project::App.setup do |app|
 
   [
     'app/models/task_store.rb', 
+    'app/controllers/add_task_view_controller.rb',
     'app/controllers/task_view_controller.rb',
     'app/controllers/task_list_view_controller.rb',
     'app/controllers/pull_tab_view_controller.rb',
