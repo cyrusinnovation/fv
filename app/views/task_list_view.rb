@@ -1,15 +1,15 @@
 class TaskListView < UIScrollView
-  TaskHeight = 69
+
   
   def drawTasks(tasks)
-    self.contentSize = CGSizeMake(self.frame.size.width, tasks.size * TaskHeight)
+    total_height = 0
     tasks.each_index do |index|
       task = tasks[index]
-      task_frame = CGRectMake(0, TaskHeight * index, self.frame.size.width, TaskHeight)
-      subview = TaskView.alloc.initWithFrame(task_frame)
-      subview.update_task(task)
+      subview = TaskView.alloc.initWithTask(task, andY:total_height)
       self.addSubview(subview)
+      total_height += subview.frame.size.height
     end
+    self.contentSize = CGSizeMake(self.frame.size.width, total_height)
 
   end
   

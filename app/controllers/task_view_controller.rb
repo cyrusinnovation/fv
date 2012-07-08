@@ -12,18 +12,50 @@ class TaskViewController < UIViewController
     self.view = UIView.alloc.initWithFrame(UIScreen.mainScreen.applicationFrame)
 
     add_list_controller
-    add_top_controller
     add_pull_tab_controller
     
     # observe events from tabbar buttons
-    observe(AddTappedNotification, action:'handleAddTapped')
-    observe(EmailTappedNotification, action:'handleEmailTapped')
+    observe(PullTabViewController::AddTappedNotification, action:'handleAddTapped')
+    observe(PullTabViewController::CameraTappedNotification, action:'handleCameraTapped')
+    observe(PullTabViewController::EmailTappedNotification, action:'handleEmailTapped')
     
     # observe completion of modal add form
     observe(AddCompleteNotification, action:'handleAddComplete')
     
   end
-  
+
+  def handleCameraTapped(notification)
+    imagePicker = UIImagePickerController.alloc.init
+
+    if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceTypeCamera)
+      imagePicker.sourceType =  UIImagePickerControllerSourceTypeCamera
+    else
+      imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary
+    end
+
+    imagePicker.mediaTypes = [KUTTypeImage]
+    imagePicker.delegate = self
+    imagePicker.allowsImageEditing = false
+    presentModalViewController(imagePicker, animated:true)
+  end
+
+  # UIImagePickerControllerDelegate methods
+
+  def imagePickerControllerDidCancel(picker)
+    dismissModalViewControllerAnimated(true)
+  end
+
+  def imagePickerController(picker, didFinishPickingMediaWithInfo:info) 
+    mediaType = info[UIImagePickerControllerMediaType]
+    if mediaType == KUTTypeImage
+      editedImage = info[UIImagePickerControllerEditedImage]
+      originalImage = info[UIImagePickerControllerOriginalImage]
+      @task_store.add_photo_task(editedImage || originalImage)
+    end
+    dismissModalViewControllerAnimated(true)
+  end
+
+
 
   def handleAddTapped(notification)
     @add_form_controller = AddTaskViewController.alloc.initWithStore(@task_store)
@@ -76,13 +108,6 @@ class TaskViewController < UIViewController
     self.addChildViewController(@pull_tab_controller)
     @pull_tab_controller.didMoveToParentViewController(self)
     self.view.addSubview(@pull_tab_controller.view)
-  end
-  
-  def add_top_controller
-    @top_controller = TopViewController.alloc.initWithStore(@task_store)
-    self.addChildViewController(@top_controller)
-    @top_controller.didMoveToParentViewController(self)
-    self.view.addSubview(@top_controller.view)
   end
   
 end

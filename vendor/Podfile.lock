@@ -1,0 +1,5 @@
+PODS:
+  - NYXImagesKit (2.1.1)
+
+DEPENDENCIES:
+  - NYXImagesKit

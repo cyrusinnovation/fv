@@ -8,7 +8,7 @@ class TaskStore
     @tasks ||= load_tasks
   end
   
-  def add_task(text)
+  def add_text_task(text)
     return if text == ''
 
     task = NSEntityDescription.insertNewObjectForEntityForName('Task', inManagedObjectContext:@context)
@@ -16,12 +16,28 @@ class TaskStore
     task.text = text
     task.dotted = false
     task.active = false
+    task.photo = false
+    save
+    publish(TaskAddedNotification)
+  end
+  
+  def add_photo_task(image)
+    task = NSEntityDescription.insertNewObjectForEntityForName('Task', inManagedObjectContext:@context)
+    task.date_moved = NSDate.date
+    task.dotted = false
+    task.active = false
+    task.photo = true
+    task.photo_uuid = CFUUIDCreateString(KCFAllocatorDefault, CFUUIDCreate(KCFAllocatorDefault))
+    scaled_image = ImageStore.saveImage(image, forTask:task)
+    task.photo_width = scaled_image.size.width
+    task.photo_height = scaled_image.size.height
     save
     publish(TaskAddedNotification)
   end
   
   def remove_task(taskID)
     task = @context.objectWithID(taskID)
+    ImageStore.deleteImageForTask(task) if task.photo?
     @context.deleteObject(task)
     save
     publish(TaskRemovedNotification)

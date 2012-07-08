@@ -1,0 +1,93 @@
+<?xml version='1.0'?>
+<signatures version='1.0'>
+<enum name='NYXCropModeBottomCenter' value='4'/>
+<enum name='NYXCropModeBottomLeft' value='3'/>
+<enum name='NYXCropModeBottomRight' value='5'/>
+<enum name='NYXCropModeCenter' value='8'/>
+<enum name='NYXCropModeLeftCenter' value='6'/>
+<enum name='NYXCropModeRightCenter' value='7'/>
+<enum name='NYXCropModeTopCenter' value='1'/>
+<enum name='NYXCropModeTopLeft' value='0'/>
+<enum name='NYXCropModeTopRight' value='2'/>
+<enum name='NYXImageTypeBMP' value='3'/>
+<enum name='NYXImageTypeGIF' value='2'/>
+<enum name='NYXImageTypeJPEG' value='1'/>
+<enum name='NYXImageTypePNG' value='0'/>
+<enum name='NYXImageTypeTIFF' value='4'/>
+<enum name='kNyxMaxPixelComponentValue' value='255'/>
+<enum name='kNyxMinPixelComponentValue' value='0'/>
+<enum name='kNyxNumberOfComponentsPerARBGPixel' value='4'/>
+<enum name='kNyxNumberOfComponentsPerGreyPixel' value='3'/>
+<function name='NYXCreateARGBBitmapContext'>
+<arg declared_type='size_t' const='true' name='width' type='L'/>
+<arg declared_type='size_t' const='true' name='height' type='L'/>
+<arg declared_type='size_t' const='true' name='bytesPerRow' type='L'/>
+<retval declared_type='int' type='i'/>
+</function>
+<function name='NYXCreateGradientImage'>
+<arg declared_type='size_t' const='true' name='pixelsWide' type='L'/>
+<arg declared_type='size_t' const='true' name='pixelsHigh' type='L'/>
+<arg declared_type='int' const='true' name='fromAlpha' type='i'/>
+<arg declared_type='int' const='true' name='toAlpha' type='i'/>
+<retval declared_type='int' type='i'/>
+</function>
+<function name='NYXGetCIContext'>
+<retval declared_type='int*' type='^i'/>
+</function>
+<function name='NYXGetRGBColorSpace'>
+<retval declared_type='int' type='i'/>
+</function>
+<function name='NYXImagesKitRelease'>
+<retval declared_type='void' type='v'/>
+</function>
+<class name='NSObject'>
+<method selector='imageDownloadCompletedWithImage:'>
+<arg declared_type='id' name='img' index='0' type='@'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='imageDownloadFailedWithData:'>
+<arg declared_type='NSData*' name='data' index='0' type='@'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
+<class name='NYXProgressiveImageView'>
+<method selector='cacheTime'>
+<retval declared_type='NSTimeInterval' type='d'/>
+</method>
+<method selector='id'>
+<retval declared_type='int' type='i'/>
+</method>
+<method selector='isCaching'>
+<retval declared_type='BOOL' type='B'/>
+</method>
+<method selector='loadImageAtURL:'>
+<arg declared_type='NSURL*' name='url' index='0' type='@'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method class_method='true' selector='resetImageCache'>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setCacheTime:'>
+<arg declared_type='NSTimeInterval' name='cacheTime' index='0' type='d'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setCaching:'>
+<arg declared_type='BOOL' name='caching' index='0' type='B'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setId:'>
+<arg declared_type='int' name='id' index='0' type='i'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
+<informal_protocol name='NYXProgressiveImageViewDelegate'>
+<method type='v12@0:4@8' selector='imageDownloadCompletedWithImage:'>
+<arg declared_type='id' name='img' index='0' type='@'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method type='v12@0:4@8' selector='imageDownloadFailedWithData:'>
+<arg declared_type='NSData*' name='data' index='0' type='@'/>
+<retval declared_type='void' type='v'/>
+</method>
+</informal_protocol>
+</signatures>

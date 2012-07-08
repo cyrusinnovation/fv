@@ -1,4 +1,0 @@
-class TopView < UIView
-  
-
-end

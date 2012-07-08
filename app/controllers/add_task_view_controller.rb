@@ -26,7 +26,7 @@ class AddTaskViewController < UIViewController
   end
     
   def textFieldDidEndEditing(text_field)
-    @task_store.add_task(text_field.text)
+    @task_store.add_text_task(text_field.text)
     publish(AddCompleteNotification)
     true
   end

@@ -13,8 +13,8 @@ class TaskListViewController < UIViewController
     view.delegate = self
 
     # Observe button actions
-    observe(ExpandTappedNotification, action:'handleExpandTapped')
-    observe(CollapseTappedNotification, action:'handleCollapseTapped')
+    observe(PullTabViewController::ExpandTappedNotification, action:'handleExpandTapped')
+    observe(PullTabViewController::CollapseTappedNotification, action:'handleCollapseTapped')
 
     # Observe model changes.
     observe(TaskAddedNotification, action:'handleModelChange')
