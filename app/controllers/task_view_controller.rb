@@ -74,7 +74,11 @@ class TaskViewController < UIViewController
     message = ""
     @task_store.tasks.each do |task|
       message << (task.dotted? ? "* " : "  ")
-      message << task.text << "\n"
+      if task.photo?
+        message << "[photo]" << "\n"
+      else
+        message << task.text << "\n"
+      end
     end
     subject = "fv list"
 
