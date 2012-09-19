@@ -1,7 +1,6 @@
 $:.unshift("/Library/RubyMotion/lib")
 require 'motion/project'
 require 'motion-cocoapods'
-require 'motion-testflight'
 require 'bubble-wrap'
 
 Motion::Project::App.setup do |app|
@@ -14,9 +13,6 @@ Motion::Project::App.setup do |app|
   end
   
   app.files_dependencies "app/controllers/task_view_controller.rb" => "app/views/task_view.rb"
-  app.testflight.sdk = 'vendor/TestFlight'
-  app.testflight.api_token = 'dc7269eba4a7c6413f36e3108b2535b8_NTI2OTk5MjAxMi0wNy0xMCAxMTo1MDoxOC4yNjU4MTQ'
-  app.testflight.team_token = 'e66b41f13e73851791644ec30232d4e0_MTA4NjYzMjAxMi0wNy0xMCAxMTo1NDo1Ny40MjcxODY'
   
   app.codesign_certificate = 'iPhone Distribution: Cyrus Innovation'
   app.identifier = 'com.cyrusinnovation.fv'
