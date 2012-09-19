@@ -1,5 +1,11 @@
 class TaskStore
-  include Notifications
+
+  TaskAddedNotification = 'TaskAdded'
+  TaskChangedNotification = 'TaskChanged'
+  TaskRemovedNotification = 'TaskRemoved'
+  TaskPausedNotification = 'TaskPaused'
+  TaskListCollapsedNotification = 'TaskListCollapsed'
+  TaskListExpandedNotification = 'TaskListExpanded'
   
   DB_FALSE = 0
   DB_TRUE = 1
@@ -18,7 +24,7 @@ class TaskStore
     task.active = false
     task.photo = false
     save
-    publish(TaskAddedNotification)
+    App.notification_center.post(TaskAddedNotification)
   end
   
   def add_photo_task(image)
@@ -32,7 +38,7 @@ class TaskStore
     task.photo_width = scaled_image.size.width
     task.photo_height = scaled_image.size.height
     save
-    publish(TaskAddedNotification)
+    App.notification_center.post(TaskAddedNotification)
   end
   
   def remove_task(taskID)
@@ -40,7 +46,7 @@ class TaskStore
     ImageStore.deleteImageForTask(task) if task.photo?
     @context.deleteObject(task)
     save
-    publish(TaskRemovedNotification)
+    App.notification_center.post(TaskRemovedNotification)
   end
   
   def pause_task(taskID)
@@ -48,7 +54,7 @@ class TaskStore
     task.dotted = 0
     task.date_moved = NSDate.date
     save
-    publish(TaskPausedNotification)
+    App.notification_center.post(TaskPausedNotification)
   end
   
   def toggle_dotted(taskID)
@@ -60,7 +66,7 @@ class TaskStore
       task.dotted = DB_TRUE
     end
     save
-    publish(TaskChangedNotification)
+    App.notification_center.post(TaskChangedNotification)
   end
   
   def initialize
@@ -84,13 +90,13 @@ class TaskStore
   def collapse
     @collapsed = true
     @tasks = nil
-    publish(TaskListCollapsedNotification)
+    App.notification_center.post(TaskListCollapsedNotification)
   end
   
   def expand
     @collapsed = false
     @tasks = nil
-    publish(TaskListExpandedNotification)
+    App.notification_center.post(TaskListExpandedNotification)
   end
 
   private

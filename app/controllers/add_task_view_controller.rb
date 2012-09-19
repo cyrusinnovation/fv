@@ -1,6 +1,7 @@
 class AddTaskViewController < UIViewController
-  include Notifications
-  
+
+  AddCompleteNotification = 'AddComplete'
+
   TextEntryHeight = 40
   
   def initWithStore(task_store)
@@ -27,7 +28,7 @@ class AddTaskViewController < UIViewController
     
   def textFieldDidEndEditing(text_field)
     @task_store.add_text_task(text_field.text)
-    publish(AddCompleteNotification)
+    App.notification_center.post(AddCompleteNotification)
     true
   end
 

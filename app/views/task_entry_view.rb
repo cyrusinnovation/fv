@@ -1,5 +1,4 @@
 class TaskEntryView < UITextField
-  include Notifications
   
   def initWithFrame(frame)
     if super

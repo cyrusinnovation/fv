@@ -1,5 +1,9 @@
 class TaskView < UIView
-  include Notifications
+
+  TaskViewTapNotification = 'TaskViewTap'
+  TaskViewRightSwipeNotification = 'TaskViewRightSwipe'
+  TaskViewLeftSwipeNotification = 'TaskViewLeftSwipe'
+
   Padding = 5
   TaskHeight = 69
   
@@ -38,15 +42,15 @@ class TaskView < UIView
   end
 
   def handleTap
-    publish(TaskViewTapNotification)
+    App.notification_center.post(TaskViewTapNotification, self)
   end
   
   def handleRightSwipe
-    publish(TaskViewRightSwipeNotification) if @active
+    App.notification_center.post(TaskViewRightSwipeNotification, self) if @active
   end
   
   def handleLeftSwipe
-    publish(TaskViewLeftSwipeNotification) if @active
+    App.notification_center.post(TaskViewLeftSwipeNotification, self) if @active
   end
   
   def taskID

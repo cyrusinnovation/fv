@@ -1,5 +1,4 @@
 class PullTabViewController < UIViewController
-  include Notifications
 
   AddTappedNotification = 'AddTapped'
   ExpandTappedNotification = 'ExpandTapped'
@@ -18,17 +17,13 @@ class PullTabViewController < UIViewController
 
     self.view = PullTabView.alloc.initWithButtons([add_button, camera_button, email_button, @collapse_toggle_button])
 
-    observe(ExpandTappedNotification, action:'handleExpandTapped')
-    observe(CollapseTappedNotification, action:'handleCollapseTapped')
+    App.notification_center.observe(ExpandTappedNotification) do |notification|
+      @collapse_toggle_button.toggle
+    end
+    
+    App.notification_center.observe(CollapseTappedNotification) do |notification|
+      @collapse_toggle_button.toggle
+    end
   end
-
-  def handleCollapseTapped(notification)
-    @collapse_toggle_button.toggle
-  end
-  
-  def handleExpandTapped(notification)
-    @collapse_toggle_button.toggle
-  end
-
 
 end

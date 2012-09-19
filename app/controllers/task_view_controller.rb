@@ -1,5 +1,4 @@
 class TaskViewController < UIViewController
-  include Notifications
   
   def initWithStore(task_store)
     if init
@@ -15,16 +14,28 @@ class TaskViewController < UIViewController
     add_pull_tab_controller
     
     # observe events from tabbar buttons
-    observe(PullTabViewController::AddTappedNotification, action:'handleAddTapped')
-    observe(PullTabViewController::CameraTappedNotification, action:'handleCameraTapped')
-    observe(PullTabViewController::EmailTappedNotification, action:'handleEmailTapped')
+    App.notification_center.observe(PullTabViewController::AddTappedNotification) do |notification|
+      handleAddTapped
+    end
+    App.notification_center.observe(PullTabViewController::CameraTappedNotification) do |notification|
+      handleCameraTapped
+    end
+    App.notification_center.observe(PullTabViewController::EmailTappedNotification) do |notification|
+      handleEmailTapped
+    end
     
     # observe completion of modal add form
-    observe(AddCompleteNotification, action:'handleAddComplete')
-    
+    App.notification_center.observe(AddTaskViewController::AddCompleteNotification) do |notification|
+      handleAddComplete
+    end
   end
 
-  def handleCameraTapped(notification)
+  def handleAddComplete
+    @add_form_controller.dismissModalViewControllerAnimated(true)
+    @add_form_controller = nil
+  end
+
+  def handleCameraTapped
     imagePicker = UIImagePickerController.alloc.init
 
     if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceTypeCamera)
@@ -55,19 +66,12 @@ class TaskViewController < UIViewController
     dismissModalViewControllerAnimated(true)
   end
 
-
-
-  def handleAddTapped(notification)
+  def handleAddTapped
     @add_form_controller = AddTaskViewController.alloc.initWithStore(@task_store)
     presentModalViewController(@add_form_controller, animated:true)
   end
-  
-  def handleAddComplete(notification)
-    @add_form_controller.dismissModalViewControllerAnimated(true)
-    @add_form_controller = nil
-  end
 
-  def handleEmailTapped(notification)
+  def handleEmailTapped
     picker = MFMailComposeViewController.alloc.init
     picker.mailComposeDelegate = self
 

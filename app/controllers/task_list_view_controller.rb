@@ -1,5 +1,4 @@
 class TaskListViewController < UIViewController
-  include Notifications
 
   def initWithStore(task_store)
     if init
@@ -13,31 +12,52 @@ class TaskListViewController < UIViewController
     view.delegate = self
 
     # Observe button actions
-    observe(PullTabViewController::ExpandTappedNotification, action:'handleExpandTapped')
-    observe(PullTabViewController::CollapseTappedNotification, action:'handleCollapseTapped')
+    App.notification_center.observe(PullTabViewController::ExpandTappedNotification) do |notification|
+      handleExpandTapped
+    end
+    App.notification_center.observe(PullTabViewController::CollapseTappedNotification  ) do |notification|
+      handleCollapseTapped
+    end
 
     # Observe model changes.
-    observe(TaskAddedNotification, action:'handleModelChange')
-    observe(TaskChangedNotification, action:'handleModelChange')
-    observe(TaskRemovedNotification, action:'handleModelChange')
-    observe(TaskPausedNotification, action:'handleModelChange')
-    observe(TaskListCollapsedNotification, action:'handleModelChange')
-    observe(TaskListExpandedNotification, action:'handleModelChange')
+    App.notification_center.observe(TaskStore::TaskAddedNotification) do |notification|
+      handleModelChange
+    end
+    App.notification_center.observe(TaskStore::TaskChangedNotification) do |notification|
+      handleModelChange
+    end
+    App.notification_center.observe(TaskStore::TaskRemovedNotification) do |notification|
+      handleModelChange
+    end
+    App.notification_center.observe(TaskStore::TaskPausedNotification) do |notification|
+      handleModelChange
+    end
+    App.notification_center.observe(TaskStore::TaskListCollapsedNotification) do |notification|
+      handleModelChange
+    end
+    App.notification_center.observe(TaskStore::TaskListExpandedNotification) do |notification|
+      handleModelChange
+    end
 
     # Observe ui events
-    observe(TaskViewTapNotification, action:'handleTaskViewTap')
-    observe(TaskViewRightSwipeNotification, action:'handleTaskViewRightSwipe')
-    observe(TaskViewLeftSwipeNotification, action:'handleTaskViewLeftSwipe')
-
+    App.notification_center.observe(TaskView::TaskViewTapNotification) do |notification|
+      handleTaskViewTap(notification)
+    end
+    App.notification_center.observe(TaskView::TaskViewRightSwipeNotification) do |notification|
+      handleTaskViewRightSwipe(notification)
+    end
+    App.notification_center.observe(TaskView::TaskViewLeftSwipeNotification) do |notification|
+      handleTaskViewLeftSwipe(notification)
+    end
 
     view.drawTasks(@task_store.tasks)
   end
 
-  def handleCollapseTapped(notification)
+  def handleCollapseTapped
     @task_store.collapse
   end
   
-  def handleExpandTapped(notification)
+  def handleExpandTapped
     @task_store.expand
   end
 
@@ -53,13 +73,9 @@ class TaskListViewController < UIViewController
     @task_store.pause_task(notification.object.taskID)
   end
   
-  def handleModelChange(notification)
+  def handleModelChange
     view.redraw_tasks(@task_store.tasks)
   end
-  
-  def scrollViewDidScroll(scrollView)
-    publish(ScrollViewMovedNotification)
-  end 
   
   
 end

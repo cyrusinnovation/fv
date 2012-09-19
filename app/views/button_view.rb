@@ -1,5 +1,4 @@
 class ButtonView < UIImageView
-  include Notifications
   
   def initWithImageNamed(imageName, tapNotification:notification)
     @notification = notification
@@ -13,7 +12,7 @@ class ButtonView < UIImageView
   end
   
   def handleTap
-    publish(@notification)
+    App.notification_center.post(@notification)
   end  
   
 end
