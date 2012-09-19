@@ -1,1 +1,2 @@
-Move notifications for taskviewcontroller instead of taskview.
+- Move notifications for taskviewcontroller instead of taskview.
+- Direction swipe handling with bubblewrap is still too verbose

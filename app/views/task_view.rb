@@ -7,17 +7,19 @@ class TaskView < UIView
   Padding = 5
   TaskHeight = 69
   
-  
-  
   def initWithTask(task, andY:y)
     height = task.photo? ? (task.photo_height / UIScreen.mainScreen.scale) : TaskHeight
     task_frame = CGRectMake(0, y, UIScreen.mainScreen.applicationFrame.size.width, height)
     if initWithFrame(task_frame)
-      addGestureRecognizer(UITapGestureRecognizer.alloc.initWithTarget(self, action:"handleTap"))
-      addGestureRecognizer(UISwipeGestureRecognizer.alloc.initWithTarget(self, action:"handleRightSwipe"))
-      leftRecognizer = UISwipeGestureRecognizer.alloc.initWithTarget(self, action:"handleLeftSwipe")
-      leftRecognizer.direction = UISwipeGestureRecognizerDirectionLeft
-      addGestureRecognizer(leftRecognizer)
+      whenTapped do
+        App.notification_center.post(TaskViewTapNotification, self)
+      end
+      whenSwipedRight do
+        App.notification_center.post(TaskViewRightSwipeNotification, self) if @active
+      end
+      whenSwipedLeft do
+        App.notification_center.post(TaskViewLeftSwipeNotification, self) if @active
+      end
       update_task(task)
     end
     self
@@ -41,18 +43,6 @@ class TaskView < UIView
     @active = task.active?
   end
 
-  def handleTap
-    App.notification_center.post(TaskViewTapNotification, self)
-  end
-  
-  def handleRightSwipe
-    App.notification_center.post(TaskViewRightSwipeNotification, self) if @active
-  end
-  
-  def handleLeftSwipe
-    App.notification_center.post(TaskViewLeftSwipeNotification, self) if @active
-  end
-  
   def taskID
     @taskID
   end
