@@ -6,6 +6,12 @@ class PullTabViewController < UIViewController
   CollapseTappedNotification = 'CollapseTapped'
   EmailTappedNotification = 'EmailTapped'
 
+  def initWithStore(task_store)
+    if init
+      @task_store = task_store
+    end
+    self
+  end
   
   def loadView
     add_button = ButtonView.alloc.initWithImageNamed("add_button.png", tapNotification:AddTappedNotification)
@@ -24,6 +30,96 @@ class PullTabViewController < UIViewController
     App.notification_center.observe(CollapseTappedNotification) do |notification|
       @collapse_toggle_button.toggle
     end
+    
+    # observe events from tabbar buttons
+    App.notification_center.observe(PullTabViewController::AddTappedNotification) do |notification|
+      handleAddTapped
+    end
+    # observe completion of modal add form
+    App.notification_center.observe(AddTaskViewController::AddCompleteNotification) do |notification|
+      handleAddComplete
+    end
+
+    App.notification_center.observe(PullTabViewController::CameraTappedNotification) do |notification|
+      handleCameraTapped
+    end
+    App.notification_center.observe(PullTabViewController::EmailTappedNotification) do |notification|
+      handleEmailTapped
+    end
+    
   end
+
+
+  def handleAddTapped
+    @add_form_controller = AddTaskViewController.alloc.initWithStore(@task_store)
+    parentViewController.presentModalViewController(@add_form_controller, animated:true)
+  end
+
+  def handleAddComplete
+    @add_form_controller.dismissModalViewControllerAnimated(true)
+    @add_form_controller = nil
+  end
+
+  def handleCameraTapped
+    imagePicker = UIImagePickerController.alloc.init
+
+    if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceTypeCamera)
+      imagePicker.sourceType =  UIImagePickerControllerSourceTypeCamera
+    else
+      imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary
+    end
+
+    imagePicker.mediaTypes = [KUTTypeImage]
+    imagePicker.delegate = self
+    imagePicker.allowsImageEditing = false
+    parentViewController.presentModalViewController(imagePicker, animated:true)
+  end
+
+  # UIImagePickerControllerDelegate methods
+
+  def imagePickerControllerDidCancel(picker)
+    parentViewController.dismissModalViewControllerAnimated(true)
+  end
+
+  def imagePickerController(picker, didFinishPickingMediaWithInfo:info) 
+    mediaType = info[UIImagePickerControllerMediaType]
+    if mediaType == KUTTypeImage
+      editedImage = info[UIImagePickerControllerEditedImage]
+      originalImage = info[UIImagePickerControllerOriginalImage]
+      @task_store.add_photo_task(editedImage || originalImage)
+    end
+    parentViewController.dismissModalViewControllerAnimated(true)
+  end
+
+  def handleEmailTapped
+    picker = MFMailComposeViewController.alloc.init
+    picker.mailComposeDelegate = self
+
+    message = ""
+    @task_store.tasks.each do |task|
+      message << (task.dotted? ? "* " : "  ")
+      if task.photo?
+        message << "[photo]" << "\n"
+      else
+        message << task.text << "\n"
+      end
+    end
+    subject = "fv list"
+
+    picker.setSubject(subject)
+    picker.setMessageBody(message,isHTML:false)
+
+    picker.navigationBar.barStyle = UIBarStyleBlack
+    parentViewController.presentModalViewController(picker, animated:true)
+  end
+
+  # delegate method for mailer
+  def mailComposeController(controller, didFinishWithResult:result, error:error)
+    controller.dismissModalViewControllerAnimated(true)
+  end
+
+  
+
+
 
 end

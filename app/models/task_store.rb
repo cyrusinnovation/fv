@@ -7,6 +7,8 @@ class TaskStore
   TaskListCollapsedNotification = 'TaskListCollapsed'
   TaskListExpandedNotification = 'TaskListExpanded'
   
+  AllChangeNotifications = [TaskAddedNotification, TaskChangedNotification, TaskRemovedNotification, TaskPausedNotification, TaskListCollapsedNotification, TaskListExpandedNotification]
+  
   DB_FALSE = 0
   DB_TRUE = 1
   

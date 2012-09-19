@@ -12,7 +12,7 @@ Motion::Project::App.setup do |app|
     dependency 'NYXImagesKit'
   end
   
-  app.files_dependencies "app/controllers/task_view_controller.rb" => "app/views/task_view.rb"
+  app.files_dependencies "app/controllers/main_view_controller.rb" => "app/views/task_view.rb"
   
   app.codesign_certificate = 'iPhone Distribution: Cyrus Innovation'
   app.identifier = 'com.cyrusinnovation.fv'
