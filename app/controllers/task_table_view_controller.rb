@@ -1,12 +1,5 @@
 class TaskTableViewController < UITableViewController
 
-  def initWithStore(task_store)
-    if initWithStyle(UITableViewStylePlain)
-      @task_store = task_store
-    end
-    self
-  end
-  
   def viewDidLoad
     view.dataSource = self
     view.delegate = self
@@ -22,13 +15,13 @@ class TaskTableViewController < UITableViewController
   end
   
   def tableView(tableView, numberOfRowsInSection:section)
-    @task_store.tasks.size
+    TaskStore.shared.tasks.size
   end
 
   PHOTOCELLID = 'PhotoCell'
   TEXTCELLID = "TextCell"
   def tableView(tableView, cellForRowAtIndexPath:indexPath)
-    task = @task_store.tasks[indexPath.row]
+    task = TaskStore.shared.tasks[indexPath.row]
     
     if task.photo?
       cell = tableView.dequeueReusableCellWithIdentifier(PHOTOCELLID) || begin
@@ -49,7 +42,7 @@ class TaskTableViewController < UITableViewController
   TextCellHeight = 69
   
   def tableView(tableView, heightForRowAtIndexPath:indexPath)
-    task = @task_store.tasks[indexPath.row]
+    task = TaskStore.shared.tasks[indexPath.row]
     
     height = task.photo? ? (task.photo_height / UIScreen.mainScreen.scale) : TextCellHeight
   end

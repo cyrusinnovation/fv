@@ -5,14 +5,7 @@ class PullTabViewController < UIViewController
   CameraTappedNotification = 'CameraTapped'
   CollapseTappedNotification = 'CollapseTapped'
   EmailTappedNotification = 'EmailTapped'
-
-  def initWithStore(task_store)
-    if init
-      @task_store = task_store
-    end
-    self
-  end
-  
+ 
   def loadView
     add_button = ButtonView.alloc.initWithImageNamed("add_button.png", tapNotification:AddTappedNotification)
     camera_button = ButtonView.alloc.initWithImageNamed("camera_button.png", tapNotification:CameraTappedNotification)
@@ -51,7 +44,7 @@ class PullTabViewController < UIViewController
 
 
   def handleAddTapped
-    @add_form_controller = AddTaskViewController.alloc.initWithStore(@task_store)
+    @add_form_controller = AddTaskViewController.new
     parentViewController.presentModalViewController(@add_form_controller, animated:true)
   end
 
@@ -86,7 +79,7 @@ class PullTabViewController < UIViewController
     if mediaType == KUTTypeImage
       editedImage = info[UIImagePickerControllerEditedImage]
       originalImage = info[UIImagePickerControllerOriginalImage]
-      @task_store.add_photo_task(editedImage || originalImage)
+      TaskStore.shared.add_photo_task(editedImage || originalImage)
     end
     parentViewController.dismissModalViewControllerAnimated(true)
   end
@@ -96,7 +89,7 @@ class PullTabViewController < UIViewController
     picker.mailComposeDelegate = self
 
     message = ""
-    @task_store.tasks.each do |task|
+    TaskStore.shared.tasks.each do |task|
       message << (task.dotted? ? "* " : "  ")
       if task.photo?
         message << "[photo]" << "\n"

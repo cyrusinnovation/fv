@@ -4,13 +4,6 @@ class AddTaskViewController < UIViewController
 
   TextEntryHeight = 40
   
-  def initWithStore(task_store)
-    if init
-      @task_store = task_store
-    end
-    self      
-  end
-  
   def loadView
     self.view = UIView.alloc.initWithFrame(UIScreen.mainScreen.applicationFrame)
     view.backgroundColor = UIColor.grayColor
@@ -27,7 +20,7 @@ class AddTaskViewController < UIViewController
   end
     
   def textFieldDidEndEditing(text_field)
-    @task_store.add_text_task(text_field.text)
+    TaskStore.shared.add_text_task(text_field.text)
     App.notification_center.post(AddCompleteNotification)
     true
   end

@@ -1,37 +1,30 @@
 class MainViewController < UIViewController
   
-  def initWithStore(task_store)
-    if init
-      @task_store = task_store
-    end
-    self
-  end
-  
   def loadView
     self.view = UIView.alloc.initWithFrame(UIScreen.mainScreen.applicationFrame)
-    add_child_controller(TaskTableViewController.alloc.initWithStore(@task_store))
-    add_child_controller(PullTabViewController.alloc.initWithStore(@task_store))
+    add_child_controller(TaskTableViewController.new)
+    add_child_controller(PullTabViewController.new)
     wire_task_store_events
   end
 
   def wire_task_store_events
     # Observe button actions
     App.notification_center.observe(PullTabViewController::ExpandTappedNotification) do |notification|
-      @task_store.expand
+      TaskStore.shared.expand
     end
     App.notification_center.observe(PullTabViewController::CollapseTappedNotification  ) do |notification|
-      @task_store.collapse
+      TaskStore.shared.collapse
     end
 
     # Observe ui events
     App.notification_center.observe(TaskTableCell::TaskViewTapNotification) do |notification|
-      @task_store.toggle_dotted(notification.object.taskID)
+      TaskStore.shared.toggle_dotted(notification.object.taskID)
     end
     App.notification_center.observe(TaskTableCell::TaskViewRightSwipeNotification) do |notification|
-      @task_store.remove_task(notification.object.taskID)
+      TaskStore.shared.remove_task(notification.object.taskID)
     end
     App.notification_center.observe(TaskTableCell::TaskViewLeftSwipeNotification) do |notification|
-      @task_store.pause_task(notification.object.taskID)
+      TaskStore.shared.pause_task(notification.object.taskID)
     end
     
   end

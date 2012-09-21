@@ -11,6 +11,28 @@ class TaskStore
   
   DB_FALSE = 0
   DB_TRUE = 1
+ 
+  def self.shared
+    @instance ||= TaskStore.new
+  end
+  
+  def initialize
+    model = NSManagedObjectModel.alloc.init
+    model.entities = [Task.entity]
+    
+    store = NSPersistentStoreCoordinator.alloc.initWithManagedObjectModel(model)
+    store_url = NSURL.fileURLWithPath(File.join(NSHomeDirectory(), 'Documents', 'Tasks.sqlite'))
+    error_ptr = Pointer.new(:object)
+    unless store.addPersistentStoreWithType(NSSQLiteStoreType, configuration:nil, URL:store_url, options:nil, error:error_ptr)
+      raise "Can't add persistent SQLite store: #{error_ptr[0].description}"
+    end
+    
+    context = NSManagedObjectContext.alloc.init
+    context.persistentStoreCoordinator = store
+    @context = context
+    
+    @collapsed = false
+  end
   
   def tasks
     @tasks ||= load_tasks
@@ -71,23 +93,6 @@ class TaskStore
     App.notification_center.post(TaskChangedNotification)
   end
   
-  def initialize
-    model = NSManagedObjectModel.alloc.init
-    model.entities = [Task.entity]
-    
-    store = NSPersistentStoreCoordinator.alloc.initWithManagedObjectModel(model)
-    store_url = NSURL.fileURLWithPath(File.join(NSHomeDirectory(), 'Documents', 'Tasks.sqlite'))
-    error_ptr = Pointer.new(:object)
-    unless store.addPersistentStoreWithType(NSSQLiteStoreType, configuration:nil, URL:store_url, options:nil, error:error_ptr)
-      raise "Can't add persistent SQLite store: #{error_ptr[0].description}"
-    end
-    
-    context = NSManagedObjectContext.alloc.init
-    context.persistentStoreCoordinator = store
-    @context = context
-    
-    @collapsed = false
-  end
 
   def collapse
     @collapsed = true
