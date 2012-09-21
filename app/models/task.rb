@@ -1,4 +1,7 @@
 class Task < NSManagedObject
+  DB_FALSE = 0
+  DB_TRUE = 1
+
   def self.entity
     @entity ||= begin
       entity = NSEntityDescription.alloc.init
@@ -6,11 +9,11 @@ class Task < NSManagedObject
       entity.managedObjectClassName = 'Task'
       
       props = []
-      props << property('dotted', NSBooleanAttributeType)
-      props << property('active', NSBooleanAttributeType)
+      props << property('is_dotted', NSBooleanAttributeType)
+      props << property('is_active', NSBooleanAttributeType)
       props << property('date_moved', NSDateAttributeType)
       props << property('text', NSStringAttributeType) { |p| p.optional = true }
-      props << property('photo', NSBooleanAttributeType)
+      props << property('is_photo', NSBooleanAttributeType)
       props << property('photo_uuid', NSStringAttributeType) { |p| p.optional = true }
       props << property('photo_height', NSFloatAttributeType) { |p| p.optional = true }
       props << property('photo_width', NSFloatAttributeType) { |p| p.optional = true }
@@ -30,15 +33,27 @@ class Task < NSManagedObject
   end
   
   def dotted?
-    dotted == 1
+    is_dotted == DB_TRUE
+  end
+  
+  def dotted= dotted
+    self.is_dotted = dotted ? DB_TRUE : DB_FALSE
   end
   
   def active?
-    active == 1
+    is_active == DB_TRUE
+  end
+  
+  def active= active
+    self.is_active = active ? DB_TRUE : DB_FALSE
   end
 
   def photo?
-    photo == 1
+    is_photo == DB_TRUE
+  end
+  
+  def photo= photo
+    self.is_photo = photo ? DB_TRUE : DB_FALSE
   end
     
 end

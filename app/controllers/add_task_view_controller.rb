@@ -20,7 +20,7 @@ class AddTaskViewController < UIViewController
   end
     
   def textFieldDidEndEditing(text_field)
-    TaskStore.shared.add_text_task(text_field.text)
+    TaskList.shared.add_text_task(text_field.text)
     App.notification_center.post(AddCompleteNotification)
     true
   end

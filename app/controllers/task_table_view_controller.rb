@@ -3,10 +3,8 @@ class TaskTableViewController < UITableViewController
   def viewDidLoad
     view.dataSource = self
     view.delegate = self
-    TaskStore::AllChangeNotifications.each do |event|
-      App.notification_center.observe(event) do |notification|
-        view.reloadData
-      end
+    App.notification_center.observe(TaskList::TaskListChangedNotification) do |event|
+      view.reloadData
     end
   end
   
@@ -15,13 +13,13 @@ class TaskTableViewController < UITableViewController
   end
   
   def tableView(tableView, numberOfRowsInSection:section)
-    TaskStore.shared.tasks.size
+    TaskList.shared.tasks.size
   end
 
   PHOTOCELLID = 'PhotoCell'
   TEXTCELLID = "TextCell"
   def tableView(tableView, cellForRowAtIndexPath:indexPath)
-    task = TaskStore.shared.tasks[indexPath.row]
+    task = TaskList.shared.tasks[indexPath.row]
     
     if task.photo?
       cell = tableView.dequeueReusableCellWithIdentifier(PHOTOCELLID) || begin
@@ -42,7 +40,7 @@ class TaskTableViewController < UITableViewController
   TextCellHeight = 69
   
   def tableView(tableView, heightForRowAtIndexPath:indexPath)
-    task = TaskStore.shared.tasks[indexPath.row]
+    task = TaskList.shared.tasks[indexPath.row]
     
     height = task.photo? ? (task.photo_height / UIScreen.mainScreen.scale) : TextCellHeight
   end
@@ -50,6 +48,5 @@ class TaskTableViewController < UITableViewController
   def tableView(tableView, willDisplayCell:cell, forRowAtIndexPath:indexPath)
     cell.updateBackgroundColor
   end
-  
-  
+
 end

@@ -79,7 +79,7 @@ class PullTabViewController < UIViewController
     if mediaType == KUTTypeImage
       editedImage = info[UIImagePickerControllerEditedImage]
       originalImage = info[UIImagePickerControllerOriginalImage]
-      TaskStore.shared.add_photo_task(editedImage || originalImage)
+      TaskList.shared.add_photo_task(editedImage || originalImage)
     end
     parentViewController.dismissModalViewControllerAnimated(true)
   end
@@ -88,19 +88,7 @@ class PullTabViewController < UIViewController
     picker = MFMailComposeViewController.alloc.init
     picker.mailComposeDelegate = self
 
-    message = ""
-    TaskStore.shared.tasks.each do |task|
-      message << (task.dotted? ? "* " : "  ")
-      if task.photo?
-        message << "[photo]" << "\n"
-      else
-        message << task.text << "\n"
-      end
-    end
-    subject = "fv list"
-
-    picker.setSubject(subject)
-    picker.setMessageBody(message,isHTML:false)
+    TaskList.shared.compose_mail(picker)
 
     picker.navigationBar.barStyle = UIBarStyleBlack
     parentViewController.presentModalViewController(picker, animated:true)

@@ -1,2 +1,4 @@
 - Move notifications for taskviewcontroller instead of taskview.
 - Direction swipe handling with bubblewrap is still too verbose
+- DB_TRUE stuff is stupid
+- Make button observe shared TaskList directly for change in state
