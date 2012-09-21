@@ -84,7 +84,7 @@ class TaskList
 
   def compose_mail(picker)
     message = ""
-    tasks.each do |task|
+    TaskStore.shared.all_tasks.each do |task|
       message << (task.dotted? ? "* " : "  ")
       if task.photo?
         message << "[photo]" << "\n"
