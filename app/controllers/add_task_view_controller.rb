@@ -7,6 +7,9 @@ class AddTaskViewController < UIViewController
     view.backgroundColor = UIColor.grayColor
     text_field_frame = CGRectMake(10, 10, view.frame.size.width - 20, TextEntryHeight)
     @text_field = TaskEntryView.alloc.initWithFrame(text_field_frame)
+    @text_field.backgroundColor = UIColor.whiteColor
+    @text_field.borderStyle = UITextBorderStyleRoundedRect
+    @text_field.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter
     view.addSubview(@text_field)
     @text_field.delegate = self
     @text_field.becomeFirstResponder

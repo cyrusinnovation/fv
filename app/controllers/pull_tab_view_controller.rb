@@ -1,4 +1,7 @@
 class PullTabViewController < UIViewController
+  
+  CollapseTappedNotification = "CollapseTapped"
+  ExpandTappedNotification = "ExpandTapped"
 
   def loadView
     add_button = ButtonView.withImage("add_button.png") { showModal(AddTaskViewController) }
@@ -13,12 +16,12 @@ class PullTabViewController < UIViewController
   end
   
   def handleCollapseTapped
-    TaskList.shared.collapse
+    App.notification_center.post(CollapseTappedNotification)
     @collapse_toggle_button.toggle
   end
   
   def handleExpandTapped
-    TaskList.shared.expand
+    App.notification_center.post(ExpandTappedNotification)
     @collapse_toggle_button.toggle
   end
   

@@ -1,11 +1,10 @@
 class TaskTableViewController < UITableViewController
 
   def viewDidLoad
-    view.dataSource = self
-    view.delegate = self
-    App.notification_center.observe(TaskList::TaskListChangedNotification) do |event|
-      view.reloadData
-    end
+    view.dataSource = view.delegate = self
+    App.notification_center.observe(TaskList::TaskListChangedNotification) { |event| view.reloadData }
+    App.notification_center.observe(PullTabViewController::CollapseTappedNotification) { |event| collapse }
+    App.notification_center.observe(PullTabViewController::ExpandTappedNotification) { |event| expand }
   end
   
   def didMoveToParentViewController(parentController)
@@ -13,13 +12,13 @@ class TaskTableViewController < UITableViewController
   end
   
   def tableView(tableView, numberOfRowsInSection:section)
-    TaskList.shared.tasks.size
+    tasks.size
   end
 
   PHOTOCELLID = 'PhotoCell'
   TEXTCELLID = "TextCell"
   def tableView(tableView, cellForRowAtIndexPath:indexPath)
-    task = TaskList.shared.tasks[indexPath.row]
+    task = tasks[indexPath.row]
     
     if task.photo?
       cell = tableView.dequeueReusableCellWithIdentifier(PHOTOCELLID) || PhotoTaskTableCell.alloc.initWithIdentifier(PHOTOCELLID)
@@ -34,8 +33,7 @@ class TaskTableViewController < UITableViewController
   TextCellHeight = 69
   
   def tableView(tableView, heightForRowAtIndexPath:indexPath)
-    task = TaskList.shared.tasks[indexPath.row]
-    
+    task = tasks[indexPath.row]
     height = task.photo? ? (task.photo_height / UIScreen.mainScreen.scale) : TextCellHeight
   end
   
@@ -43,4 +41,19 @@ class TaskTableViewController < UITableViewController
     cell.updateBackgroundColor
   end
 
+  def collapse
+    @collapsed = true
+    view.reloadData
+  end
+  
+  def expand
+    @collapsed = false
+    view.reloadData
+  end
+
+  def tasks
+    all_tasks = TaskList.shared.all_tasks
+    @collapsed ? all_tasks.select { |task| task.dotted? } : all_tasks
+  end
+  
 end
