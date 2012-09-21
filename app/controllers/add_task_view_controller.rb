@@ -1,7 +1,5 @@
 class AddTaskViewController < UIViewController
 
-  AddCompleteNotification = 'AddComplete'
-
   TextEntryHeight = 40
   
   def loadView
@@ -21,7 +19,7 @@ class AddTaskViewController < UIViewController
     
   def textFieldDidEndEditing(text_field)
     TaskList.shared.add_text_task(text_field.text)
-    App.notification_center.post(AddCompleteNotification)
+    presentingViewController.dismissModalViewControllerAnimated(true)
     true
   end
 

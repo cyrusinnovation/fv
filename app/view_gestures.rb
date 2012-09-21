@@ -1,25 +1,25 @@
 class UIView
   
-  def whenSwipedUp(enableInteraction=true, &proc)
-    whenSwipedInDirection(UISwipeGestureRecognizerDirectionUp, enableInteraction, &proc)
+  def when_swiped_up(enableInteraction=true, &proc)
+    when_swiped_in_direction(UISwipeGestureRecognizerDirectionUp, enableInteraction, &proc)
   end
 
-  def whenSwipedDown(enableInteraction=true, &proc)
-    whenSwipedInDirection(UISwipeGestureRecognizerDirectionDown, enableInteraction, &proc)
+  def when_swiped_down(enableInteraction=true, &proc)
+    when_swiped_in_direction(UISwipeGestureRecognizerDirectionDown, enableInteraction, &proc)
   end
 
-  def whenSwipedLeft(enableInteraction=true, &proc)
-    whenSwipedInDirection(UISwipeGestureRecognizerDirectionLeft, enableInteraction, &proc)
+  def when_swiped_left(enableInteraction=true, &proc)
+    when_swiped_in_direction(UISwipeGestureRecognizerDirectionLeft, enableInteraction, &proc)
   end
 
-  def whenSwipedRight(enableInteraction=true, &proc)
-    whenSwipedInDirection(UISwipeGestureRecognizerDirectionRight, enableInteraction, &proc)
+  def when_swiped_right(enableInteraction=true, &proc)
+    when_swiped_in_direction(UISwipeGestureRecognizerDirectionRight, enableInteraction, &proc)
   end
   
   private
   
-  def whenSwipedInDirection(direction, enableInteraction=true, &proc)
-    recognizer = whenSwiped(enableInteraction, &proc)
+  def when_swiped_in_direction(direction, enableInteraction=true, &proc)
+    recognizer = when_swiped(enableInteraction, &proc)
     recognizer.direction = direction
     recognizer
   end

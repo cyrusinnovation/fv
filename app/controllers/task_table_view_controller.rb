@@ -22,15 +22,9 @@ class TaskTableViewController < UITableViewController
     task = TaskList.shared.tasks[indexPath.row]
     
     if task.photo?
-      cell = tableView.dequeueReusableCellWithIdentifier(PHOTOCELLID) || begin
-        cell = PhotoTaskTableCell.alloc.initWithIdentifier(PHOTOCELLID)
-        cell
-      end
+      cell = tableView.dequeueReusableCellWithIdentifier(PHOTOCELLID) || PhotoTaskTableCell.alloc.initWithIdentifier(PHOTOCELLID)
     else
-      cell = tableView.dequeueReusableCellWithIdentifier(TEXTCELLID) || begin
-        cell = TextTaskTableCell.alloc.initWithIdentifier(TEXTCELLID)
-        cell
-      end
+      cell = tableView.dequeueReusableCellWithIdentifier(TEXTCELLID) || TextTaskTableCell.alloc.initWithIdentifier(TEXTCELLID)
     end
       
     cell.task = task

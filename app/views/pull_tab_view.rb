@@ -18,11 +18,11 @@ class PullTabView < UIView
       end
     end
     
-    whenSwipedUp do
+    when_swiped_up do
       animateFrameChange(upFrame)
     end
     
-    whenSwipedDown do
+    when_swiped_down do
       animateFrameChange(downFrame)
     end
     

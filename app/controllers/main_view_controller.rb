@@ -8,12 +8,6 @@ class MainViewController < UIViewController
   end
 
   def wire_task_list_events
-    App.notification_center.observe(PullTabViewController::ExpandTappedNotification) do |notification|
-      TaskList.shared.expand
-    end
-    App.notification_center.observe(PullTabViewController::CollapseTappedNotification  ) do |notification|
-      TaskList.shared.collapse
-    end
     App.notification_center.observe(TaskTableCell::TaskViewTapNotification) do |notification|
       TaskList.shared.toggle_dotted(notification.object.taskID)
     end

@@ -6,13 +6,13 @@ class TaskTableCell < UITableViewCell
 
   def initWithIdentifier(reuseIdentifier)
     initWithStyle(UITableViewCellStyleDefault, reuseIdentifier:reuseIdentifier)
-    whenTapped do
+    when_tapped do
       App.notification_center.post(TaskViewTapNotification, self)
     end
-    whenSwipedRight do
+    when_swiped_right do
       App.notification_center.post(TaskViewRightSwipeNotification, self) if @active
     end
-    whenSwipedLeft do
+    when_swiped_left do
       App.notification_center.post(TaskViewLeftSwipeNotification, self) if @active
     end
     self

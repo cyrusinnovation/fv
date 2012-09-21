@@ -1,14 +1,15 @@
 class ButtonView < UIImageView
   
-  def initWithImageNamed(imageName, tapNotification:notification)
-    @notification = notification
+  def self.withImage(imageName, &proc)
+    self.alloc.initWithImageNamed(imageName, &proc)
+  end
+  
+  def initWithImageNamed(imageName, &proc)
     button_image = UIImage.imageNamed(imageName)
     if initWithImage(button_image)
-      whenTapped do
-        App.notification_center.post(@notification)
-      end
+      when_tapped { proc.call }
     end
     self
   end
-  
+
 end
