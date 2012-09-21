@@ -1,20 +1,10 @@
 class TaskTableCell < UITableViewCell
 
-  TaskViewTapNotification = 'TaskViewTap'
-  TaskViewRightSwipeNotification = 'TaskViewRightSwipe'
-  TaskViewLeftSwipeNotification = 'TaskViewLeftSwipe'
-
   def initWithIdentifier(reuseIdentifier)
     initWithStyle(UITableViewCellStyleDefault, reuseIdentifier:reuseIdentifier)
-    when_tapped do
-      App.notification_center.post(TaskViewTapNotification, self)
-    end
-    when_swiped_right do
-      App.notification_center.post(TaskViewRightSwipeNotification, self) if @active
-    end
-    when_swiped_left do
-      App.notification_center.post(TaskViewLeftSwipeNotification, self) if @active
-    end
+    when_tapped { TaskList.shared.toggle_dotted(taskID) }
+    when_swiped_right { TaskList.shared.remove_task(taskID) if @active }
+    when_swiped_left { TaskList.shared.pause_task(taskID) if @active }
     self
   end
   
