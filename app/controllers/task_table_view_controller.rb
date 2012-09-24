@@ -2,6 +2,7 @@ class TaskTableViewController < UITableViewController
 
   def viewDidLoad
     view.dataSource = view.delegate = self
+    view.allowsSelection = false
     App.notification_center.observe(TaskList::TaskListChangedNotification) { |event| view.reloadData }
     App.notification_center.observe(PullTabViewController::CollapseTappedNotification) { |event| collapse }
     App.notification_center.observe(PullTabViewController::ExpandTappedNotification) { |event| expand }
