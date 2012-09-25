@@ -2,14 +2,16 @@ $:.unshift("/Library/RubyMotion/lib")
 require 'motion/project'
 require 'motion-cocoapods'
 require 'bubble-wrap'
+require 'nano-store'
 
 Motion::Project::App.setup do |app|
   # Use `rake config' to see complete project settings.
   app.name = 'fv'
-  app.frameworks += ['CoreData', 'MessageUI']
+  app.frameworks += ['CoreData','MessageUI']
 
   app.pods do
-    dependency 'NYXImagesKit'
+    pod 'NYXImagesKit'
+    pod 'NanoStore', '~> 2.1.4'
   end
   
   app.codesign_certificate = 'iPhone Distribution: Cyrus Innovation'

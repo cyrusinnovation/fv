@@ -5,14 +5,18 @@ class TaskList
     @instance ||= TaskList.new
   end
   
+  def initialize
+    @task_store = TaskStore.shared
+  end
+  
   def all_tasks
-    TaskStore.shared.all_tasks
+    @task_store.all_tasks
   end
 
   def add_text_task(text)
     make_change do
       return if text == ''
-      TaskStore.shared.create_task do |task|
+      @task_store.create_task do |task|
         task.date_moved = NSDate.date
         task.text = text
         task.dotted = false
@@ -24,7 +28,7 @@ class TaskList
   
   def add_photo_task(image)
     make_change do
-      TaskStore.shared.create_task do |task|
+      @task_store.create_task do |task|
         task.date_moved = NSDate.date
         task.dotted = false
         task.active = false
@@ -39,7 +43,7 @@ class TaskList
   
   def remove_task(taskID)
     make_change do
-      TaskStore.shared.delete_task(taskID) do |task|
+      @task_store.delete_task(taskID) do |task|
         ImageStore.deleteImageForTask(task) if task.photo?
       end
     end
@@ -47,7 +51,7 @@ class TaskList
 
   def toggle_dotted(taskID)
     make_change do
-      TaskStore.shared.update_task(taskID) do |task|
+      @task_store.update_task(taskID) do |task|
         if task.dotted?
           task.dotted = false
           task.active = false
@@ -60,7 +64,7 @@ class TaskList
   
   def pause_task(taskID)
     make_change do
-      TaskStore.shared.update_task(taskID) do |task|
+      @task_store.update_task(taskID) do |task|
         task.dotted = false
         task.date_moved = NSDate.date
       end
@@ -76,7 +80,7 @@ class TaskList
   end
 
   def ensure_correctness
-    TaskStore.shared.update_tasks do |tasks|
+    @task_store.update_tasks do |tasks|
       return if tasks.empty?
       tasks.first.dotted = true
       tasks.each { |task| task.active = false }
