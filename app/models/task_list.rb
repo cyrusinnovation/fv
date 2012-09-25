@@ -6,7 +6,7 @@ class TaskList
   end
   
   def initialize
-    @task_store = TaskStore.shared
+    @task_store = CoreDataTaskStore.shared
   end
   
   def all_tasks

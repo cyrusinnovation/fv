@@ -1,12 +1,12 @@
-class TaskStore
+class CoreDataTaskStore
 
   def self.shared
-    @instance ||= TaskStore.new
+    @instance ||= CoreDataTaskStore.new
   end
   
   def initialize
     model = NSManagedObjectModel.alloc.init
-    model.entities = [Task.entity]
+    model.entities = [CoreDataTask.entity]
     
     store = NSPersistentStoreCoordinator.alloc.initWithManagedObjectModel(model)
     store_url = NSURL.fileURLWithPath(File.join(NSHomeDirectory(), 'Documents', 'Tasks.sqlite'))

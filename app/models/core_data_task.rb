@@ -1,4 +1,4 @@
-class Task < NSManagedObject
+class CoreDataTask < NSManagedObject
   DB_FALSE = 0
   DB_TRUE = 1
 
@@ -6,7 +6,7 @@ class Task < NSManagedObject
     @entity ||= begin
       entity = NSEntityDescription.alloc.init
       entity.name = 'Task'
-      entity.managedObjectClassName = 'Task'
+      entity.managedObjectClassName = 'CoreDataTask'
       
       props = []
       props << property('is_dotted', NSBooleanAttributeType)
