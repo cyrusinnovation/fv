@@ -6,3 +6,4 @@ resources/*.storyboardc
 .dat*
 vendor/Pods
 vendor/Podfile.lock
+.idea
