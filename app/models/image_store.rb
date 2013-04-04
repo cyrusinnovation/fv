@@ -26,7 +26,7 @@ class ImageStore
   private
   
   def self.scaleFactorForImage(image)
-    screenWidth = UIScreen.mainScreen.bounds.size.width * UIScreen.mainScreen.scale
+    screenWidth = UIScreen.mainScreen.bounds.size.width
     scaleFactor = screenWidth / image.size.width
     scaleFactor
   end

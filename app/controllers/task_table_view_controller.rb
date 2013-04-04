@@ -35,7 +35,7 @@ class TaskTableViewController < UITableViewController
   
   def tableView(tableView, heightForRowAtIndexPath:indexPath)
     task = tasks[indexPath.row]
-    height = task.photo? ? (task.photo_height / UIScreen.mainScreen.scale) : TextCellHeight
+    height = task.photo? ? task.photo_height : TextCellHeight
   end
   
   def tableView(tableView, willDisplayCell:cell, forRowAtIndexPath:indexPath)
